@@ -1,0 +1,224 @@
+[
+  {
+    "productSlug": "carolina-herrera-212-sexy-masculino",
+    "brand": "Carolina Herrera",
+    "referenceName": "212 Sexy Men",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Carolina-Herrera/212-Sexy-Men-1054.html",
+      "checkedAt": "2026-09-16"
+    },
+    "profile": {
+      "topNotes": [
+        "Mandarin Orange",
+        "Bergamot",
+        "Green Notes"
+      ],
+      "middleNotes": [
+        "Pepper",
+        "Cardamom",
+        "Flowers"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Guaiac Wood",
+        "Sandalwood",
+        "Amber",
+        "Musk"
+      ],
+      "accords": [
+        "Vanilla",
+        "Woody",
+        "Powdery",
+        "Warm Spicy",
+        "Fresh Spicy",
+        "Citrus",
+        "Floral",
+        "Aromatic",
+        "Musky",
+        "Amber"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Referencia 212 Sexy Men (2006). Identidad cerrada en el lote 09: la URL de referencia ya estaba verificada y fechada en el proyecto y el ledger declaraba la identidad; lo unico que bloqueaba era la colision de alias con el par de genero de la misma casa, resuelta con BRAND_GENDER_NAME_ALIASES."
+  },
+  {
+    "productSlug": "carolina-herrera-ch-masculino",
+    "brand": "Carolina Herrera",
+    "referenceName": "CH Men",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Carolina-Herrera/CH-Men-6759.html",
+      "checkedAt": "2026-09-16"
+    },
+    "profile": {
+      "topNotes": [
+        "Grass",
+        "Bergamot",
+        "Grapefruit"
+      ],
+      "middleNotes": [
+        "Woodsy Notes",
+        "Nutmeg",
+        "Violet",
+        "Saffron",
+        "Jasmine"
+      ],
+      "baseNotes": [
+        "Sugar",
+        "Leather",
+        "Vanilla",
+        "Suede",
+        "Amber",
+        "Cashmere Wood",
+        "Sandalwood",
+        "Oakmoss",
+        "Vetiver"
+      ],
+      "accords": [
+        "Leather",
+        "Vanilla",
+        "Sweet",
+        "Woody",
+        "Powdery",
+        "Green",
+        "Animalic",
+        "Fresh Spicy",
+        "Citrus",
+        "Fresh"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Referencia CH Men (2009). Identidad cerrada en el lote 09: la URL de referencia ya estaba verificada y fechada en el proyecto y el ledger declaraba la identidad; lo unico que bloqueaba era la colision de alias con el par de genero de la misma casa, resuelta con BRAND_GENDER_NAME_ALIASES."
+  },
+  {
+    "productSlug": "dolce-gabbana-light-blue-masculino",
+    "brand": "Dolce & Gabbana",
+    "referenceName": "Light Blue pour Homme",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Dolce-Gabbana/Light-Blue-pour-Homme-1068.html",
+      "checkedAt": "2026-09-16"
+    },
+    "profile": {
+      "topNotes": [
+        "Grapefruit",
+        "Bergamot",
+        "Sicilian Mandarin",
+        "Juniper"
+      ],
+      "middleNotes": [
+        "Pepper",
+        "Rosemary",
+        "Brazilian Rosewood"
+      ],
+      "baseNotes": [
+        "Musk",
+        "Incense",
+        "Oakmoss"
+      ],
+      "accords": [
+        "Citrus",
+        "Fresh Spicy",
+        "Aromatic",
+        "Woody",
+        "Musky"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Referencia Light Blue pour Homme (2007). Identidad cerrada en el lote 09: la URL de referencia ya estaba verificada y fechada en el proyecto y el ledger declaraba la identidad; lo unico que bloqueaba era la colision de alias con el par de genero de la misma casa, resuelta con BRAND_GENDER_NAME_ALIASES."
+  },
+  {
+    "productSlug": "jean-paul-gaultier-scandal-masculino",
+    "brand": "Jean Paul Gaultier",
+    "referenceName": "Scandal Pour Homme",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Jean-Paul-Gaultier/Scandal-Pour-Homme-68074.html",
+      "checkedAt": "2026-09-16"
+    },
+    "profile": {
+      "topNotes": [
+        "Mandarin Orange",
+        "Clary Sage"
+      ],
+      "middleNotes": [
+        "Caramel",
+        "Tonka Bean"
+      ],
+      "baseNotes": [
+        "Vetiver"
+      ],
+      "accords": [
+        "Caramel",
+        "Aromatic",
+        "Sweet",
+        "Citrus",
+        "Vanilla",
+        "Amber",
+        "Soft Spicy",
+        "Woody"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Referencia Scandal Pour Homme (2021). Identidad cerrada en el lote 09: la URL de referencia ya estaba verificada y fechada en el proyecto y el ledger declaraba la identidad; lo unico que bloqueaba era la colision de alias con el par de genero de la misma casa, resuelta con BRAND_GENDER_NAME_ALIASES."
+  },
+  {
+    "productSlug": "versace-eros",
+    "brand": "Versace",
+    "referenceName": "Eros Pour Femme",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Versace/Eros-Pour-Femme-28958.html",
+      "checkedAt": "2026-09-16"
+    },
+    "profile": {
+      "topNotes": [
+        "Sicilian Lemon",
+        "Pomegranate",
+        "Calabrian Bergamot"
+      ],
+      "middleNotes": [
+        "Lemon Blossom",
+        "Jasmine Sambac",
+        "Jasmine",
+        "Peony"
+      ],
+      "baseNotes": [
+        "Musk",
+        "Ambroxan",
+        "Woodsy Notes",
+        "Sandalwood"
+      ],
+      "accords": [
+        "Citrus",
+        "White Floral",
+        "Woody",
+        "Musky",
+        "Floral",
+        "Fresh",
+        "Fresh Spicy",
+        "Powdery",
+        "Aromatic",
+        "Amber"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Referencia Eros Pour Femme (2014). Identidad cerrada en el lote 09: la URL de referencia ya estaba verificada y fechada en el proyecto y el ledger declaraba la identidad; lo unico que bloqueaba era la colision de alias con el par de genero de la misma casa, resuelta con BRAND_GENDER_NAME_ALIASES."
+  }
+]

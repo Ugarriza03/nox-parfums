@@ -1,0 +1,21 @@
+[
+  {
+    "productSlug": "lattafa-yara",
+    "brand": "Lattafa",
+    "referenceName": "Yara",
+    "source": {
+      "name": "Fragrantica",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Yara-76880.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": ["Orchid", "Heliotrope", "Tangerine"],
+      "middleNotes": ["Gourmand Accord", "Tropical Fruits"],
+      "baseNotes": ["Vanilla", "Musk", "Sandalwood"],
+      "accords": ["Sweet", "Vanilla", "Powdery", "Tropical", "Musky", "Fruity", "Floral", "Citrus"],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Plantilla de lote. Copiar este bloque una vez por fragancia."
+  }
+]

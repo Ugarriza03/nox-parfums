@@ -1,0 +1,29 @@
+[
+ {"productSlug":"armani-si","brand":"Armani","referenceName":"Sì Eau de Parfum","referenceGender":"femenino",
+  "source":{"name":"Armani beauty (sitio oficial)","status":"verified","url":"https://www.giorgioarmanibeauty-usa.com/fragrances/womens-perfume/si/si-eau-de-parfum/3605521816511.html","checkedAt":"2026-09-26"},
+  "profile":{"topNotes":[],"middleNotes":[],"baseNotes":[],
+   "mainNotes":["Blackcurrant Nectar","Rose de Mai","White Musk","Freesia"],
+   "accords":["Floral","Fruity","Musky"],"family":null},
+  "note":"Decision comercial de NOX (lote 10): Si Eau de Parfum en la formulacion que Armani publica hoy, no la piramide clasica de Fragrantica, no Si Intense ni Si Passione. La pagina oficial enumera cuatro notas clave SIN separarlas por etapa, asi que se cargan como mainNotes y la piramide queda vacia: no se infiere. El texto narrativo de la pagina menciona ademas mandarina, azahar y vainilla, pero no como notas clave, y por eso no se cargan."},
+
+ {"productSlug":"creed-aventus-absolu","brand":"Creed","referenceName":"Absolu Aventus","referenceGender":"masculino",
+  "source":{"name":"Creed (sitio oficial)","status":"verified","url":"https://www.creedfragrance.com/p/absolu-aventus/14926231/","checkedAt":"2026-09-26"},
+  "profile":{"topNotes":[],"middleNotes":[],"baseNotes":[],
+   "mainNotes":["Grapefruit","Pineapple","Haitian Vetiver","Patchouli","Bergamot","Lemon","Ginger","Cinnamon","Cardamom"],
+   "accords":["Citrus","Fruity","Woody","Smoky","Fresh Spicy"],"family":null},
+  "note":"Decision comercial de NOX (lote 10): Absolu Aventus (2025). La pagina oficial de Creed enumera las notas SIN separarlas por etapa, asi que se cargan como mainNotes y la piramide queda vacia."},
+
+ {"productSlug":"victorias-secret-very-sexy","brand":"Victoria's Secret","referenceName":"Very Sexy Eau de Parfum","referenceGender":"femenino",
+  "source":{"name":"Fragrantica","status":"verified","url":"https://www.fragrantica.com/perfume/Victoria-s-Secret/Very-Sexy-Eau-de-Parfum-23316.html","checkedAt":"2026-09-26"},
+  "profile":{"topNotes":[],"middleNotes":[],"baseNotes":[],
+   "mainNotes":["Blackberry","Clementine","Vanilla Orchid"],
+   "accords":["Fruity","Sweet","Citrus","Floral","Powdery"],"family":null},
+  "note":"Decision comercial de NOX (lote 10): Very Sexy Eau de Parfum (2014), no la de 2002 ni la de 2025. La ficha no publica piramide: presenta las tres notas como una mezcla, asi que van a mainNotes."},
+
+ {"productSlug":"victorias-secret-summer-daze","brand":"Victoria's Secret","referenceName":"Summer Daze","referenceGender":"femenino",
+  "source":{"name":"Fragrantica","status":"verified","url":"https://www.fragrantica.com/perfume/Victoria-s-Secret/Summer-Daze-90554.html","checkedAt":"2026-09-26"},
+  "profile":{"topNotes":[],"middleNotes":[],"baseNotes":[],
+   "mainNotes":["Grapefruit","Tiare Flower"],
+   "accords":["White Floral","Citrus","Fruity","Fresh Spicy","Sweet","Aromatic"],"family":null},
+  "note":"Identificacion visual de NOX (lote 10): Summer Daze Fragrance Mist 250 ml / 8.4 fl oz. La ficha no publica piramide, solo dos notas, asi que van a mainNotes. Las notas coinciden con las que los minoristas listan para el mist de 8.4 oz (Tiare y pomelo)."}
+]

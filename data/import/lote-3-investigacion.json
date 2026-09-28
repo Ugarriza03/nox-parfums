@@ -1,0 +1,871 @@
+[
+  {
+    "productSlug": "christian-dior-fahrenheit",
+    "brand": "Christian Dior",
+    "referenceName": "Fahrenheit",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Dior/Fahrenheit-228.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Nutmeg Flower",
+        "Lavender",
+        "Cedar",
+        "Mandarin Orange",
+        "Chamomile",
+        "Bergamot",
+        "Hawthorn",
+        "Lemon"
+      ],
+      "middleNotes": [
+        "Violet Leaf",
+        "Nutmeg",
+        "Cedar",
+        "Sandalwood",
+        "Carnation",
+        "Honeysuckle",
+        "Jasmine",
+        "Lily-of-the-Valley"
+      ],
+      "baseNotes": [
+        "Leather",
+        "Vetiver",
+        "Musk",
+        "Amber",
+        "Patchouli",
+        "Tonka Bean"
+      ],
+      "accords": [
+        "Leather",
+        "Woody",
+        "Ozonic",
+        "Fresh Spicy",
+        "Aromatic",
+        "Animalic",
+        "Aquatic",
+        "Floral",
+        "Citrus",
+        "Green"
+      ],
+      "mainNotes": [],
+      "family": "Woody Aromatic"
+    },
+    "note": "Fahrenheit original de 1988. La casa tiene numerosos flankers (Le Parfum, 32, Absolute, Cologne, Summer, 0 Degree, Aqua) y ninguno se usó."
+  },
+  {
+    "productSlug": "ralph-lauren-polo-black",
+    "brand": "Ralph Lauren",
+    "referenceName": "Polo Black",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Ralph-Lauren/Polo-Black-1197.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Mango",
+        "Tangerine",
+        "Lemon"
+      ],
+      "middleNotes": [
+        "Sandalwood",
+        "Sage",
+        "Wormwood"
+      ],
+      "baseNotes": [
+        "Patchouli",
+        "Tonka Bean"
+      ],
+      "accords": [
+        "Tropical",
+        "Fruity",
+        "Woody",
+        "Sweet",
+        "Citrus",
+        "Aromatic",
+        "Warm Spicy",
+        "Patchouli",
+        "Terpenic",
+        "Powdery"
+      ],
+      "mainNotes": [],
+      "family": "Woody Aromatic"
+    },
+    "note": "Polo Black de 2005. No confundir con Polo Double Black, que es otra referencia."
+  },
+  {
+    "productSlug": "ralph-lauren-polo-red",
+    "brand": "Ralph Lauren",
+    "referenceName": "Polo Red",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Ralph-Lauren/Polo-Red-18598.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Cranberry",
+        "Grapefruit",
+        "Italian Lemon"
+      ],
+      "middleNotes": [
+        "Saffron",
+        "Sage"
+      ],
+      "baseNotes": [
+        "Amber",
+        "Coffee",
+        "Woodsy Notes"
+      ],
+      "accords": [
+        "Citrus",
+        "Fruity",
+        "Amber",
+        "Warm Spicy",
+        "Coffee",
+        "Woody",
+        "Aromatic",
+        "Fresh Spicy",
+        "Soft Spicy"
+      ],
+      "mainNotes": [],
+      "family": "Woody Spicy"
+    },
+    "note": "Polo Red original de 2013. La linea tiene Parfum, Eau de Parfum, Intense, Rush, Extreme y Racing Edition; ninguno se usó."
+  },
+  {
+    "productSlug": "giorgio-armani-acqua-di-gio-profondo",
+    "brand": "Giorgio Armani",
+    "referenceName": "Acqua di Gio Profondo",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Giorgio-Armani/Acqua-di-Gio-Profondo-59532.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Sea Notes",
+        "Aquozone",
+        "Bergamot",
+        "Green Mandarin"
+      ],
+      "middleNotes": [
+        "Rosemary",
+        "Lavender",
+        "Cypress",
+        "Mastic or Lentisque"
+      ],
+      "baseNotes": [
+        "Mineral Notes",
+        "Musk",
+        "Patchouli",
+        "Amber"
+      ],
+      "accords": [
+        "Marine",
+        "Aromatic",
+        "Citrus",
+        "Fresh Spicy",
+        "Fresh",
+        "Woody",
+        "Mineral",
+        "Salty",
+        "Lavender"
+      ],
+      "mainNotes": [],
+      "family": "Aromatic Fougere"
+    },
+    "note": "Profondo original de 2020. Existen Profondo Parfum (2024), Profondo Eau de Parfum (2024), Profondo Eau de Toilette (2025) y Profondo Lights; ninguno se usó."
+  },
+  {
+    "productSlug": "giorgio-armani-armani-code-profumo",
+    "brand": "Giorgio Armani",
+    "referenceName": "Armani Code Profumo",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Giorgio-Armani/Armani-Code-Profumo-34761.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Cardamom",
+        "Green Apple",
+        "Green Mandarin"
+      ],
+      "middleNotes": [
+        "Nutmeg",
+        "Lavender",
+        "Orange Blossom"
+      ],
+      "baseNotes": [
+        "Tonka Bean",
+        "Amber",
+        "Leather"
+      ],
+      "accords": [
+        "Amber",
+        "Vanilla",
+        "Warm Spicy",
+        "Aromatic",
+        "Leather",
+        "Fresh Spicy",
+        "Sweet",
+        "Animalic",
+        "Citrus",
+        "Lavender"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Spicy"
+    },
+    "note": "Code Profumo de 2016, concentración explícita en el nombre. No confundir con Armani Code, Code Parfum, Code Eau de Parfum, Code Colonia, Code A-List ni Code Elixir."
+  },
+  {
+    "productSlug": "viktor-rolf-spice-bomb",
+    "brand": "Viktor & Rolf",
+    "referenceName": "Spicebomb",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Viktor-Rolf/Spicebomb-13857.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Pink Pepper",
+        "Elemi",
+        "Bergamot",
+        "Grapefruit"
+      ],
+      "middleNotes": [
+        "Cinnamon",
+        "Paprika",
+        "Saffron"
+      ],
+      "baseNotes": [
+        "Tobacco",
+        "Leather",
+        "Vetiver"
+      ],
+      "accords": [
+        "Warm Spicy",
+        "Cinnamon",
+        "Tobacco",
+        "Sweet",
+        "Soft Spicy",
+        "Leather",
+        "Aromatic",
+        "Citrus"
+      ],
+      "mainNotes": [],
+      "family": "Woody Spicy"
+    },
+    "note": "Spicebomb original de 2012. La linea tiene Extreme, Night Vision, Infrared, Dark Leather, Eau Fraiche y Metallic Musk; ninguno se usó."
+  },
+  {
+    "productSlug": "christian-dior-poison-girl",
+    "brand": "Christian Dior",
+    "referenceName": "Poison Girl",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Dior/Poison-Girl-35561.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Bitter Orange",
+        "Lemon"
+      ],
+      "middleNotes": [
+        "Damask Rose",
+        "Grasse Rose",
+        "Orange Blossom"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Almond",
+        "Tonka Bean",
+        "Tolu Balsam",
+        "Sandalwood",
+        "Heliotrope",
+        "Cashmeran"
+      ],
+      "accords": [
+        "Vanilla",
+        "Sweet",
+        "Almond",
+        "Powdery",
+        "Citrus",
+        "Amber",
+        "Nutty",
+        "Woody",
+        "Fruity",
+        "Warm Spicy"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Floral"
+    },
+    "note": "Poison Girl Eau de Parfum de 2016. No confundir con Poison (1985), Hypnotic Poison, Pure Poison, Poison Girl Eau de Toilette ni Poison Girl Unexpected."
+  },
+  {
+    "productSlug": "thierry-mugler-alien-goddess",
+    "brand": "Thierry Mugler",
+    "referenceName": "Alien Goddess",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Mugler/Alien-Goddess-68354.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Coconut Water",
+        "Bergamot"
+      ],
+      "middleNotes": [
+        "Jasmine",
+        "Heliotrope"
+      ],
+      "baseNotes": [
+        "Bourbon Vanilla",
+        "Cashmeran"
+      ],
+      "accords": [
+        "Vanilla",
+        "Powdery",
+        "White Floral",
+        "Woody",
+        "Citrus",
+        "Musky",
+        "Floral"
+      ],
+      "mainNotes": [],
+      "family": "Floral"
+    },
+    "note": "Alien Goddess original de 2021. No confundir con Alien (2005), Alien Goddess Intense ni Alien Goddess Supra Florale."
+  },
+  {
+    "productSlug": "thierry-mugler-angel-nova",
+    "brand": "Thierry Mugler",
+    "referenceName": "Angel Nova",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Mugler/Angel-Nova-61519.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Raspberry",
+        "Litchi"
+      ],
+      "middleNotes": [
+        "Damask Rose"
+      ],
+      "baseNotes": [
+        "Akigalawood",
+        "Benzoin"
+      ],
+      "accords": [
+        "Fruity",
+        "Rose",
+        "Sweet",
+        "Oud",
+        "Tropical",
+        "Woody",
+        "Warm Spicy",
+        "Fresh",
+        "Amber"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Floral"
+    },
+    "note": "Angel Nova Eau de Parfum de 2020. No confundir con Angel (1992), Angel Nova Eau de Toilette, Angel Stellar ni Angel Blush."
+  },
+  {
+    "productSlug": "carolina-herrera-212-vip-rose",
+    "brand": "Carolina Herrera",
+    "referenceName": "212 VIP Rosé",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Carolina-Herrera/212-VIP-Rose-22857.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Champagne Rosé",
+        "Pink Pepper"
+      ],
+      "middleNotes": [
+        "Peach Blossom",
+        "Rose"
+      ],
+      "baseNotes": [
+        "White Musk",
+        "Woody Notes"
+      ],
+      "accords": [
+        "Floral",
+        "Musky",
+        "Fruity",
+        "Woody",
+        "Powdery",
+        "Rose"
+      ],
+      "mainNotes": [],
+      "family": "Floral"
+    },
+    "note": "212 VIP Rosé de 2014. La linea tiene Rosé Elixir, Rosé Red, Rosé Extra, Rosé Love NY, Rosé Rodeo y Rosé Cab; ninguno se usó."
+  },
+  {
+    "productSlug": "viktor-rolf-bonbon",
+    "brand": "Viktor & Rolf",
+    "referenceName": "Bonbon",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Viktor-Rolf/Bonbon-23317.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Peach",
+        "Mandarin Orange",
+        "Orange"
+      ],
+      "middleNotes": [
+        "Caramel",
+        "Orange Blossom",
+        "Jasmine"
+      ],
+      "baseNotes": [
+        "Amber",
+        "Sandalwood",
+        "Guaiac Wood",
+        "Cedar"
+      ],
+      "accords": [
+        "Caramel",
+        "Citrus",
+        "Sweet",
+        "White Floral",
+        "Fruity",
+        "Woody",
+        "Amber",
+        "Powdery"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Floral"
+    },
+    "note": "Bonbon original de 2014. La linea tiene Couture, Pastel, Spring Summer, Extreme y otros; ninguno se usó."
+  },
+  {
+    "productSlug": "armani-my-way-intense",
+    "brand": "Armani",
+    "referenceName": "My Way Intense",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Giorgio-Armani/My-Way-Intense-68596.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Orange Blossom",
+        "Bitter Orange"
+      ],
+      "middleNotes": [
+        "Indian Tuberose",
+        "Tuberose"
+      ],
+      "baseNotes": [
+        "Madagascar Vanilla",
+        "Sandalwood"
+      ],
+      "accords": [
+        "White Floral",
+        "Tuberose",
+        "Citrus",
+        "Vanilla",
+        "Animalic",
+        "Woody",
+        "Powdery",
+        "Sweet"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Floral"
+    },
+    "note": "My Way Intense de 2021, concentración explícita en el nombre. No confundir con My Way, My Way Parfum, My Way Floral ni My Way Nectar. La referencia se publica bajo Giorgio Armani; el registro NOX conserva su casa 'Armani'."
+  },
+  {
+    "productSlug": "tom-ford-lost-cherry",
+    "brand": "Tom Ford",
+    "referenceName": "Lost Cherry",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Lost-Cherry-51411.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Bitter Almond",
+        "Black Cherry",
+        "Cherry Liqueur"
+      ],
+      "middleNotes": [
+        "Sour Cherry",
+        "Plum",
+        "Turkish Rose",
+        "Jasmine Sambac"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Tonka Bean",
+        "Cinnamon",
+        "Peru Balsam",
+        "Sandalwood",
+        "Benzoin",
+        "Cloves",
+        "Cedar",
+        "Patchouli",
+        "Vetiver"
+      ],
+      "accords": [
+        "Cherry",
+        "Sweet",
+        "Almond",
+        "Nutty",
+        "Fruity",
+        "Vanilla",
+        "Warm Spicy",
+        "Amber",
+        "Woody",
+        "Balsamic"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Floral"
+    },
+    "note": "Lost Cherry de 2018. No confundir con Cherry Smoke ni Electric Cherry."
+  },
+  {
+    "productSlug": "tom-ford-ombre-leather",
+    "brand": "Tom Ford",
+    "referenceName": "Ombre Leather",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Ombre-Leather-2018-50239.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Cardamom"
+      ],
+      "middleNotes": [
+        "Leather",
+        "Jasmine Sambac"
+      ],
+      "baseNotes": [
+        "Amber",
+        "Moss",
+        "Patchouli"
+      ],
+      "accords": [
+        "Leather",
+        "Animalic",
+        "Warm Spicy",
+        "White Floral",
+        "Amber",
+        "Smoky",
+        "Earthy",
+        "Mossy",
+        "Patchouli",
+        "Woody"
+      ],
+      "mainNotes": [],
+      "family": "Leather"
+    },
+    "note": "La fuente es la ficha 'Ombré Leather (2018)', la versión vigente de la linea. No se usó Ombré Leather Parfum (2021) ni Eau d'Ombré Leather (2024). El sufijo (2018) de la referencia distingue esta version de la anterior 'Ombré Leather 16', discontinuada."
+  },
+  {
+    "productSlug": "parfums-de-marly-haltane",
+    "brand": "Parfums de Marly",
+    "referenceName": "Haltane",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Parfums-de-Marly/Haltane-70776.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Lavender",
+        "Clary Sage",
+        "Bergamot"
+      ],
+      "middleNotes": [
+        "Saffron",
+        "Praline"
+      ],
+      "baseNotes": [
+        "Agarwood (Oud)",
+        "Cedar"
+      ],
+      "accords": [
+        "Oud",
+        "Aromatic",
+        "Sweet",
+        "Warm Spicy",
+        "Woody",
+        "Lavender",
+        "Fresh Spicy",
+        "Metallic",
+        "Leather",
+        "Soft Spicy"
+      ],
+      "mainNotes": [],
+      "family": "Woody Spicy"
+    },
+    "note": "Haltane de 2021. Nombre único dentro de la casa, sin flankers."
+  },
+  {
+    "productSlug": "xerjoff-accento-overdose",
+    "brand": "Xerjoff",
+    "referenceName": "Accento Overdose",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Xerjoff/Accento-Overdose-56097.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Fruity Notes",
+        "Green Accord",
+        "Aldehydes"
+      ],
+      "middleNotes": [
+        "Egyptian Jasmine",
+        "Lily-of-the-Valley",
+        "Bulgarian Rose"
+      ],
+      "baseNotes": [
+        "Eucalyptus",
+        "Pine"
+      ],
+      "accords": [
+        "White Floral",
+        "Green",
+        "Fruity",
+        "Fresh",
+        "Woody",
+        "Aldehydic",
+        "Sweet",
+        "Rose",
+        "Aromatic",
+        "Floral"
+      ],
+      "mainNotes": [],
+      "family": "Floral"
+    },
+    "note": "Accento Overdose de 2019. No confundir con Accento (2019) ni con Accento Overdose Pride Edition (2022)."
+  },
+  {
+    "productSlug": "lattafa-asad-elixir",
+    "brand": "Lattafa",
+    "referenceName": "Asad Elixir",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Asad-Elixir-117616.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Pink Pepper",
+        "Saffron",
+        "Grapefruit"
+      ],
+      "middleNotes": [
+        "Tobacco",
+        "Vanilla",
+        "Cedar"
+      ],
+      "baseNotes": [
+        "Light Amber",
+        "Frankincense",
+        "Patchouli",
+        "Cashmeran"
+      ],
+      "accords": [
+        "Amber",
+        "Woody",
+        "Tobacco",
+        "Vanilla",
+        "Sweet",
+        "Warm Spicy",
+        "Powdery",
+        "Soft Spicy",
+        "Patchouli",
+        "Fresh Spicy"
+      ],
+      "mainNotes": [],
+      "family": "Oriental"
+    },
+    "note": "Asad Elixir de 2025. No confundir con Asad ni con Asad Zanzibar Limited Edition."
+  },
+  {
+    "productSlug": "lattafa-amethyst",
+    "brand": "Lattafa",
+    "referenceName": "Bade'e Al Oud Amethyst",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Bade-e-Al-Oud-Amethyst-68214.html",
+      "checkedAt": "2026-09-15"
+    },
+    "note": "Bade'e Al Oud Amethyst de 2021. El catálogo NOX dice sólo 'Amethyst'; el alias autorizado en el lote 3 resuelve la equivalencia. No confundir con Bade'e Al Oud Amethyst Fusion.",
+    "profile": {
+      "topNotes": [
+        "Pink Pepper",
+        "Bergamot"
+      ],
+      "middleNotes": [
+        "Turkish Rose",
+        "Bulgarian Rose",
+        "Jasmine"
+      ],
+      "baseNotes": [
+        "Agarwood (Oud)",
+        "Amber",
+        "Vanilla"
+      ],
+      "accords": [
+        "Rose",
+        "Oud",
+        "Amber",
+        "Soft Spicy",
+        "Floral",
+        "Vanilla",
+        "Citrus",
+        "Fresh Spicy",
+        "White Floral"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Floral"
+    }
+  },
+  {
+    "productSlug": "lattafa-honor-y-gloria",
+    "brand": "Lattafa",
+    "referenceName": "Bade'e Al Oud Honor & Glory",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Bade-e-Al-Oud-Honor-Glory-84302.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Pineapple",
+        "Creme Brulee"
+      ],
+      "middleNotes": [
+        "Cinnamon",
+        "Turmeric",
+        "Black Pepper",
+        "Benzoin"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Sandalwood",
+        "Cashmeran",
+        "Moss"
+      ],
+      "accords": [
+        "Sweet",
+        "Warm Spicy",
+        "Fruity",
+        "Vanilla",
+        "Woody",
+        "Powdery",
+        "Cinnamon",
+        "Tropical"
+      ],
+      "mainNotes": [],
+      "family": "Oriental"
+    },
+    "note": "Bade'e Al Oud Honor & Glory de 2023. El alias del catálogo ya estaba verificado. No confundir con Bade'e Al Oud Oud for Glory, que está en el ledger de revisión."
+  },
+  {
+    "productSlug": "lattafa-yara-tous",
+    "brand": "Lattafa",
+    "referenceName": "Yara Tous",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Yara-Tous-83320.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Mango",
+        "Coconut",
+        "Passionfruit"
+      ],
+      "middleNotes": [
+        "Jasmine",
+        "Orange Blossom",
+        "Heliotrope"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Musk",
+        "Cashmeran"
+      ],
+      "accords": [
+        "Tropical",
+        "Sweet",
+        "White Floral",
+        "Vanilla",
+        "Fruity",
+        "Powdery",
+        "Coconut",
+        "Musky",
+        "Woody"
+      ],
+      "mainNotes": [],
+      "family": "Floral Fruity Gourmand"
+    },
+    "note": "Yara Tous de 2023. No confundir con Yara, Yara Candy, Yara Elixir ni Yara Tous Mist."
+  }
+]

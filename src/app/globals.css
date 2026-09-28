@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #050609;
+  color: #ECEAE5;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #ECEAE5;
+  color: #050609;
+}
+
+/* Scrollbar sobria, no protagonista */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #0A0C11; }
+::-webkit-scrollbar-thumb { background: #232833; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #2E3440; }
+
+/* Foco accesible en toda la app */
+:focus-visible {
+  outline: 2px solid #8FA6CC;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------- utilidades NOX */
+
+.nox-shell { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: 20px; }
+@media (min-width: 768px) { .nox-shell { padding-inline: 40px; } }
+
+.nox-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8D93A0;
+}
+
+.nox-rule { height: 1px; background: linear-gradient(90deg, #2E3440, transparent); }
+
+/* Aparición sutil al hacer scroll */
+.nox-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.nox-reveal[data-visible="true"] { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nox-reveal { opacity: 1 !important; transform: none !important; transition: none; }
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Respiración lenta del halo del hero */
+@keyframes nox-breathe {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.06); }
+}
+.nox-breathe { animation: nox-breathe 9s ease-in-out infinite; }
+
+/* Barra de pedido: entrada desde abajo */
+@keyframes nox-rise { from { transform: translateY(110%); } to { transform: translateY(0); } }
+.nox-rise { animation: nox-rise 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* Ocultar scrollbar en carruseles horizontales */
+.nox-scroll-x { -ms-overflow-style: none; scrollbar-width: none; }
+.nox-scroll-x::-webkit-scrollbar { display: none; }

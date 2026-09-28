@@ -1,0 +1,44 @@
+[
+  {
+    "productSlug": "christian-dior-dior-homme",
+    "brand": "Christian Dior",
+    "referenceName": "Dior Homme Original",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Dior/Dior-Homme-Original-69010.html",
+      "checkedAt": "2026-09-26"
+    },
+    "profile": {
+      "topNotes": ["Tuscan Iris"],
+      "middleNotes": ["Guatemalan Cardamom"],
+      "baseNotes": ["Vetiver"],
+      "accords": ["Iris", "Aromatic", "Earthy", "Warm Spicy", "Woody", "Powdery", "Violet"],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Referencia Dior Homme Original (2021), la reedicion del perfil de iris de 2005. Decision comercial de NOX, impresa ademas en la portada del lote 08. No es Dior Homme 2005, 2011, 2020, Parfum, Intense ni Sport: cada una tiene su propia ficha y su propia piramide."
+  },
+  {
+    "productSlug": "christian-dior-jadore",
+    "brand": "Christian Dior",
+    "referenceName": "J'adore Eau de Toilette",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Dior (sitio oficial)",
+      "status": "verified",
+      "url": "https://www.dior.com/en_int/beauty/products/jadore-eau-de-toilette-Y0615246.html",
+      "checkedAt": "2026-09-26"
+    },
+    "profile": {
+      "topNotes": ["Blood Orange"],
+      "middleNotes": ["Neroli"],
+      "baseNotes": ["Damask Rose"],
+      "accords": ["Floral", "Citrus"],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Referencia J'adore Eau de Toilette en la formulacion que Dior comercializa hoy: naranja sanguina, neroli de Vallauris y esencia de rosa de Damasco, con caracter floral y citrico. Se usa la pagina oficial de Dior y no la ficha de Fragrantica del EDT 2011, cuya piramide (citricos, mandarina, neroli / jazmin, flor de naranjo africana, ylang, nardo, rosa / notas amaderadas, vainilla) corresponde a la formulacion anterior. No se mezclan las dos. No es el Eau de Parfum, ni Parfum d'Eau, ni L'Or."
+  }
+]

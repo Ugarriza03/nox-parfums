@@ -1,0 +1,843 @@
+[
+  {
+    "productSlug": "paco-rabanne-invictus-legend",
+    "brand": "Paco Rabanne",
+    "referenceName": "Invictus Legend",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Rabanne/Invictus-Legend-54323.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Sea Notes",
+        "Sea Salt",
+        "Grapefruit"
+      ],
+      "middleNotes": [
+        "Bay Leaf",
+        "Geranium",
+        "Spices"
+      ],
+      "baseNotes": [
+        "Red Amber",
+        "Guaiac Wood"
+      ],
+      "accords": [
+        "Marine",
+        "Aromatic",
+        "Fresh Spicy",
+        "Salty",
+        "Amber",
+        "Citrus",
+        "Woody",
+        "Warm Spicy",
+        "Camphor",
+        "Aquatic"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Invictus Legend 2019. No se usó ninguna otra variante de la línea Invictus."
+  },
+  {
+    "productSlug": "paco-rabanne-invictus-victory",
+    "brand": "Paco Rabanne",
+    "referenceName": "Invictus Victory",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Rabanne/Invictus-Victory-65177.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Pink Pepper",
+        "Lemon"
+      ],
+      "middleNotes": [
+        "Olibanum",
+        "Lavender"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Tonka Bean",
+        "Amber"
+      ],
+      "accords": [
+        "Vanilla",
+        "Amber",
+        "Sweet",
+        "Aromatic",
+        "Soft Spicy",
+        "Lavender",
+        "Powdery",
+        "Fresh Spicy",
+        "Citrus",
+        "Balsamic"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Invictus Victory 2021, Eau de Parfum. No confundir con Invictus Victory Elixir, que es otro producto del catálogo NOX."
+  },
+  {
+    "productSlug": "paco-rabanne-invictus-platinum",
+    "brand": "Paco Rabanne",
+    "referenceName": "Invictus Platinum",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Rabanne/Invictus-Platinum-72557.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Absinthe",
+        "Grapefruit"
+      ],
+      "middleNotes": [
+        "Mint",
+        "Lavender"
+      ],
+      "baseNotes": [
+        "Cypress",
+        "Patchouli"
+      ],
+      "accords": [
+        "Aromatic",
+        "Fresh Spicy",
+        "Green",
+        "Woody",
+        "Citrus",
+        "Lavender",
+        "Bitter",
+        "Patchouli"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Invictus Platinum 2022, Eau de Parfum."
+  },
+  {
+    "productSlug": "paco-rabanne-one-million-elixir",
+    "brand": "Paco Rabanne",
+    "referenceName": "1 Million Elixir",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Rabanne/1-Million-Elixir-71708.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Apple",
+        "Davana"
+      ],
+      "middleNotes": [
+        "Damask Rose",
+        "Cedar",
+        "Osmanthus"
+      ],
+      "baseNotes": [
+        "Vanilla Absolute",
+        "Tonka Bean",
+        "Patchouli"
+      ],
+      "accords": [
+        "Vanilla",
+        "Fruity",
+        "Rose",
+        "Sweet",
+        "Woody",
+        "Green",
+        "Powdery",
+        "Balsamic",
+        "Aromatic",
+        "Floral"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "1 Million Elixir 2022. La casa publica la linea como '1 Million'; el catalogo NOX la nombra 'One Million'. Alias preexistente en NAME_ALIASES."
+  },
+  {
+    "productSlug": "paco-rabanne-phantom-parfum",
+    "brand": "Paco Rabanne",
+    "referenceName": "Phantom Parfum",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Rabanne/Phantom-Parfum-81927.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Cardamom",
+        "Bergamot",
+        "Rhubarb",
+        "Lemon"
+      ],
+      "middleNotes": [
+        "Lavender",
+        "Cedarwood",
+        "Patchouli",
+        "Geranium"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Tolu Balsam",
+        "Haitian Vetiver"
+      ],
+      "accords": [
+        "Aromatic",
+        "Vanilla",
+        "Warm Spicy",
+        "Citrus",
+        "Lavender",
+        "Woody",
+        "Fresh Spicy",
+        "Powdery",
+        "Sweet",
+        "Green"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Phantom Parfum 2023. No es Phantom EDT ni Phantom Legion."
+  },
+  {
+    "productSlug": "giorgio-armani-armani-code-absolut",
+    "brand": "Giorgio Armani",
+    "referenceName": "Armani Code Absolu",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Giorgio-Armani/Armani-Code-Absolu-53106.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Green Mandarin",
+        "Apple"
+      ],
+      "middleNotes": [
+        "Nutmeg",
+        "Orange Blossom",
+        "Carrot Seeds"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Tonka Bean",
+        "Suede",
+        "Woody Notes"
+      ],
+      "accords": [
+        "Vanilla",
+        "Powdery",
+        "Sweet",
+        "Fresh Spicy",
+        "Citrus",
+        "Leather",
+        "Amber",
+        "Musky",
+        "Woody"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Armani Code Absolu 2019, masculino. La casa tiene ademas Absolu Femme y Absolu Gold, y ninguno se uso."
+  },
+  {
+    "productSlug": "hugo-boss-bottled-elixir",
+    "brand": "Hugo Boss",
+    "referenceName": "Boss Bottled Elixir",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Hugo-Boss/Boss-Bottled-Elixir-84074.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Frankincense",
+        "Cardamom"
+      ],
+      "middleNotes": [
+        "Patchouli",
+        "Vetiver"
+      ],
+      "baseNotes": [
+        "Labdanum",
+        "Cedar"
+      ],
+      "accords": [
+        "Woody",
+        "Amber",
+        "Warm Spicy",
+        "Aromatic",
+        "Patchouli",
+        "Earthy",
+        "Balsamic",
+        "Fresh Spicy"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Boss Bottled Elixir 2023. La linea Boss Bottled tiene muchos flankers y ninguno se uso."
+  },
+  {
+    "productSlug": "hugo-boss-boss-the-scent-elixir",
+    "brand": "Hugo Boss",
+    "referenceName": "Boss The Scent Elixir For Him",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Hugo-Boss/Boss-The-Scent-Elixir-For-Him-88879.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Red Pepper"
+      ],
+      "middleNotes": [
+        "Lavender"
+      ],
+      "baseNotes": [
+        "Sandalwood"
+      ],
+      "accords": [
+        "Warm Spicy",
+        "Lavender",
+        "Woody",
+        "Aromatic",
+        "Powdery",
+        "Fresh",
+        "Fresh Spicy"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Boss The Scent Elixir For Him 2024. Existe tambien For Her y no se uso."
+  },
+  {
+    "productSlug": "jean-paul-gaultier-scandal-le-parfum",
+    "brand": "Jean Paul Gaultier",
+    "referenceName": "Scandal Le Parfum",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Jean-Paul-Gaultier/Scandal-Le-Parfum-74914.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Jasmine"
+      ],
+      "middleNotes": [
+        "Caramel",
+        "Salt"
+      ],
+      "baseNotes": [
+        "Vanilla"
+      ],
+      "accords": [
+        "Caramel",
+        "Vanilla",
+        "White Floral",
+        "Sweet",
+        "Salty",
+        "Powdery",
+        "Balsamic"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Scandal Le Parfum 2022, femenino. No es Scandal EDP ni Scandal Pour Homme Le Parfum."
+  },
+  {
+    "productSlug": "jean-paul-gaultier-le-beau",
+    "brand": "Jean Paul Gaultier",
+    "referenceName": "Le Beau",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Jean-Paul-Gaultier/Le-Beau-55785.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Bergamot"
+      ],
+      "middleNotes": [
+        "Coconut"
+      ],
+      "baseNotes": [
+        "Tonka Bean"
+      ],
+      "accords": [
+        "Coconut",
+        "Vanilla",
+        "Sweet",
+        "Citrus",
+        "Lactonic",
+        "Aromatic",
+        "Amber",
+        "Tropical",
+        "Fresh Spicy"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Le Beau 2019, Eau de Toilette. No es Le Beau Le Parfum ni Le Beau Paradise Garden."
+  },
+  {
+    "productSlug": "jean-paul-gaultier-divine",
+    "brand": "Jean Paul Gaultier",
+    "referenceName": "Gaultier Divine",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Jean-Paul-Gaultier/Gaultier-Divine-83889.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Calypsone",
+        "Bergamot",
+        "Red Berries"
+      ],
+      "middleNotes": [
+        "Lily",
+        "Ylang-Ylang",
+        "Jasmine"
+      ],
+      "baseNotes": [
+        "Meringue",
+        "Musk",
+        "Patchouli"
+      ],
+      "accords": [
+        "White Floral",
+        "Sweet",
+        "Aquatic",
+        "Marine",
+        "Aromatic",
+        "Powdery",
+        "Yellow Floral",
+        "Salty",
+        "Musky",
+        "Woody"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Gaultier Divine 2023, Eau de Parfum. La referencia lleva el prefijo de linea 'Gaultier'."
+  },
+  {
+    "productSlug": "louis-vuitton-ombre-nomade",
+    "brand": "Louis Vuitton",
+    "referenceName": "Ombre Nomade",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Louis-Vuitton/Ombre-Nomade-49755.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [],
+      "middleNotes": [],
+      "baseNotes": [],
+      "accords": [
+        "Amber",
+        "Warm Spicy",
+        "Smoky",
+        "Oud",
+        "Rose",
+        "Leather",
+        "Woody",
+        "Fruity",
+        "Balsamic",
+        "Sweet"
+      ],
+      "mainNotes": [
+        "Agarwood (Oud)",
+        "Rose",
+        "Incense",
+        "Raspberry",
+        "Saffron",
+        "Amberwood",
+        "Benzoin",
+        "Birch",
+        "Geranium"
+      ],
+      "family": null
+    },
+    "note": "Ombre Nomade 2018. La ficha publica las notas en una lista unica, sin separar por etapas: se cargan como mainNotes."
+  },
+  {
+    "productSlug": "louis-vuitton-nuit-de-feu",
+    "brand": "Louis Vuitton",
+    "referenceName": "Nuit de Feu",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Louis-Vuitton/Nuit-de-Feu-60031.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [],
+      "middleNotes": [],
+      "baseNotes": [],
+      "accords": [
+        "Smoky",
+        "Oud",
+        "Amber",
+        "Leather",
+        "Balsamic",
+        "Warm Spicy",
+        "Animalic",
+        "Fresh Spicy"
+      ],
+      "mainNotes": [
+        "Incense",
+        "Agarwood (Oud)",
+        "Leather",
+        "Olibanum",
+        "Musk"
+      ],
+      "family": null
+    },
+    "note": "Nuit de Feu 2020. La ficha publica las notas en una lista unica, sin separar por etapas: se cargan como mainNotes."
+  },
+  {
+    "productSlug": "tom-ford-soleil-blanc",
+    "brand": "Tom Ford",
+    "referenceName": "Soleil Blanc",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Soleil-Blanc-34893.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Pistachio",
+        "Bergamot",
+        "Cardamom",
+        "Pink Pepper"
+      ],
+      "middleNotes": [
+        "Tuberose",
+        "Ylang-Ylang",
+        "Jasmine"
+      ],
+      "baseNotes": [
+        "Coconut",
+        "Amber",
+        "Tonka Bean",
+        "Benzoin"
+      ],
+      "accords": [
+        "White Floral",
+        "Coconut",
+        "Sweet",
+        "Tuberose",
+        "Amber",
+        "Yellow Floral",
+        "Vanilla",
+        "Woody",
+        "Warm Spicy",
+        "Citrus"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Soleil Blanc 2016, Eau de Parfum. No es Soleil Neige ni Soleil Brulant."
+  },
+  {
+    "productSlug": "tom-ford-neroli-portofino",
+    "brand": "Tom Ford",
+    "referenceName": "Neroli Portofino",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Neroli-Portofino-12192.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Bergamot",
+        "Mandarin Orange",
+        "Lemon",
+        "Bitter Orange",
+        "Lavender",
+        "Rosemary",
+        "Myrtle"
+      ],
+      "middleNotes": [
+        "African Orange Flower",
+        "Neroli",
+        "Jasmine",
+        "Pitosporum"
+      ],
+      "baseNotes": [
+        "Amber",
+        "Ambrette (Musk Mallow)",
+        "Angelica"
+      ],
+      "accords": [
+        "Citrus",
+        "White Floral",
+        "Aromatic",
+        "Fresh Spicy",
+        "Floral"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Neroli Portofino 2011, Eau de Parfum. No se mezclo con Neroli Portofino Acqua, Forte ni Parfum."
+  },
+  {
+    "productSlug": "lattafa-teriaq",
+    "brand": "Lattafa",
+    "referenceName": "Teriaq",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Teriaq-89850.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Caramel",
+        "Bitter Almond",
+        "Apricot",
+        "Pink Pepper"
+      ],
+      "middleNotes": [
+        "Honey",
+        "Rhubarb",
+        "White Flowers",
+        "Rose"
+      ],
+      "baseNotes": [
+        "Leather",
+        "Vanilla",
+        "Musk",
+        "Labdanum",
+        "Vetiver"
+      ],
+      "accords": [
+        "Sweet",
+        "Caramel",
+        "Fruity",
+        "Honey",
+        "Leather",
+        "Vanilla",
+        "Almond",
+        "Animalic",
+        "Musky",
+        "Powdery"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Teriaq 2024. No es Teriaq Intense ni Teriaq Lattafa Mist."
+  },
+  {
+    "productSlug": "lattafa-nebras",
+    "brand": "Lattafa",
+    "referenceName": "Nebras",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Nebras-78560.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Red Berries",
+        "Mandarin Orange"
+      ],
+      "middleNotes": [
+        "Vanilla",
+        "Cacao",
+        "Rose"
+      ],
+      "baseNotes": [
+        "Sugar",
+        "Tonka Bean",
+        "Amber",
+        "Musk"
+      ],
+      "accords": [
+        "Vanilla",
+        "Sweet",
+        "Cacao",
+        "Warm Spicy",
+        "Amber",
+        "Fruity",
+        "Powdery"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Nebras 2022. No es Nebras Elixir."
+  },
+  {
+    "productSlug": "lattafa-eclaire",
+    "brand": "Lattafa",
+    "referenceName": "Eclaire",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Eclaire-93628.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Caramel",
+        "Milk",
+        "Sugar"
+      ],
+      "middleNotes": [
+        "Honey",
+        "White Flowers"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Praline",
+        "Musk"
+      ],
+      "accords": [
+        "Sweet",
+        "Vanilla",
+        "Caramel",
+        "Lactonic",
+        "Honey",
+        "Powdery",
+        "Musky",
+        "Balsamic"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Eclaire 2024, femenino. No es Eclaire Banoffi, Eclaire Pistache ni Eclaire Mist."
+  },
+  {
+    "productSlug": "lattafa-asad-bourbon",
+    "brand": "Lattafa",
+    "referenceName": "Asad Bourbon",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Asad-Bourbon-101124.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Lavender",
+        "Mirabelle",
+        "Pink Pepper"
+      ],
+      "middleNotes": [
+        "Cacao",
+        "Nutmeg",
+        "Davana"
+      ],
+      "baseNotes": [
+        "Bourbon Vanilla",
+        "Amber",
+        "Vetiver"
+      ],
+      "accords": [
+        "Vanilla",
+        "Cacao",
+        "Sweet",
+        "Lavender",
+        "Fresh Spicy",
+        "Warm Spicy",
+        "Amber",
+        "Aromatic",
+        "Powdery",
+        "Soft Spicy"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Asad Bourbon 2025. No es Asad, Asad Elixir ni Asad Zanzibar."
+  },
+  {
+    "productSlug": "kayali-yum-pistachio",
+    "brand": "Kayali",
+    "referenceName": "Yum Pistachio Gelato | 33",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Kayali-Fragrances/Yum-Pistachio-Gelato-33-79846.html",
+      "checkedAt": "2026-09-15"
+    },
+    "profile": {
+      "topNotes": [
+        "Pistachio",
+        "Ice Cream",
+        "Bergamot",
+        "Hazelnut",
+        "Rum",
+        "Cardamom"
+      ],
+      "middleNotes": [
+        "Lily-of-the-Valley",
+        "Pear",
+        "Jasmine",
+        "Peony",
+        "Geranium",
+        "White Peach",
+        "Raspberry"
+      ],
+      "baseNotes": [
+        "Whipped Cream",
+        "Marshmallow",
+        "Cotton Candy",
+        "Tonka Bean",
+        "Loukhoum",
+        "Sandalwood",
+        "Cedar",
+        "Cacao"
+      ],
+      "accords": [
+        "Sweet",
+        "Woody",
+        "Vanilla",
+        "Nutty",
+        "Powdery",
+        "Warm Spicy"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Yum Pistachio Gelato | 33, 2023, Eau de Parfum Intense. La casa figura en la fuente como 'Kayali Fragrances'."
+  }
+]

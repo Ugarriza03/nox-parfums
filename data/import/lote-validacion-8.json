@@ -1,0 +1,108 @@
+[
+  {
+    "productSlug": "afnan-9pm",
+    "brand": "Afnan",
+    "referenceName": "9 PM",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Afnan/9pm-65414.html",
+      "checkedAt": "2026-09-13"
+    },
+    "note": "URL ya registrada en src/data/olfactory.sources.ts de una consulta anterior. Caso 1: la casa es Afnan, no Armaf. Prueba además la normalización 9PM / 9 PM."
+  },
+  {
+    "productSlug": "armaf-mandarin-sky",
+    "brand": "Armaf",
+    "referenceName": "Odyssey Mandarin Sky",
+    "source": {
+      "name": "Fragrantica",
+      "status": "candidate",
+      "url": null,
+      "checkedAt": null,
+      "candidateUrl": "https://www.fragrantica.com/perfume/Armaf/Odyssey-Mandarin-Sky.html"
+    },
+    "note": "Caso 2: prueba el alias Mandarin Sky → Odyssey Mandarin Sky. La casa sigue siendo Armaf. URL declarada como candidata: se conoce la línea comercial, no la ficha comprobada."
+  },
+  {
+    "productSlug": "carolina-herrera-212-vip-men",
+    "brand": "Carolina Herrera",
+    "referenceName": "212 VIP Men",
+    "source": {
+      "name": "Fragrantica",
+      "status": "candidate",
+      "url": null,
+      "checkedAt": null,
+      "candidateUrl": "https://www.fragrantica.com/perfume/Carolina-Herrera/212-VIP-Men.html"
+    },
+    "note": "Caso 3: tiene que resolver la variante masculina y no 212 VIP, 212 VIP Black ni 212 VIP Rosé. URL declarada como candidata: todavía no se comprobó la ficha."
+  },
+  {
+    "productSlug": "carolina-herrera-212-vip",
+    "brand": "Carolina Herrera",
+    "referenceName": "212 VIP",
+    "source": {
+      "name": "Fragrantica",
+      "status": "candidate",
+      "url": null,
+      "checkedAt": null,
+      "candidateUrl": "https://www.fragrantica.com/perfume/Carolina-Herrera/212-VIP.html"
+    },
+    "note": "Caso 4: el femenino. Tiene que quedar separado del masculino y no compartir perfil. URL declarada como candidata: todavía no se comprobó la ficha."
+  },
+  {
+    "productSlug": "tom-ford-tobacco-vanilla",
+    "brand": "Tom Ford",
+    "referenceName": "Tobacco Vanille",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Tobacco-Vanille-1825.html",
+      "checkedAt": "2026-09-13"
+    },
+    "note": "URL ya registrada de una consulta anterior. Caso 5: alias Tobacco Vanilla → Tobacco Vanille. El nombre público del catálogo NO se toca: el alias vive sólo en el pipeline."
+  },
+  {
+    "productSlug": "montale-arabians-tonka",
+    "brand": "Montale",
+    "referenceName": "Arabians Tonka",
+    "source": {
+      "name": "Fragrantica",
+      "status": "candidate",
+      "url": null,
+      "checkedAt": null,
+      "candidateUrl": "https://www.fragrantica.com/perfume/Montale/Arabians-Tonka.html"
+    },
+    "note": "Caso 6: identificación de la casa Montale. El importer no toca el universo comercial: la clasificación la resuelve la capa de catálogo, donde HOUSE_UNIVERSE (Montale = nicho) tiene prioridad sobre el origin del bloque raw. URL declarada como candidata: todavía no se comprobó la ficha."
+  },
+  {
+    "productSlug": "louis-vuitton-afternoon-sweet",
+    "brand": "Louis Vuitton",
+    "referenceName": "Afternoon Sweet",
+    "source": {
+      "name": "Fragrantica",
+      "status": "candidate",
+      "url": null,
+      "checkedAt": null,
+      "candidateUrl": "https://www.fragrantica.com/perfume/Louis-Vuitton/Afternoon-Sweet.html"
+    },
+    "needsReview": true,
+    "reviewReason": "No hay una referencia inequívoca llamada \"Afternoon Sweet\" en el catálogo de la casa. Existe una fragancia de nombre muy parecido, y asignarla sería adivinar. Confirmá cuál es la que vendés antes de cargar notas.",
+    "note": "Caso 7: el sistema tiene que DETENERSE en vez de buscar algo parecido."
+  },
+  {
+    "productSlug": "versace-eros",
+    "brand": "Versace",
+    "referenceName": "Eros",
+    "source": {
+      "name": "Fragrantica",
+      "status": "candidate",
+      "url": null,
+      "checkedAt": null,
+      "candidateUrl": "https://www.fragrantica.com/perfume/Versace/Eros.html"
+    },
+    "needsReview": true,
+    "reviewReason": "En el catálogo NOX, Eros figura entre los femeninos, y la línea Eros tiene versión masculina y versión femenina. No se puede determinar cuál corresponde sin confirmarlo, así que no se carga ninguna nota.",
+    "note": "Caso 8: variante de género sin determinar. Coincide con la nota que ya existe en PRODUCT_REVIEW_NOTES['Versace — Eros']."
+  }
+]

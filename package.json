@@ -1,0 +1,56 @@
+{
+  "name": "nox-parfums",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "build": "next build",
+    "datos": "tsx scripts/reporte-datos.ts",
+    "dev": "next dev",
+    "lint": "next lint",
+    "olfativo": "tsx scripts/autocompletar-olfativo.ts",
+    "preview": "node scripts/build-preview.mjs",
+    "qa": "npm run qa:catalogo && npm run qa:performance && npm run qa:mayoristas && npm run qa:match && npm run qa:olfativo && npm run qa:import && npm run preview && npm run qa:lote && npm run qa:lote10 && npm run qa:lote20 && npm run qa:redaccion && npm run qa:pedido && npm run qa:asesor && npm run test:e2e",
+    "qa:asesor": "node scripts/qa-asesor.mjs",
+    "qa:catalogo": "tsx scripts/qa-catalogo.ts",
+    "qa:import": "node scripts/qa-import.mjs",
+    "qa:lote": "node scripts/qa-lote.mjs",
+    "qa:lote10": "node scripts/qa-lote-10.mjs",
+    "qa:lote20": "node scripts/qa-lote-20.mjs",
+    "qa:match": "node scripts/qa-match.mjs",
+    "qa:mayoristas": "tsx scripts/qa-mayoristas.ts",
+    "qa:olfativo": "node scripts/qa-olfativo.mjs",
+    "qa:pedido": "node scripts/qa-pedido.mjs",
+    "qa:performance": "tsx scripts/qa-performance.ts",
+    "qa:redaccion": "node scripts/qa-redaccion.mjs",
+    "qa:sync": "node scripts/qa-sync.mjs",
+    "redaccion": "tsx scripts/redactar-olfativo.ts",
+    "revisar:olfativo": "tsx scripts/revisar-olfativo.ts",
+    "start": "next start",
+    "test:e2e": "node scripts/test-preview.mjs",
+    "test:layout": "node scripts/verificar-layout.mjs",
+    "validar": "tsx scripts/validar-catalogo.ts"
+  },
+  "overrides": {
+    "postcss": "^8.5.12"
+  },
+  "dependencies": {
+    "next": "14.2.35",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.10",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "autoprefixer": "10.4.19",
+    "postcss": "^8.5.12",
+    "tailwindcss": "3.4.10",
+    "typescript": "5.5.4",
+    "tsx": "4.19.1",
+    "esbuild": "0.23.1",
+    "playwright": "1.55.1"
+  }
+}

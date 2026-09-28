@@ -1,0 +1,155 @@
+[
+  {
+    "productSlug": "dolce-gabbana-the-one-masculino",
+    "brand": "Dolce & Gabbana",
+    "referenceName": "The One for Men",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Dolce-Gabbana/The-One-for-Men-2056.html",
+      "checkedAt": "2026-09-16"
+    },
+    "profile": {
+      "topNotes": [
+        "Grapefruit",
+        "Coriander",
+        "Basil"
+      ],
+      "middleNotes": [
+        "Ginger",
+        "Cardamom",
+        "Orange Blossom"
+      ],
+      "baseNotes": [
+        "Amber",
+        "Tobacco",
+        "Cedar"
+      ],
+      "accords": [
+        "Amber",
+        "Fresh Spicy",
+        "Tobacco",
+        "Aromatic",
+        "Citrus",
+        "Sweet",
+        "Warm Spicy",
+        "Woody",
+        "White Floral",
+        "Fresh"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Referencia The One for Men (2008). Identidad cerrada en el lote 06: la URL de referencia estaba verificada y fechada; el bloqueo previo era la colisión de alias con el par de género, no una duda de identidad."
+  },
+  {
+    "productSlug": "issey-miyake-leau-dissey-masculino",
+    "brand": "Issey Miyake",
+    "referenceName": "L'Eau d'Issey Pour Homme",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Issey-Miyake/L-Eau-d-Issey-Pour-Homme-721.html",
+      "checkedAt": "2026-09-16"
+    },
+    "profile": {
+      "topNotes": [
+        "Yuzu",
+        "Lemon",
+        "Bergamot",
+        "Lemon Verbena",
+        "Mandarin Orange",
+        "Cypress",
+        "Calone",
+        "Coriander",
+        "Sage",
+        "Tarragon"
+      ],
+      "middleNotes": [
+        "Blue Lotus",
+        "Lily-of-the-Valley",
+        "Nutmeg",
+        "Bourbon Geranium",
+        "Saffron",
+        "Ceylon Cinnamon",
+        "Mignonette"
+      ],
+      "baseNotes": [
+        "Tahitian Vetiver",
+        "Musk",
+        "Cedar",
+        "Sandalwood",
+        "Amber",
+        "Tobacco"
+      ],
+      "accords": [
+        "Citrus",
+        "Aromatic",
+        "Fresh Spicy",
+        "Woody",
+        "Floral",
+        "Green"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Referencia L'Eau d'Issey Pour Homme (1994). Identidad cerrada en el lote 06: la URL de referencia estaba verificada y fechada; el bloqueo previo era la colisión de alias con el par de género, no una duda de identidad."
+  },
+  {
+    "productSlug": "giorgio-armani-acqua-di-gio-femenino",
+    "brand": "Giorgio Armani",
+    "referenceName": "Acqua di Gio",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Giorgio-Armani/Acqua-di-Gio-411.html",
+      "checkedAt": "2026-09-26"
+    },
+    "profile": {
+      "topNotes": [
+        "Peony",
+        "Musk Vodka",
+        "Pineapple",
+        "Lemon",
+        "Peach",
+        "Banana Leaf",
+        "Violet"
+      ],
+      "middleNotes": [
+        "Lily-of-the-Valley",
+        "Hyacinth",
+        "Lily",
+        "Jasmine",
+        "Freesia",
+        "Calone",
+        "Ylang-Ylang",
+        "Rose"
+      ],
+      "baseNotes": [
+        "Musk",
+        "Cedar",
+        "Sandalwood",
+        "Amber",
+        "Styrax"
+      ],
+      "accords": [
+        "Floral",
+        "Fresh",
+        "White Floral",
+        "Green",
+        "Rose",
+        "Fruity",
+        "Sweet",
+        "Vodka",
+        "Woody",
+        "Powdery"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "Referencia Acqua di Gio pour Femme (1995), ficha 411. Es una fragancia distinta de Acqua di Gioia (2010, ficha 8442), que el catalogo lista aparte en el mismo grupo femenino de la casa."
+  }
+]

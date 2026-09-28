@@ -1,0 +1,23 @@
+node_modules
+.next
+out
+*.tsbuildinfo
+next-env.d.ts
+
+# caché de páginas de referencia del autocompletado
+.cache/
+# data-review/ SÍ se versiona. El comentario anterior decía "cola generada",
+# pero de sus tres archivos ninguno es un derivado reconstruible:
+#   baseline-copy-protegido.json  fixture de 233 huellas sha1 del copy aprobado;
+#                                 lo mantiene una persona, lo lee qa:redaccion.
+#   revision.json                 ledger acumulativo entre lotes; lo lee qa:lote20.
+#   pending-identity.json         registro histórico de identidades; nadie lo lee.
+# Sin los dos primeros, qa:lote20 y qa:redaccion mueren con ENOENT en un clon.
+
+# artefactos del preview standalone y del chequeo de tipos: se regeneran
+dist-preview/
+.typecheck/
+# Los derivados de 640 px de public/products/covers/preview/ SÍ se versionan.
+# Son los que mantienen el HTML autónomo en 20 MB: sin ellos build-preview.mjs
+# cae en los originales de 1122 px, el archivo pasa a 81 MB y el QA de
+# navegador se vuelve mucho más lento e inestable. Un clon limpio los necesita.

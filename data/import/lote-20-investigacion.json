@@ -1,0 +1,763 @@
+[
+  {
+    "productSlug": "ariana-grande-sweet-like-candy",
+    "brand": "Ariana Grande",
+    "referenceName": "Sweet Like Candy",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Ariana-Grande/Sweet-Like-Candy-39970.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Blackberry",
+        "Pear",
+        "Bergamot"
+      ],
+      "middleNotes": [
+        "Whipped Cream",
+        "Marshmallow",
+        "Black Currant",
+        "Jasmine",
+        "Honeysuckle",
+        "Frangipani"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Cashmere Wood"
+      ],
+      "accords": [
+        "Sweet",
+        "Fruity",
+        "Vanilla",
+        "Powdery",
+        "Lactonic"
+      ],
+      "mainNotes": [],
+      "family": "Floral Fruity Gourmand"
+    },
+    "note": "Perfil estructurado tomado de una sola fuente. No mezclar con otras pirámides ni importar performance."
+  },
+  {
+    "productSlug": "armani-si",
+    "brand": "Armani",
+    "referenceName": "Si",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Giorgio-Armani/Si-18453.html",
+      "checkedAt": "2026-09-13"
+    },
+    "needsReview": true,
+    "reviewReason": "La ficha clásica de Fragrantica y la composición publicada actualmente por Giorgio Armani para Sì Eau de Parfum difieren de forma material. No elegir silenciosamente una formulación/version.",
+    "note": "No cargar notas hasta resolver qué versión/formulación corresponde al producto NOX."
+  },
+  {
+    "productSlug": "britney-spears-fantasy",
+    "brand": "Britney Spears",
+    "referenceName": "Fantasy",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Britney-Spears/Fantasy-600.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Kiwi",
+        "Red Litchi",
+        "Quince"
+      ],
+      "middleNotes": [
+        "White Chocolate",
+        "Cupcake",
+        "Orchid",
+        "Jasmine"
+      ],
+      "baseNotes": [
+        "Musk",
+        "Orris Root",
+        "Woodsy Notes"
+      ],
+      "accords": [
+        "Sweet",
+        "Fruity",
+        "Tropical",
+        "Fresh",
+        "Chocolate"
+      ],
+      "mainNotes": [],
+      "family": "Floral Fruity Gourmand"
+    },
+    "note": "No importar performance."
+  },
+  {
+    "productSlug": "carolina-herrera-212-vip",
+    "brand": "Carolina Herrera",
+    "referenceName": "212 VIP",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Carolina-Herrera/212-VIP-10126.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Rum",
+        "Passionfruit"
+      ],
+      "middleNotes": [
+        "Gardenia",
+        "Musk"
+      ],
+      "baseNotes": [
+        "Vanille",
+        "Tonka Bean"
+      ],
+      "accords": [
+        "Vanilla",
+        "Sweet",
+        "Rum",
+        "Tropical",
+        "Fruity",
+        "White Floral",
+        "Powdery",
+        "Musky",
+        "Woody",
+        "Fresh"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Vanilla"
+    },
+    "note": "Separar estrictamente de 212 VIP Men."
+  },
+  {
+    "productSlug": "carolina-herrera-good-girl-blush",
+    "brand": "Carolina Herrera",
+    "referenceName": "Good Girl Blush",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Carolina-Herrera/Good-Girl-Blush-78576.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Bergamot",
+        "Bitter Almond"
+      ],
+      "middleNotes": [
+        "Peony",
+        "Ylang-Ylang"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Coumarin"
+      ],
+      "accords": [
+        "Floral",
+        "Vanilla",
+        "Fresh",
+        "Citrus",
+        "Sweet",
+        "Yellow Floral",
+        "Rose",
+        "Almond",
+        "Woody",
+        "Aromatic"
+      ],
+      "mainNotes": [],
+      "family": "Chypre Floral"
+    },
+    "note": "Mantener este perfil como unidad de fuente; no mezclar con notas de otras fichas oficiales/regionales."
+  },
+  {
+    "productSlug": "christian-dior-jadore",
+    "brand": "Christian Dior",
+    "referenceName": "J'adore",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Dior/J-adore-210.html",
+      "checkedAt": "2026-09-13"
+    },
+    "needsReview": true,
+    "reviewReason": "El catálogo NOX dice únicamente 'J'adore' y no especifica concentración/versión. Además, la composición publicada actualmente por Dior para J'adore Eau de Parfum difiere de la pirámide clásica de Fragrantica.",
+    "note": "No cargar notas hasta confirmar la variante exacta."
+  },
+  {
+    "productSlug": "dkny-be-delicious",
+    "brand": "DKNY",
+    "referenceName": "DKNY Be Delicious",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Donna-Karan/DKNY-Be-Delicious-498.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Cucumber",
+        "Grapefruit",
+        "Magnolia"
+      ],
+      "middleNotes": [
+        "Green Apple",
+        "Lily-of-the-Valley",
+        "Tuberose",
+        "Violet",
+        "Rose"
+      ],
+      "baseNotes": [
+        "Woodsy Notes",
+        "Sandalwood",
+        "Amber"
+      ],
+      "accords": [
+        "Green",
+        "Fruity",
+        "Aquatic",
+        "Ozonic",
+        "Fresh",
+        "Citrus",
+        "White Floral",
+        "Floral",
+        "Fresh Spicy",
+        "Woody"
+      ],
+      "mainNotes": [],
+      "family": "Floral Fruity"
+    },
+    "note": "La URL de Fragrantica usa la casa Donna-Karan; DKNY es el naming del catálogo. Requiere mapping de brand slug, no cambio de nombre público."
+  },
+  {
+    "productSlug": "givenchy-linterdit",
+    "brand": "Givenchy",
+    "referenceName": "L'Interdit",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Givenchy/L-Interdit-2018--51488.html",
+      "checkedAt": "2026-09-13"
+    },
+    "needsReview": true,
+    "reviewReason": "El catálogo NOX dice sólo L'Interdit. Givenchy comercializa actualmente EDP y EDT con composiciones distintas; no corresponde elegir concentración silenciosamente.",
+    "note": "No cargar notas hasta confirmar EDP/EDT/variante."
+  },
+  {
+    "productSlug": "azzaro-wanted-by-night",
+    "brand": "Azzaro",
+    "referenceName": "Wanted by Night",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Azzaro/Wanted-by-Night-49144.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Cinnamon",
+        "Mandarin Orange",
+        "Lavender",
+        "Lemon"
+      ],
+      "middleNotes": [
+        "Fruity Notes",
+        "Incense",
+        "Cumin",
+        "Red Cedar"
+      ],
+      "baseNotes": [
+        "Tobacco",
+        "Vanilla",
+        "Cedar",
+        "Leather",
+        "Benzoin",
+        "Iso E Super",
+        "Cypress",
+        "Patchouli"
+      ],
+      "accords": [
+        "Warm Spicy",
+        "Cinnamon",
+        "Fruity",
+        "Woody",
+        "Sweet",
+        "Citrus",
+        "Amber",
+        "Tobacco",
+        "Vanilla"
+      ],
+      "mainNotes": [],
+      "family": "Woody Spicy"
+    },
+    "note": "No confundir con Wanted ni The Most Wanted."
+  },
+  {
+    "productSlug": "bulgari-man-in-black",
+    "brand": "Bulgari",
+    "referenceName": "Man In Black",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Bvlgari/Bvlgari-Man-In-Black-26358.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Spices",
+        "Rum",
+        "Tobacco"
+      ],
+      "middleNotes": [
+        "Leather",
+        "Iris",
+        "Tuberose"
+      ],
+      "baseNotes": [
+        "Tonka Bean",
+        "Guaiac Wood",
+        "Benzoin"
+      ],
+      "accords": [
+        "Warm Spicy",
+        "Woody",
+        "Leather",
+        "Rum",
+        "Amber",
+        "Tobacco",
+        "Sweet",
+        "Vanilla",
+        "Animalic",
+        "Iris"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Floral"
+    },
+    "note": "La URL usa Bvlgari; el catálogo NOX usa Bulgari. Mantener naming público."
+  },
+  {
+    "productSlug": "carolina-herrera-212-vip-men",
+    "brand": "Carolina Herrera",
+    "referenceName": "212 VIP Men",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Carolina-Herrera/212-VIP-Men-12865.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Passionfruit",
+        "Lime",
+        "Pepper",
+        "Ginger",
+        "Finger Lime"
+      ],
+      "middleNotes": [
+        "Vodka",
+        "Gin",
+        "Mint",
+        "Spices"
+      ],
+      "baseNotes": [
+        "Amber",
+        "Leather",
+        "Woodsy Notes"
+      ],
+      "accords": [
+        "Fresh Spicy",
+        "Aromatic",
+        "Vodka",
+        "Woody",
+        "Green",
+        "Tropical",
+        "Citrus",
+        "Fruity",
+        "Warm Spicy",
+        "Fresh"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Woody"
+    },
+    "note": "Separar estrictamente de 212 VIP femenino."
+  },
+  {
+    "productSlug": "giorgio-armani-stronger-with-you-intensely",
+    "brand": "Giorgio Armani",
+    "referenceName": "Emporio Armani Stronger With You Intensely",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Giorgio-Armani/Emporio-Armani-Stronger-With-You-Intensely-52802.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Pink Pepper",
+        "Juniper",
+        "Violet"
+      ],
+      "middleNotes": [
+        "Toffee",
+        "Cinnamon",
+        "Lavender",
+        "Sage"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Amber",
+        "Tonka Bean",
+        "Suede"
+      ],
+      "accords": [
+        "Vanilla",
+        "Sweet",
+        "Amber",
+        "Cinnamon",
+        "Warm Spicy",
+        "Powdery",
+        "Aromatic",
+        "Soft Spicy",
+        "Caramel"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Fougere"
+    },
+    "note": "Usar el alias existente; no confundir con Stronger With You base u otros flankers."
+  },
+  {
+    "productSlug": "givenchy-gentleman-reserve-privee",
+    "brand": "Givenchy",
+    "referenceName": "Gentleman Eau de Parfum Reserve Privée",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Givenchy/Gentleman-Eau-de-Parfum-Reserve-Privee-71272.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Bergamot"
+      ],
+      "middleNotes": [
+        "Iris",
+        "Chestnut"
+      ],
+      "baseNotes": [
+        "Whiskey",
+        "Woodsy Notes",
+        "Amber"
+      ],
+      "accords": [
+        "Woody",
+        "Iris",
+        "Whiskey",
+        "Powdery",
+        "Amber",
+        "Violet",
+        "Warm Spicy",
+        "Earthy",
+        "Nutty"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Vanilla"
+    },
+    "note": "Requiere alias interno brand-scoped desde 'Gentleman Reserve Privée'. No cambiar naming público."
+  },
+  {
+    "productSlug": "louis-vuitton-imagination",
+    "brand": "Louis Vuitton",
+    "referenceName": "Imagination",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Louis-Vuitton/Imagination-67370.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Citron",
+        "Calabrian Bergamot",
+        "Sicilian Orange"
+      ],
+      "middleNotes": [
+        "Tunisian Neroli",
+        "Nigerian Ginger",
+        "Ceylon Cinnamon"
+      ],
+      "baseNotes": [
+        "Chinese Black Tea",
+        "Ambroxan",
+        "Guaiac Wood",
+        "Olibanum"
+      ],
+      "accords": [
+        "Citrus",
+        "Fresh Spicy",
+        "Green",
+        "Fresh",
+        "Aromatic"
+      ],
+      "mainNotes": [],
+      "family": "Citrus Aromatic"
+    },
+    "note": "No importar performance."
+  },
+  {
+    "productSlug": "tom-ford-noir-extreme",
+    "brand": "Tom Ford",
+    "referenceName": "Noir Extreme",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Noir-Extreme-29675.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Cardamom",
+        "Nutmeg",
+        "Saffron",
+        "Mandarin Orange",
+        "Neroli"
+      ],
+      "middleNotes": [
+        "Kulfi",
+        "Rose",
+        "Mastic or Lentisque",
+        "Orange Blossom",
+        "Jasmine"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Amber",
+        "Woody Notes",
+        "Sandalwood"
+      ],
+      "accords": [
+        "Warm Spicy",
+        "Sweet",
+        "Vanilla",
+        "Woody",
+        "Powdery",
+        "Amber",
+        "Fresh Spicy",
+        "Aromatic",
+        "White Floral",
+        "Balsamic"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Woody"
+    },
+    "note": "No confundir con Noir Extreme Parfum."
+  },
+  {
+    "productSlug": "versace-eros-flame",
+    "brand": "Versace",
+    "referenceName": "Eros Flame",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Versace/Eros-Flame-52180.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Mandarin Orange",
+        "Madagascar Pepper",
+        "Lemon",
+        "Chinotto",
+        "Rosemary"
+      ],
+      "middleNotes": [
+        "Geranium",
+        "Rose",
+        "Pepperwood™"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Tonka Bean",
+        "Sandalwood",
+        "Texas Cedar",
+        "Patchouli",
+        "Oakmoss"
+      ],
+      "accords": [
+        "Citrus",
+        "Fresh Spicy",
+        "Vanilla",
+        "Aromatic",
+        "Woody",
+        "Warm Spicy",
+        "Sweet",
+        "Powdery"
+      ],
+      "mainNotes": [],
+      "family": "Woody Spicy"
+    },
+    "note": "No confundir con Eros base ni Eros Parfum."
+  },
+  {
+    "productSlug": "lattafa-yara-candy",
+    "brand": "Lattafa",
+    "referenceName": "Yara Candy",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Yara-Candy-95752.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Black Currant",
+        "Green Tangerine"
+      ],
+      "middleNotes": [
+        "Strawberry Fizz Candy",
+        "Gardenia"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Musk",
+        "Amber",
+        "Sandalwood"
+      ],
+      "accords": [
+        "Vanilla",
+        "Fruity",
+        "Powdery",
+        "Citrus",
+        "White Floral",
+        "Aromatic",
+        "Woody",
+        "Soft Spicy",
+        "Musky",
+        "Animalic"
+      ],
+      "mainNotes": [],
+      "family": "Floral Fruity Gourmand"
+    },
+    "note": "Separar de Yara, Yara Elixir y Yara Tous."
+  },
+  {
+    "productSlug": "lattafa-khamrah-qahwa",
+    "brand": "Lattafa",
+    "referenceName": "Khamrah Qahwa",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Khamrah-Qahwa-88175.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Cinnamon",
+        "Cardamom",
+        "Ginger"
+      ],
+      "middleNotes": [
+        "Praline",
+        "Candied Fruits",
+        "White Flowers"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Coffee",
+        "Tonka Bean",
+        "Benzoin",
+        "Musk"
+      ],
+      "accords": [
+        "Warm Spicy",
+        "Sweet",
+        "Vanilla",
+        "Cinnamon",
+        "Coffee",
+        "Amber",
+        "Powdery"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Vanilla"
+    },
+    "note": "No confundir con Khamrah base."
+  },
+  {
+    "productSlug": "lattafa-oud-for-glory",
+    "brand": "Lattafa",
+    "referenceName": "Bade'e Al Oud Oud for Glory",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Lattafa",
+      "status": "verified",
+      "url": "https://lattafa.com/product/badee-al-oud-oud-for-glory/",
+      "checkedAt": "2026-09-13"
+    },
+    "needsReview": true,
+    "reviewReason": "La misma página oficial de Lattafa publica dos pirámides olfativas incompatibles para Bade'e Al Oud Oud for Glory. No elegir silenciosamente una de ellas.",
+    "note": "No cargar notas hasta resolver la contradicción de la fuente oficial."
+  },
+  {
+    "productSlug": "montale-arabians-tonka",
+    "brand": "Montale",
+    "referenceName": "Arabians Tonka",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Montale/Arabians-Tonka-57384.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Saffron",
+        "Bergamot"
+      ],
+      "middleNotes": [
+        "Agarwood (Oud)",
+        "Bulgarian Rose"
+      ],
+      "baseNotes": [
+        "Tonka Bean",
+        "Sugar Cane",
+        "Amber",
+        "White Musk",
+        "Oakmoss"
+      ],
+      "accords": [
+        "Sweet",
+        "Vanilla",
+        "Amber",
+        "Oud",
+        "Warm Spicy",
+        "Rose",
+        "Musky",
+        "Metallic",
+        "Aromatic",
+        "Powdery"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Woody"
+    },
+    "note": "Universo comercial NOX debe seguir siendo Nicho aunque origin interno sea arabe. No mezclar con la pirámide más amplia de otra fuente."
+  }
+]

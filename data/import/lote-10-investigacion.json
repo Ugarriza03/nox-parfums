@@ -1,0 +1,365 @@
+[
+  {
+    "productSlug": "ariana-grande-cloud",
+    "brand": "Ariana Grande",
+    "referenceName": "Cloud",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Ariana-Grande/Cloud-50384.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Lavender",
+        "Pear",
+        "Bergamot"
+      ],
+      "middleNotes": [
+        "Whipped Cream",
+        "Coconut",
+        "Praline",
+        "Vanilla Orchid"
+      ],
+      "baseNotes": [
+        "Musk",
+        "Woody Notes"
+      ],
+      "accords": [
+        "Sweet",
+        "Lactonic",
+        "Vanilla",
+        "Coconut",
+        "Musky"
+      ],
+      "mainNotes": [],
+      "family": "Floral Fruity Gourmand"
+    },
+    "note": "Identidad corroborada también con la página oficial de Ariana Grande Fragrances. No importar performance."
+  },
+  {
+    "productSlug": "chanel-chanel-n-5",
+    "brand": "Chanel",
+    "referenceName": "Chanel N°5",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "candidate",
+      "url": null,
+      "checkedAt": null,
+      "candidateUrl": "https://www.fragrantica.com/perfume/Chanel/Chanel-No-5-Eau-de-Parfum-40069.html"
+    },
+    "needsReview": true,
+    "reviewReason": "El catálogo NOX dice únicamente 'Chanel N°5'. La línea tiene Parfum, Eau de Parfum, Eau de Toilette y otras variantes. La página oficial consultada corresponde a Eau de Parfum, pero el catálogo NOX no especifica concentración. Confirmar la variante antes de cargar notas.",
+    "note": "No asignar automáticamente la ficha de N°5 Eau de Parfum."
+  },
+  {
+    "productSlug": "christian-dior-hypnotic-poison",
+    "brand": "Christian Dior",
+    "referenceName": "Hypnotic Poison",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Dior/Hypnotic-Poison-219.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Coconut",
+        "Plum",
+        "Apricot"
+      ],
+      "middleNotes": [
+        "Brazilian Rosewood",
+        "Jasmine",
+        "Tuberose",
+        "Caraway",
+        "Rose",
+        "Lily-of-the-Valley"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Almond",
+        "Sandalwood",
+        "Musk"
+      ],
+      "accords": [
+        "Vanilla",
+        "Sweet",
+        "Almond",
+        "Fruity",
+        "Nutty",
+        "Powdery",
+        "Woody",
+        "Coconut",
+        "White Floral",
+        "Balsamic"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Vanilla"
+    },
+    "note": "La identidad se corroboró con la página oficial actual de Dior para Hypnotic Poison Eau de Toilette; no confundir con Hypnotic Poison Eau de Parfum."
+  },
+  {
+    "productSlug": "azzaro-the-most-wanted",
+    "brand": "Azzaro",
+    "referenceName": "The Most Wanted",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Azzaro/The-Most-Wanted-66826.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Cardamom"
+      ],
+      "middleNotes": [
+        "Toffee"
+      ],
+      "baseNotes": [
+        "Amberwood"
+      ],
+      "accords": [
+        "Warm Spicy",
+        "Sweet",
+        "Amber",
+        "Woody",
+        "Caramel",
+        "Aromatic"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Spicy"
+    },
+    "note": "Identidad corroborada con la página oficial de Azzaro. No confundir con The Most Wanted Parfum."
+  },
+  {
+    "productSlug": "jean-paul-gaultier-le-male-parfum",
+    "brand": "Jean Paul Gaultier",
+    "referenceName": "Le Male Le Parfum",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Jean-Paul-Gaultier/Le-Male-Le-Parfum-61856.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Cardamom"
+      ],
+      "middleNotes": [
+        "Lavender",
+        "Iris"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Oriental Notes",
+        "Woody Notes"
+      ],
+      "accords": [
+        "Warm Spicy",
+        "Vanilla",
+        "Lavender",
+        "Aromatic",
+        "Powdery",
+        "Iris",
+        "Woody",
+        "Amber",
+        "Violet"
+      ],
+      "mainNotes": [],
+      "family": "Oriental"
+    },
+    "note": "El nombre público NOX es 'Le Male Parfum'; la referencia validada es 'Le Male Le Parfum'. No confundir con Le Male ni Le Male Elixir."
+  },
+  {
+    "productSlug": "tom-ford-oud-wood",
+    "brand": "Tom Ford",
+    "referenceName": "Oud Wood",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Tom-Ford/Oud-Wood-1826.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [],
+      "middleNotes": [],
+      "baseNotes": [],
+      "accords": [
+        "Woody",
+        "Warm Spicy",
+        "Oud",
+        "Aromatic",
+        "Vanilla",
+        "Balsamic",
+        "Fresh Spicy",
+        "Amber",
+        "Powdery",
+        "Sweet"
+      ],
+      "mainNotes": [
+        "Agarwood (Oud)",
+        "Brazilian Rosewood",
+        "Cardamom",
+        "Sandalwood",
+        "Sichuan Pepper",
+        "Vanilla",
+        "Vetiver",
+        "Tonka Bean",
+        "Amber"
+      ],
+      "family": "Oriental Woody"
+    },
+    "note": "Fragrantica presenta Oud Wood como unisex; NOX hoy lo mercha en masculino. Eso no debe cambiar el universo/género comercial ni bloquear identidad si el guard admite unisex como compatible."
+  },
+  {
+    "productSlug": "parfums-de-marly-layton-exclusif",
+    "brand": "Parfums de Marly",
+    "referenceName": "Layton Exclusif",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Parfums-de-Marly/Layton-Exclusif-46633.html",
+      "checkedAt": "2026-09-13"
+    },
+    "needsReview": true,
+    "reviewReason": "La identidad Layton Exclusif es inequívoca, pero las páginas oficiales actuales de Parfums de Marly muestran pirámides diferentes según la versión/región consultada. No elegir una pirámide automáticamente hasta resolver la discrepancia.",
+    "note": "Mantener sin datos olfativos por ahora. NO confundir con Layton."
+  },
+  {
+    "productSlug": "lattafa-yara-elixir",
+    "brand": "Lattafa",
+    "referenceName": "Yara Elixir",
+    "referenceGender": "femenino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Lattafa-Perfumes/Yara-Elixir-117615.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Strawberry S'mores",
+        "Black Currant"
+      ],
+      "middleNotes": [
+        "Jasmine",
+        "Orange Blossom"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Caramel",
+        "Amber",
+        "Musk"
+      ],
+      "accords": [
+        "Vanilla",
+        "Caramel",
+        "Sweet",
+        "White Floral",
+        "Powdery",
+        "Fruity",
+        "Amber",
+        "Musky",
+        "Soft Spicy",
+        "Animalic"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Vanilla"
+    },
+    "note": "Pirámide corroborada con la página oficial de Lattafa. Debe permanecer separada de Yara, Yara Candy y Yara Tous."
+  },
+  {
+    "productSlug": "armaf-mandarin-sky",
+    "brand": "Armaf",
+    "referenceName": "Odyssey Mandarin Sky",
+    "referenceGender": "masculino",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Armaf/Odyssey-Mandarin-Sky-83132.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Mandarin Orange",
+        "Orange",
+        "Saffron",
+        "Sage"
+      ],
+      "middleNotes": [
+        "Caramel",
+        "Tonka Bean",
+        "Marigold"
+      ],
+      "baseNotes": [
+        "Ambroxan",
+        "Cedar",
+        "Vetiver"
+      ],
+      "accords": [
+        "Citrus",
+        "Caramel",
+        "Sweet",
+        "Amber",
+        "Aromatic",
+        "Vanilla",
+        "Woody"
+      ],
+      "mainNotes": [],
+      "family": null
+    },
+    "note": "La pirámide coincide con la página oficial de Armaf. Mantener el naming público NOX 'Mandarin Sky'; Odyssey Mandarin Sky es la referencia interna."
+  },
+  {
+    "productSlug": "al-haramain-amber-oud-gold",
+    "brand": "Al Haramain",
+    "referenceName": "Amber Oud Gold Edition",
+    "referenceGender": "unisex",
+    "source": {
+      "name": "Fragrantica",
+      "status": "verified",
+      "url": "https://www.fragrantica.com/perfume/Al-Haramain-Perfumes/Amber-Oud-Gold-Edition-51816.html",
+      "checkedAt": "2026-09-13"
+    },
+    "profile": {
+      "topNotes": [
+        "Bergamot",
+        "Green Notes"
+      ],
+      "middleNotes": [
+        "Melon",
+        "Pineapple",
+        "Amber",
+        "Gourmand Accord"
+      ],
+      "baseNotes": [
+        "Vanilla",
+        "Musk",
+        "Woody Notes"
+      ],
+      "accords": [
+        "Sweet",
+        "Fruity",
+        "Ozonic",
+        "Vanilla",
+        "Powdery",
+        "Musky",
+        "Fresh",
+        "Aquatic",
+        "Amber",
+        "Citrus"
+      ],
+      "mainNotes": [],
+      "family": "Oriental Vanilla"
+    },
+    "note": "Pirámide corroborada con la tienda oficial y el catálogo oficial de Al Haramain. El naming público NOX es 'Amber Oud Gold'."
+  }
+]
