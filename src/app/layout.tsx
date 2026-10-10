@@ -32,7 +32,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="es-AR">
+    // data-scroll-behavior: Next.js 16 ya no anula `scroll-behavior: smooth`
+    // (globals.css) al navegar entre rutas. El atributo conserva el
+    // comportamiento de Next 14: salto instantáneo al inicio en cada página.
+    <html lang="es-AR" data-scroll-behavior="smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
