@@ -14,48 +14,21 @@ import { RAW_CATALOG } from "./catalog.raw";
 import { HOUSE_UNIVERSE } from "./brands";
 import { OLFACTORY_PROFILES } from "./olfactory";
 import { getPerformance } from "./nox-performance";
-import type { Family, Gender, Occasion, Product, Universe } from "./types";
+import { PRODUCT_ID_REGISTRY } from "./product-ids";
+import {
+  assignStableSlugs,
+  collectDrafts,
+  slugify,
+  type Draft
+} from "./product-identity";
+import type { Family, Occasion, Product, Universe } from "./types";
 
-/* ------------------------------------------------------------------ utils */
+/* ------------------------------------------------------------- identidad */
 
-export function slugify(input: string): string {
-  return input
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/['’]/g, "")
-    .replace(/&/g, " ")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-/* ------------------------------------------------------------- construcción */
-
-interface Draft {
-  house: string;
-  name: string;
-  gender: Gender;
-  origin: "internacional" | "arabe";
-  baseSlug: string;
-}
-
-function collectDrafts(): Draft[] {
-  const drafts: Draft[] = [];
-  for (const group of RAW_CATALOG) {
-    for (const [house, names] of Object.entries(group.brands)) {
-      for (const name of names) {
-        drafts.push({
-          house,
-          name,
-          gender: group.gender,
-          origin: group.origin,
-          baseSlug: slugify(`${house} ${name}`)
-        });
-      }
-    }
-  }
-  return drafts;
-}
+// El slug ya no se calcula acá: sale del registro congelado (product-ids.ts)
+// a través de product-identity.ts. `slugify` se re-exporta para no romper a
+// quien lo importaba desde este módulo.
+export { slugify };
 
 /**
  * PRECEDENCIA DE UNIVERSO COMERCIAL — una sola regla, en un solo lugar.
@@ -84,18 +57,13 @@ function resolveUniverse(draft: Draft): Universe {
 }
 
 function buildProducts(): Product[] {
-  const drafts = collectDrafts();
-
-  // Una misma fragancia puede figurar en dos géneros (por ejemplo Light Blue).
-  // En ese caso ambas reciben sufijo de género para que el slug sea estable.
-  const slugCounts = new Map<string, number>();
-  for (const d of drafts) {
-    slugCounts.set(d.baseSlug, (slugCounts.get(d.baseSlug) ?? 0) + 1);
-  }
+  // Cada fragancia recibe el slug de su entrada en el registro. Un homónimo
+  // nuevo (otro género) ya no puede renombrar a los existentes: ver
+  // product-identity.ts y la prueba npm run qa:ids.
+  const drafts = assignStableSlugs(collectDrafts(RAW_CATALOG), PRODUCT_ID_REGISTRY);
 
   return drafts.map((draft) => {
-    const duplicated = (slugCounts.get(draft.baseSlug) ?? 0) > 1;
-    const slug = duplicated ? `${draft.baseSlug}-${draft.gender}` : draft.baseSlug;
+    const slug = draft.slug;
     const olfactory = OLFACTORY_PROFILES[slug] ?? null;
 
     return {
