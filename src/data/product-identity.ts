@@ -136,7 +136,9 @@ export function assignStableSlugs(
 
   // 3. Toda entrada registrada tiene que seguir existiendo. Si no, alguien
   //    renombró o quitó una fragancia sin actualizar el registro.
-  for (const [key, entry] of porClave) {
+  // Array.from: el tsconfig no fija `target`, y sin ES2015 TypeScript no
+  // permite recorrer un Map con for…of (TS2802).
+  for (const [key, entry] of Array.from(porClave.entries())) {
     if (!clavesVistas.has(key)) {
       problemas.push(
         `Registro: "${entry.slug}" (${key}) ya no está en el catálogo maestro. ` +
