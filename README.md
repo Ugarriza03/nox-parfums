@@ -36,6 +36,8 @@ teléfonos repartidos por los componentes.
 | Preguntas frecuentes | `src/config/faq.ts` |
 | Colores y tipografías | `src/config/theme.ts` |
 | **Qué fragancias existen** | `src/data/catalog.raw.ts` |
+| Identificador (slug) congelado de cada fragancia | `src/data/product-ids.ts` |
+| Manifiesto de integridad del catálogo | `data/integridad/manifiesto-catalogo.json` |
 | Notas, acordes, familia, carácter (perfil público) | `src/data/olfactory.ts` |
 | **Duración, proyección y estela probadas por NOX** | `src/data/nox-performance.ts` |
 | Procedencia del dato (capa interna) | `src/data/olfactory.sources.ts` |
@@ -47,11 +49,17 @@ teléfonos repartidos por los componentes.
 ### Agregar una fragancia
 
 1. Sumar el nombre en `src/data/catalog.raw.ts`, dentro de su casa y su grupo.
-2. Listo: ya aparece en el catálogo, en el buscador y en el armado de pedido.
-3. Cargar su perfil olfativo: `npm run olfativo -- --only <slug>`.
+2. Congelar su identificador: `npm run ids:registrar` (agrega la entrada en
+   `src/data/product-ids.ts`; revisar el diff).
+3. Listo: ya aparece en el catálogo, en el buscador y en el armado de pedido.
+4. Cargar su perfil olfativo: `npm run olfativo -- --only <slug>`.
+5. Con el cambio aprobado, actualizar el manifiesto: `npm run integridad:generar`.
 
-El slug se genera solo a partir de casa + nombre. Si una fragancia figura en dos géneros,
-se le agrega el sufijo de género automáticamente para que no choquen.
+El slug de un producto nuevo se calcula una sola vez a partir de casa + nombre y queda
+congelado en `src/data/product-ids.ts`. Los existentes nunca se recalculan: un homónimo
+nuevo en otro género recibe sufijo propio sin renombrar a los anteriores, y renombrar
+una fragancia sin actualizar el registro hace fallar el build. Detalle en
+`docs/NOX-ADMIN.md`.
 
 ### Cambiar precios
 
@@ -121,6 +129,8 @@ npm run build          # build de producción
 npm run preview        # regenera dist-preview/index.html
 
 npm run qa             # toda la suite de QA de una
+npm run qa:integridad  # 233 slugs, perfiles, portadas y precios contra el manifiesto
+npm run qa:ids         # identificadores estables ante homónimos y renombres
 npm run qa:catalogo    # atribución de marcas, variantes homónimas y copy
 npm run qa:performance # separación perfil olfativo / performance NOX
 npm run qa:mayoristas  # escala por rangos: bordes, totales, mínimo
@@ -137,6 +147,8 @@ npm run datos          # estado de la carga: cargadas, pendientes, needsReview
 npm run olfativo       # autocompletado de información olfativa
 npm run validar        # integridad del catálogo (slugs, enlaces de datos)
 npm run revisar:olfativo  # revisión editorial de las fichas (acepta --dry-run)
+npm run ids:registrar     # congela el slug de las fragancias nuevas
+npm run integridad:generar  # regenera el manifiesto (sólo cambios aprobados)
 ```
 
 ---
