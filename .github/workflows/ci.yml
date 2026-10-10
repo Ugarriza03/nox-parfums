@@ -1,0 +1,134 @@
+# CI de NOX Parfums — sólo verifica. No despliega, no publica, no escribe
+# datos externos y no usa secretos.
+#
+# Qué corre y en qué orden (detalle en docs/NOX-ADMIN.md):
+#   1. verificar     npm ci → integridad + identificadores (falla rápido) →
+#                    next build → navegador de Playwright → npm run qa
+#                    (incluye preview + E2E) → test:layout → qa:sync
+#   2. dependencias  npm audit sobre el lockfile, con reporte visible
+#
+# Los dos jobs son independientes: una vulnerabilidad conocida pone el job
+# "dependencias" en rojo sin ocultar el resultado de "verificar", y viceversa.
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "feature/**"
+      - develop
+  workflow_dispatch:
+
+# Permisos mínimos: el token sólo puede leer el repositorio.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    name: Build y QA
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalación reproducible
+        run: npm ci
+
+      # Barato (segundos) y bloqueante: si un slug, una portada, un perfil o un
+      # precio cambió sin aprobar, no tiene sentido seguir. npm run qa los
+      # vuelve a correr al principio; se aceptan esos segundos a cambio de
+      # fallar antes del build.
+      - name: Integridad de los 233 productos e identificadores estables
+        run: |
+          npm run qa:integridad
+          npm run qa:ids
+
+      - name: Build de producción (sin desplegar)
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+
+      - name: Navegador para las pruebas E2E
+        run: npx playwright install --with-deps chromium
+
+      # npm run qa ya incluye: catálogo, performance, mayoristas, match,
+      # olfativo, import, preview, lotes, redacción, pedido, asesor y test:e2e.
+      # Por eso test:e2e no se repite como paso propio.
+      - name: Suite de QA (incluye preview y E2E)
+        run: npm run qa
+
+      - name: Layout sin scroll horizontal (390 px)
+        run: npm run test:layout
+
+      # qa:sync no forma parte de npm run qa y en main (c98bea1) ya falla un
+      # chequeo ("Rasasi sigue en Árabes"). Se corre a la vista, sin bloquear,
+      # hasta que se decida su corrección. Ver docs/NOX-ADMIN.md.
+      - name: qa:sync (falla preexistente documentada, no bloqueante)
+        run: npm run qa:sync
+        continue-on-error: true
+
+  dependencias:
+    name: Auditoría de dependencias
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Sólo lee el lockfile: no instala ni ejecuta código de terceros.
+      # Nunca se corre `npm audit fix` desde CI.
+      - name: npm audit
+        run: |
+          npm audit --package-lock-only --json > audit.json || true
+          node -e '
+            const r = require("./audit.json");
+            const v = r.metadata?.vulnerabilities ?? {};
+            const filas = Object.entries(r.vulnerabilities ?? {}).map(([nombre, d]) => {
+              const via = (d.via ?? []).map((x) => typeof x === "string" ? x : x.title).filter(Boolean);
+              const fix = d.fixAvailable === true ? "sí" :
+                d.fixAvailable ? `${d.fixAvailable.name}@${d.fixAvailable.version}${d.fixAvailable.isSemVerMajor ? " (major)" : ""}` : "no";
+              return `| ${nombre} | ${d.severity} | ${d.isDirect ? "directa" : "transitiva"} | ${d.range} | ${fix} | ${via.slice(0, 3).join("; ")} |`;
+            });
+            const md = [
+              "## npm audit",
+              "",
+              `crítica ${v.critical ?? 0} · alta ${v.high ?? 0} · moderada ${v.moderate ?? 0} · baja ${v.low ?? 0}`,
+              "",
+              filas.length ? "| Paquete | Severidad | Tipo | Rango afectado | Corrección | Avisos |\n|---|---|---|---|---|---|\n" + filas.join("\n") : "Sin vulnerabilidades reportadas."
+            ].join("\n");
+            require("fs").appendFileSync(process.env.GITHUB_STEP_SUMMARY, md + "\n");
+            console.log(md);
+            if ((v.critical ?? 0) + (v.high ?? 0) > 0) {
+              console.log("::error::npm audit reporta vulnerabilidades altas o críticas. Ver el resumen del job.");
+              process.exit(1);
+            }
+          '
+
+      - name: Guardar reporte de auditoría
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit
+          path: audit.json
+          retention-days: 14
