@@ -6,7 +6,7 @@ datos ni endpoints: deja preparado el terreno para hacerlo sin romper la tienda.
 
 ## 1. Arquitectura actual
 
-- Next.js 14 (App Router) + TypeScript + Tailwind, desplegado en Vercel desde
+- Next.js 16 (App Router) + React 19 + TypeScript + Tailwind 3, desplegado en Vercel desde
   `main`. Sitio 100 % estático: las 233 fichas se generan con
   `generateStaticParams`.
 - Sin backend: no hay base de datos, autenticación, API Routes, Server Actions,
@@ -133,8 +133,9 @@ Todo está en la rama `feature/nox-admin-foundation`; `main` no se tocó.
 ## 8. Pendiente antes de autenticación e inventario
 
 1. Revisar y mergear esta rama, con CI en verde (o con cada bloqueo explicado).
-2. Revisar el reporte de `npm audit` del CI y decidir la actualización a
-   Next 15 (Next 14 ya no tiene soporte) **antes** de exponer `/admin`.
+2. Completar la actualización a Next 16 de `feature/nox-admin-seguridad`
+   (lockfile, build y auditoría: ver `docs/SEGURIDAD-DEPENDENCIAS.md`)
+   **antes** de exponer `/admin`.
 3. Confirmar el plan de Vercel: Hobby no admite uso comercial.
 4. Decidir proveedor (Supabase recomendado) y crear el proyecto recién en la
    fase siguiente, con aprobación.

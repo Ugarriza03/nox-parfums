@@ -1,6 +1,6 @@
 # NOX PARFUMS — tienda online
 
-Primera versión real, navegable y funcional. Next.js 14 (App Router) + TypeScript + Tailwind CSS.
+Primera versión real, navegable y funcional. Next.js 16 (App Router) + React 19 + TypeScript + Tailwind CSS 3.
 
 ---
 
