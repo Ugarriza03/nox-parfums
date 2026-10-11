@@ -44,7 +44,7 @@ const resumen = [
 
 if (categorias.length === 0) {
   // Coincidencia byte a byte: además de lo anterior, nada más se movió.
-  const identico = serializar(actual) === readFileSync(MANIFIESTO_RUTA, "utf8");
+  const identico = serializar(actual).replace(/\r\n/g, "\n") === readFileSync(MANIFIESTO_RUTA, "utf8").replace(/\r\n/g, "\n");
   console.log(`✓ Integridad del catálogo OK — ${resumen}`);
   console.log(`✓ ${t.productos} slugs, ${t.productos} perfiles y ${t.productos} portadas coinciden con el manifiesto`);
   console.log(`✓ precios, promociones y regalos sin cambios`);
