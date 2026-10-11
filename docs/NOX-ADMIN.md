@@ -130,18 +130,17 @@ Todo está en la rama `feature/nox-admin-foundation`; `main` no se tocó.
   perfiles ni pedidos guardados.
 - Quitar sólo el CI: borrar `.github/workflows/ci.yml`.
 
-## 8. Pendiente antes de autenticación e inventario
+## 8. Estado (NOX Admin V1)
 
-1. Revisar y mergear esta rama, con CI en verde (o con cada bloqueo explicado).
-2. Completar la actualización a Next 16 de `feature/nox-admin-seguridad`
-   (lockfile, build y auditoría: ver `docs/SEGURIDAD-DEPENDENCIAS.md`)
-   **antes** de exponer `/admin`.
-3. Confirmar el plan de Vercel: Hobby no admite uso comercial.
-4. Decidir proveedor (Supabase recomendado) y crear el proyecto recién en la
-   fase siguiente, con aprobación.
-5. Definir: política de URL para productos ocultos/archivados, MFA obligatorio,
-   umbral de alertas de stock y carga inicial de las ~94 unidades.
-6. Decidir qué hacer con la falla preexistente de `qa:sync`.
+- Hecho: actualización a Next 16 (PR #1); Supabase Free aprobado; umbral de
+  stock bajo global = 1; carga inicial explícita por fragancia; ajuste = stock
+  real contado.
+- Implementado en `feature/nox-admin-panel-v1`: panel de inventario,
+  autenticación, migración con RLS y pruebas. Ver `docs/NOX-ADMIN-PANEL.md`.
+- Pendiente antes de producción: pruebas con un proyecto Supabase real, MFA
+  exigido a ambos administradores, separar el layout del panel del de la
+  tienda, confirmar el plan de Vercel (Hobby no admite uso comercial) y decidir
+  la falla preexistente de `qa:sync`.
 
 ### Costos futuros posibles (nada contratado)
 
