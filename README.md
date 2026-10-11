@@ -104,8 +104,12 @@ src/
       mi-pedido/            Armado de pedido + WhatsApp
       mayoristas/           Escala mayorista + armado propio
       como-comprar/ envios/ preguntas-frecuentes/ contacto/
+      not-found.tsx         404 de la tienda (dentro del marco)
+      [...noEncontrada]/    Toda URL inexistente → 404 de la tienda
     admin/                  NOX Admin, layout propio (ver docs/NOX-ADMIN-PANEL.md)
-    sitemap.ts robots.ts not-found.tsx (404 con el marco de la tienda)
+    not-found.tsx           404 raíz neutral (sin nada de la tienda: Next la
+                            incluye en todas las rutas, también en /admin)
+    sitemap.ts robots.ts
   components/
     ui/                     Botones, chips, stepper, reveal, íconos
     layout/                 Header, nav mobile, footer, TiendaChrome, contenido 404

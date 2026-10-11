@@ -17,7 +17,7 @@ import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, sep } from "node:path";
 import { execFileSync } from "node:child_process";
 import { leerConfigSupabase, panelHabilitado, ADMIN_COOKIE_OPTIONS } from "../src/lib/admin/config";
-import { resolverAcceso, destinoDe, type EntradaAcceso } from "../src/lib/admin/acceso";
+import { resolverAcceso, destinoDe, clasificarErrorAuth, type EntradaAcceso } from "../src/lib/admin/acceso";
 import { validarMovimiento, estadoStock, mensajeDeError } from "../src/lib/admin/inventario-reglas";
 import { leerFiltrosActividad, leerFiltrosInventario, filtrarInventario } from "../src/lib/admin/filtros";
 import { PRODUCTOS_ADMIN, SLUGS_VALIDOS } from "../src/lib/admin/catalogo";
@@ -85,6 +85,8 @@ const casos: [string, EntradaAcceso, string, string | null][] = [
   ["autenticado sin permisos", { ...base, claims: { sub: "u1", email: "x@y.z" } }, "sin_permiso", "/admin/sin-acceso"],
   ["admin desactivado", { ...base, claims: { sub: "u1" }, estadoDB: { ...fila, active: false } }, "sin_permiso", "/admin/sin-acceso"],
   ["error de la base", { ...base, claims: { sub: "u1" }, errorDB: "caída" }, "error", "/admin/login"],
+  ["Supabase Auth inaccesible (sin claims)", { ...base, errorAuth: "sin conexión" }, "error", "/admin/login"],
+  ["Supabase Auth inaccesible no concede acceso aunque la base diga admin", { ...base, errorAuth: "sin conexión", estadoDB: fila }, "error", "/admin/login"],
   ["admin con MFA exigido y sesión aal1", { ...base, claims: { sub: "u1", aal: "aal1" }, estadoDB: { ...fila, mfa_required: true } }, "requiere_mfa", "/admin/mfa"],
   ["admin con MFA exigido y sesión aal2", { ...base, claims: { sub: "u1", aal: "aal2" }, estadoDB: { ...fila, mfa_required: true } }, "ok", null],
   ["admin autorizado sin MFA exigido", { ...base, claims: { sub: "u1" }, estadoDB: fila }, "ok", null]
@@ -93,9 +95,29 @@ for (const [nombre, entrada, estado, destino] of casos) {
   const a = resolverAcceso(entrada);
   check(`${nombre} → ${estado}`, a.estado === estado && destinoDe(a) === destino, `${a.estado} / ${destinoDe(a)}`);
 }
+{
+  const clases: [string, unknown, string | null][] = [
+    ["sin error", null, null],
+    ["AuthRetryableFetchError (red caída, status 0)", { name: "AuthRetryableFetchError", status: 0 }, "conexion"],
+    ["AuthRetryableFetchError 503", { name: "AuthRetryableFetchError", status: 503 }, "conexion"],
+    ["AuthUnknownError", { name: "AuthUnknownError" }, "conexion"],
+    ["error sin status (excepción de fetch)", new TypeError("fetch failed"), "conexion"],
+    ["500 del servidor de Auth", { name: "AuthApiError", status: 500 }, "conexion"],
+    ["sesión inexistente (AuthSessionMissingError 400)", { name: "AuthSessionMissingError", status: 400 }, "sesion"],
+    ["JWT inválido (AuthInvalidJwtError 400)", { name: "AuthInvalidJwtError", status: 400 }, "sesion"],
+    ["refresh token revocado (AuthApiError 400)", { name: "AuthApiError", status: 400 }, "sesion"],
+    ["credenciales incorrectas (AuthApiError 400)", { name: "AuthApiError", status: 400, code: "invalid_credentials" }, "sesion"],
+    ["token vencido (AuthApiError 401)", { name: "AuthApiError", status: 401 }, "sesion"],
+    ["límite de intentos (429)", { name: "AuthApiError", status: 429 }, "sesion"]
+  ];
+  for (const [nombre, error, esperado] of clases) {
+    const r = clasificarErrorAuth(error);
+    check(`error de Auth: ${nombre} → ${esperado ?? "ninguno"}`, r === esperado, String(r));
+  }
+}
 check(
   "la pantalla de MFA admite aal1 sólo si se pide explícitamente",
-  destinoDe(resolverAcceso(casos[6][1]), { permitirAal1: true }) === null
+  destinoDe(resolverAcceso(casos.find(([n]) => n === "admin con MFA exigido y sesión aal1")![1]), { permitirAal1: true }) === null
 );
 
 /* ====================================================== 3. movimientos */
@@ -235,9 +257,22 @@ check(
   "el layout raíz no incluye el marco de la tienda (Header, Footer, OrderBar, pedido)",
   !/Header|Footer|OrderBar|OrderProvider|TiendaChrome|@\/store\//.test(raizLayout)
 );
+check("el layout de (tienda) usa TiendaChrome", /<TiendaChrome>/.test(leer("src/app/(tienda)/layout.tsx")));
 check(
-  "el layout de (tienda) y la 404 global usan TiendaChrome",
-  /<TiendaChrome>/.test(leer("src/app/(tienda)/layout.tsx")) && /<TiendaChrome>/.test(leer("src/app/not-found.tsx"))
+  "la 404 de la tienda vive en (tienda) y muestra NoEncontrado dentro del marco",
+  /<NoEncontrado \/>/.test(leer("src/app/(tienda)/not-found.tsx")) && !/TiendaChrome/.test(leer("src/app/(tienda)/not-found.tsx"))
+);
+check(
+  "las URLs inexistentes caen en (tienda)/[...noEncontrada] y responden notFound()",
+  existsSync("src/app/(tienda)/[...noEncontrada]/page.tsx") && /notFound\(\)/.test(leer("src/app/(tienda)/[...noEncontrada]/page.tsx"))
+);
+check(
+  "la 404 raíz es neutral: no importa nada de la tienda",
+  ![...leer("src/app/not-found.tsx").matchAll(/from\s+["']([^"']+)["']/g)].some(([, r]) => r !== "next/link")
+);
+check(
+  "con el panel deshabilitado, el proxy responde la 404 de la tienda",
+  /if \(!panelHabilitado\(\)\)\s*\{\s*return conCabeceras\(NextResponse\.rewrite\(new URL\(RUTA_INEXISTENTE/.test(leer("src/proxy.ts"))
 );
 const chrome = leer("src/components/layout/TiendaChrome.tsx");
 check(
@@ -279,6 +314,52 @@ check(
   `el JavaScript de cliente del panel (${deCliente.size} módulos) no incluye pedido, catálogo ni componentes de la tienda`,
   deTienda.length === 0,
   deTienda.join(", ")
+);
+
+// Árbol que Next arma para CADA ruta de /admin: los archivos especiales del
+// nivel raíz (layout, not-found, error, loading, template…) más los de
+// src/app/admin. Next serializa el not-found de cada segmento como parte de la
+// página aunque no se muestre, así que los componentes de cliente que
+// alcance cualquiera de estos archivos se descargan en /admin/login.
+const ESPECIALES = /^(layout|page|not-found|error|global-error|loading|template|default|forbidden|unauthorized)\.(tsx|ts|jsx|js)$/;
+const especialesRaiz = readdirSync("src/app").filter((n) => ESPECIALES.test(n)).map((n) => `src/app/${n}`);
+const especialesAdmin = archivos("src/app/admin").filter((f) => ESPECIALES.test(f.split("/").pop()!));
+const raicesArbolAdmin = [...especialesRaiz, ...especialesAdmin];
+function clientesDelArbol(raices: string[]): Set<string> {
+  const vistos = new Set<string>();
+  const clientes = new Set<string>();
+  const pendientes = [...raices];
+  while (pendientes.length) {
+    const f = pendientes.pop()!;
+    if (vistos.has(f)) continue;
+    vistos.add(f);
+    const texto = readFileSync(f, "utf8");
+    if (/^\s*["']use client["']/.test(texto)) {
+      clientes.add(f);
+      continue;
+    }
+    if (!raices.includes(f) && /^\s*["']use server["']/.test(texto)) continue;
+    for (const [, ruta] of sinComentarios(texto).matchAll(/from\s+["']([^"']+)["']/g)) {
+      let base: string | null = null;
+      if (ruta.startsWith("@/")) base = `src/${ruta.slice(2)}`;
+      else if (ruta.startsWith(".")) base = enPosix(join(f, "..", ruta));
+      if (!base) continue;
+      const candidato = [`${base}.ts`, `${base}.tsx`, `${base}/index.ts`, `${base}/index.tsx`].find((c) => existsSync(c));
+      if (candidato) pendientes.push(candidato);
+    }
+  }
+  return clientes;
+}
+const clientesArbolAdmin = clientesDelArbol(raicesArbolAdmin);
+const codigoNavegadorAdmin = alcanzables([...clientesArbolAdmin], (f, t) => !clientesArbolAdmin.has(f) && /^\s*["']use server["']/.test(t));
+const tiendaEnAdmin = [...codigoNavegadorAdmin].filter((f) => /src\/(store|components\/(layout|order|product|home|ui)|data)\//.test(f));
+const culpables = especialesRaiz.filter((r) =>
+  [...clientesDelArbol([r])].some((c) => [...alcanzables([c], () => false)].some((f) => /src\/(store|components\/(layout|order|product|home|ui)|data)\//.test(f)))
+);
+check(
+  `ninguna ruta de /admin descarga código de la tienda (árbol completo: ${raicesArbolAdmin.length} archivos de Next, ${codigoNavegadorAdmin.size} módulos de cliente)`,
+  tiendaEnAdmin.length === 0,
+  `${tiendaEnAdmin.slice(0, 6).join(", ")}${culpables.length ? ` · lo introduce: ${culpables.join(", ")}` : ""}`
 );
 const desdeLayoutAdmin = alcanzables(["src/app/admin/layout.tsx"], () => false);
 check(

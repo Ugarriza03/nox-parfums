@@ -23,6 +23,12 @@ export interface EntradaAcceso {
   estadoDB: EstadoAdminDB | null;
   /** Error al consultar la base (red, proyecto pausado, etc.). */
   errorDB?: string | null;
+  /**
+   * Supabase Auth no pudo verificar la sesión por un problema de conexión
+   * (caído, pausado, sin red). Distinto de "no hay sesión": nunca concede
+   * acceso, pero se informa en lugar de mostrarse como sesión inexistente.
+   */
+  errorAuth?: string | null;
 }
 
 export type Acceso =
@@ -45,6 +51,7 @@ export interface AdminSesion {
 export function resolverAcceso(e: EntradaAcceso): Acceso {
   if (!e.habilitado) return { estado: "deshabilitado" };
   if (!e.configurado) return { estado: "no_configurado" };
+  if (e.errorAuth) return { estado: "error", mensaje: e.errorAuth };
   if (!e.claims || !e.claims.sub) return { estado: "sin_sesion" };
   if (e.errorDB) return { estado: "error", mensaje: e.errorDB };
 
@@ -82,3 +89,24 @@ export function destinoDe(acceso: Acceso, opciones: { permitirAal1?: boolean } =
       return "404";
   }
 }
+
+/**
+ * Clasifica el error de Supabase Auth (getClaims, signInWithPassword…).
+ *
+ *  · "conexion": el servicio no respondió o falló del lado del servidor
+ *    (AuthRetryableFetchError / AuthUnknownError, status 0, ausente o ≥ 500).
+ *  · "sesion": el servicio respondió y rechazó la sesión o las credenciales
+ *    (token inválido o vencido, sesión inexistente, 4xx).
+ *
+ * Ninguno de los dos concede acceso; sólo cambia el mensaje.
+ */
+export function clasificarErrorAuth(error: unknown): "conexion" | "sesion" | null {
+  if (error === null || error === undefined) return null;
+  const e = error as { name?: unknown; status?: unknown };
+  if (e.name === "AuthRetryableFetchError" || e.name === "AuthUnknownError") return "conexion";
+  const status = typeof e.status === "number" ? e.status : 0;
+  if (status === 0 || status >= 500) return "conexion";
+  return "sesion";
+}
+
+export const MENSAJE_AUTH_INACCESIBLE = "No se pudo conectar con el servicio de autenticación. Probá de nuevo en unos minutos.";

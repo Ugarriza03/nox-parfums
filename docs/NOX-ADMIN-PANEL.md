@@ -67,8 +67,13 @@ navegador ──► Next.js (servidor) ──► Supabase (Auth + Postgres con R
     para el dueño de la base.
   - `mfa_required` (por defecto `true`): `is_admin()` exige sesión `aal2`;
     vale también para llamadas directas a la API.
-- **Producción cerrada:** con `VERCEL_ENV=production`, `/admin` responde 404
-  salvo `NOX_ADMIN_HABILITADO=true`.
+- **Producción cerrada:** con `VERCEL_ENV=production`, `/admin` responde la
+  misma 404 que cualquier URL inexistente de la tienda (el proxy la reescribe)
+  salvo `NOX_ADMIN_HABILITADO=true`. El layout de `/admin` también responde 404.
+- **Supabase inaccesible:** si Auth no responde (red, proyecto pausado, 5xx),
+  el panel muestra "No se pudo conectar con el servicio de autenticación" y no
+  da acceso. Una sesión inexistente, inválida o vencida se trata como "sin
+  sesión". Ninguno de los dos casos expone detalles técnicos.
 
 ## 3. Configuración gratuita (Supabase Free)
 
@@ -114,9 +119,11 @@ igual.
 | Comando | Qué verifica | Requiere |
 | --- | --- | --- |
 | `npm run qa:admin` | Lógica de acceso, validaciones, estados, filtros y revisión estática de seguridad (incluido en `npm run qa`) | Nada |
+| `npm run test:admin:sesion` | `obtenerAcceso()` / `requerirAdmin()` reales con Supabase simulado: sin sesión, Auth caído, 5xx, excepción, token inválido, base caída, sin permisos, MFA, sin configuración, producción deshabilitada (incluido en `npm run qa`) | Nada |
 | `npm run test:admin:formulario` | Regresión del formulario de movimientos: tras la carga inicial pasa solo al modo de movimientos (sin F5), conserva la confirmación, no permite otra carga y ingreso/egreso/ajuste siguen funcionando (incluido en `npm run qa`) | Chromium de Playwright |
 | `npm run qa:admin:sql` | Migración sobre PostgreSQL desechable: RLS, permisos, MFA, stock negativo, idempotencia, 25 egresos concurrentes, historial inmutable | `psql`/`createdb` y un PostgreSQL local (en CI: contenedor) |
-| `npm run test:admin:e2e` | `next start` sin Supabase, producción deshabilitada y Supabase caído: redirecciones, noindex, sin datos, sin código del panel en la tienda, sin errores de hidratación | `npm run build` + Chromium de Playwright |
+| `npm run test:admin:e2e` | `next start` sin Supabase, producción deshabilitada y Supabase caído: redirecciones, noindex, sin datos, 404 de la tienda, sin código del panel en la tienda ni de la tienda en el login (HTML visible, carga RSC y JS descargado), sesión no verificable sin acceso, sin errores de hidratación. Entorno aislado: no lee `.env*` ni variables heredadas | `npm run build` + Chromium de Playwright |
+| `npm run diagnostico:admin [chunk.js …]` | Informativo: según el manifiesto del build, qué entradas de Next aportan JavaScript a cada ruta de `/admin` y si figura algún módulo de la tienda | `npm run build` |
 
 **Pendiente con Supabase real** (no se considera aprobado hasta hacerlo):
 login real de un admin, usuario autenticado sin permisos, MFA de punta a punta,
@@ -130,6 +137,9 @@ registro de movimientos desde la interfaz y cierre de sesión.
   (mismas URLs) con Header, Footer, OrderProvider y OrderBar vía
   `TiendaChrome`; el layout raíz sólo tiene `<html>`, fuentes y estilos; el
   panel `/admin` tiene su propio layout y no descarga el pedido ni el catálogo
-  (`npm run qa:admin` lo verifica recorriendo los imports). La 404 global usa
-  el mismo marco de la tienda.
+  (`npm run qa:admin` lo verifica recorriendo los imports de todo el árbol
+  que Next arma para `/admin`, incluidos los archivos de la raíz). La 404 de
+  la tienda vive en `(tienda)/not-found.tsx` y las URLs inexistentes llegan a
+  ella por `(tienda)/[...noEncontrada]`; la 404 raíz es neutral porque Next la
+  incluye en todas las rutas.
 - Las clases de Tailwind del panel se suman a la hoja de estilos global.

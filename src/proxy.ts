@@ -8,6 +8,7 @@
  *
  * El matcher limita su ejecución a /admin: la tienda pública nunca pasa por
  * acá. Sin configuración de Supabase, deja pasar la request sin tocarla.
+ * Con el panel deshabilitado, responde la 404 de la tienda.
  */
 
 import { NextResponse, type NextRequest } from "next/server";
@@ -22,14 +23,25 @@ const CABECERAS_ADMIN: Record<string, string> = {
   "Cache-Control": "private, no-store"
 };
 
+/** Ruta que no existe: la atrapa (tienda)/[...noEncontrada] y responde 404. */
+const RUTA_INEXISTENTE = "/__nox/no-encontrado";
+
 function conCabeceras(respuesta: NextResponse): NextResponse {
   for (const [clave, valor] of Object.entries(CABECERAS_ADMIN)) respuesta.headers.set(clave, valor);
   return respuesta;
 }
 
 export async function proxy(request: NextRequest) {
+  // Panel deshabilitado (producción sin NOX_ADMIN_HABILITADO): /admin responde
+  // la misma página 404 que cualquier URL inexistente de la tienda (con su
+  // presentación y sin nada del panel). El layout de /admin vuelve a
+  // responder 404 por su cuenta si esto no se aplicara.
+  if (!panelHabilitado()) {
+    return conCabeceras(NextResponse.rewrite(new URL(RUTA_INEXISTENTE, request.url)));
+  }
+
   const config = leerConfigSupabase();
-  if (!config || !panelHabilitado()) return conCabeceras(NextResponse.next({ request }));
+  if (!config) return conCabeceras(NextResponse.next({ request }));
 
   let respuesta = NextResponse.next({ request });
 

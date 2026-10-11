@@ -3,7 +3,7 @@ import { NoxMark } from "@/components/ui";
 
 /**
  * Contenido de la página 404 (sin marco). Lo usan la 404 global
- * (src/app/not-found.tsx, con el marco de la tienda) y el preview estático.
+ * ((tienda)/not-found.tsx, dentro del marco de la tienda) y el preview estático.
  */
 export function NoEncontrado() {
   return (

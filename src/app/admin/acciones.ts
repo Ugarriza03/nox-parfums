@@ -12,6 +12,7 @@
 import { notFound, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { obtenerAcceso, requerirAdmin } from "@/lib/admin/sesion";
+import { MENSAJE_AUTH_INACCESIBLE, clasificarErrorAuth } from "@/lib/admin/acceso";
 import { ETIQUETA_TIPO, mensajeDeError, validarMovimiento } from "@/lib/admin/inventario-reglas";
 import { SLUGS_VALIDOS } from "@/lib/admin/catalogo";
 import { registrarMovimientoDB } from "@/lib/admin/datos";
@@ -43,12 +44,12 @@ export async function iniciarSesion(_previo: EstadoFormulario, formData: FormDat
   try {
     resultado = await supabase.auth.signInWithPassword({ email, password });
   } catch {
-    return { ok: false, mensaje: "No se pudo conectar con el servicio de autenticación." };
+    return { ok: false, mensaje: MENSAJE_AUTH_INACCESIBLE };
   }
   if (resultado.error) {
     // Sin respuesta del servidor de autenticación (caído, pausado o sin red).
-    if (!resultado.error.status || resultado.error.status >= 500) {
-      return { ok: false, mensaje: "No se pudo conectar con el servicio de autenticación." };
+    if (clasificarErrorAuth(resultado.error) === "conexion") {
+      return { ok: false, mensaje: MENSAJE_AUTH_INACCESIBLE };
     }
     if (resultado.error.status === 429) {
       return { ok: false, mensaje: "Demasiados intentos. Esperá unos minutos antes de volver a probar." };

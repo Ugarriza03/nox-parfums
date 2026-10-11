@@ -9,7 +9,15 @@
 
 import { notFound, redirect } from "next/navigation";
 import { leerConfigSupabase, panelHabilitado } from "./config";
-import { destinoDe, resolverAcceso, type Acceso, type AdminSesion, type EstadoAdminDB } from "./acceso";
+import {
+  MENSAJE_AUTH_INACCESIBLE,
+  clasificarErrorAuth,
+  destinoDe,
+  resolverAcceso,
+  type Acceso,
+  type AdminSesion,
+  type EstadoAdminDB
+} from "./acceso";
 import { crearClienteAdmin, type ClienteAdmin } from "./supabase";
 
 export interface ContextoAdmin {
@@ -29,10 +37,17 @@ export async function obtenerAcceso(): Promise<ContextoAdmin> {
 
   const supabase = await crearClienteAdmin(config);
 
+  // Tres resultados posibles, que no se confunden entre sí:
+  //  · claims válidos            → se consulta admin_status() en la base
+  //  · sin sesión / sesión inválida o vencida (4xx) → "sin_sesion"
+  //  · Supabase inaccesible (red, 5xx, excepción)   → "error", sin acceso
   let claims: { sub: string; email?: string; aal?: string } | null = null;
+  let errorAuth: string | null = null;
   try {
     const { data, error } = await supabase.auth.getClaims();
-    if (!error && data?.claims?.sub) {
+    if (error) {
+      if (clasificarErrorAuth(error) === "conexion") errorAuth = MENSAJE_AUTH_INACCESIBLE;
+    } else if (data?.claims?.sub) {
       claims = {
         sub: String(data.claims.sub),
         email: typeof data.claims.email === "string" ? data.claims.email : undefined,
@@ -40,7 +55,10 @@ export async function obtenerAcceso(): Promise<ContextoAdmin> {
       };
     }
   } catch {
+    // Una excepción inesperada no es "no hay sesión": se trata como falla del
+    // servicio. No se concede acceso y no se expone el detalle.
     claims = null;
+    errorAuth = MENSAJE_AUTH_INACCESIBLE;
   }
 
   let estadoDB: EstadoAdminDB | null = null;
@@ -55,7 +73,7 @@ export async function obtenerAcceso(): Promise<ContextoAdmin> {
   }
 
   return {
-    acceso: resolverAcceso({ habilitado, configurado: true, claims, estadoDB, errorDB }),
+    acceso: resolverAcceso({ habilitado, configurado: true, claims, estadoDB, errorDB, errorAuth }),
     supabase
   };
 }
