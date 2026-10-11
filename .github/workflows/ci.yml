@@ -5,7 +5,11 @@
 #   1. verificar     npm ci → integridad + identificadores (falla rápido) →
 #                    next build → navegador de Playwright → npm run qa
 #                    (incluye preview + E2E) → test:layout → qa:sync
-#   2. dependencias  npm audit sobre el lockfile, con reporte visible
+#   2. dependencias  npm audit sobre el lockfile, en dos partes:
+#                    · producción (--omit=dev): BLOQUEANTE ante alta/crítica
+#                    · completa (incluye desarrollo): informativa, visible
+#                    Si una auditoría no corre o su JSON es inválido, el job
+#                    falla: nunca se interpreta como "cero vulnerabilidades".
 #
 # Los dos jobs son independientes: una vulnerabilidad conocida pone el job
 # "dependencias" en rojo sin ocultar el resultado de "verificar", y viceversa.
@@ -96,39 +100,122 @@ jobs:
         with:
           node-version: 22
 
-      # Sólo lee el lockfile: no instala ni ejecuta código de terceros.
-      # Nunca se corre `npm audit fix` desde CI.
-      - name: npm audit
+      # Analizador común de los dos informes. Vive sólo en el runner
+      # ($RUNNER_TEMP) y no se versiona: este workflow es su única fuente.
+      #   node reporte.js <informe.json> <bloqueante|informativo> [produccion.json]
+      # Sale con 1 si el informe no existe, está vacío, no es JSON, trae un
+      # campo "error" o no tiene los contadores esperados. En modo bloqueante
+      # sale con 1 además ante vulnerabilidades altas o críticas.
+      - name: Preparar analizador de npm audit
         run: |
-          npm audit --package-lock-only --json > audit.json || true
-          node -e '
-            const r = require("./audit.json");
-            const v = r.metadata?.vulnerabilities ?? {};
-            const filas = Object.entries(r.vulnerabilities ?? {}).map(([nombre, d]) => {
-              const via = (d.via ?? []).map((x) => typeof x === "string" ? x : x.title).filter(Boolean);
-              const fix = d.fixAvailable === true ? "sí" :
-                d.fixAvailable ? `${d.fixAvailable.name}@${d.fixAvailable.version}${d.fixAvailable.isSemVerMajor ? " (major)" : ""}` : "no";
-              return `| ${nombre} | ${d.severity} | ${d.isDirect ? "directa" : "transitiva"} | ${d.range} | ${fix} | ${via.slice(0, 3).join("; ")} |`;
-            });
-            const md = [
-              "## npm audit",
-              "",
-              `crítica ${v.critical ?? 0} · alta ${v.high ?? 0} · moderada ${v.moderate ?? 0} · baja ${v.low ?? 0}`,
-              "",
-              filas.length ? "| Paquete | Severidad | Tipo | Rango afectado | Corrección | Avisos |\n|---|---|---|---|---|---|\n" + filas.join("\n") : "Sin vulnerabilidades reportadas."
-            ].join("\n");
-            require("fs").appendFileSync(process.env.GITHUB_STEP_SUMMARY, md + "\n");
-            console.log(md);
-            if ((v.critical ?? 0) + (v.high ?? 0) > 0) {
-              console.log("::error::npm audit reporta vulnerabilidades altas o críticas. Ver el resumen del job.");
-              process.exit(1);
+          cat > "$RUNNER_TEMP/reporte.js" <<'EOF'
+          const fs = require("fs");
+          const [archivo, modo, archivoProduccion] = process.argv.slice(2);
+          const bloqueante = modo === "bloqueante";
+          const titulo = bloqueante
+            ? "npm audit — producción (--omit=dev) · bloqueante"
+            : "npm audit — completo (incluye desarrollo) · informativo";
+          const resumen = (texto) => fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, texto + "\n");
+
+          function leer(ruta) {
+            let texto;
+            try { texto = fs.readFileSync(ruta, "utf8"); }
+            catch { return { error: `no se encontró ${ruta}` }; }
+            if (!texto.trim()) return { error: `${ruta} está vacío` };
+            let r;
+            try { r = JSON.parse(texto); }
+            catch (e) { return { error: `${ruta} no es JSON válido (${e.message})` }; }
+            if (r.error) return { error: `npm audit devolvió un error: ${r.error.summary ?? JSON.stringify(r.error)}` };
+            const v = r.metadata?.vulnerabilities;
+            const claves = ["critical", "high", "moderate", "low"];
+            if (!v || claves.some((k) => !Number.isInteger(v[k]))) {
+              return { error: `${ruta} no tiene los contadores metadata.vulnerabilities esperados` };
             }
-          '
+            return { r, v };
+          }
+
+          const informe = leer(archivo);
+          if (informe.error) {
+            resumen(`## ${titulo}\n\n**ERROR: la auditoría no pudo evaluarse.** ${informe.error}\n`);
+            console.log(`::error title=${titulo}::${informe.error}. No se interpreta como cero vulnerabilidades.`);
+            process.exit(1);
+          }
+
+          // En el informe completo, marcar qué paquetes también afectan producción.
+          let enProduccion = null;
+          if (!bloqueante && archivoProduccion) {
+            const prod = leer(archivoProduccion);
+            enProduccion = prod.error ? null : new Set(Object.keys(prod.r.vulnerabilities ?? {}));
+          }
+          const alcance = (nombre) =>
+            enProduccion === null ? "sin dato" : enProduccion.has(nombre) ? "producción" : "sólo desarrollo";
+
+          const { r, v } = informe;
+          const filas = Object.entries(r.vulnerabilities ?? {}).map(([nombre, d]) => {
+            const via = (d.via ?? []).map((x) => typeof x === "string" ? x : x.title).filter(Boolean);
+            const fix = d.fixAvailable === true ? "sí" :
+              d.fixAvailable ? `${d.fixAvailable.name}@${d.fixAvailable.version}${d.fixAvailable.isSemVerMajor ? " (major)" : ""}` : "no";
+            const columnas = [nombre, d.severity, d.isDirect ? "directa" : "transitiva"];
+            if (!bloqueante) columnas.push(alcance(nombre));
+            columnas.push(d.range, fix, via.slice(0, 3).join("; "));
+            // Un "|" dentro de un rango (p. ej. "a || b") rompería la tabla.
+            return `| ${columnas.map((c) => String(c).replace(/\|/g, "\\|")).join(" | ")} |`;
+          });
+          const cabecera = bloqueante
+            ? "| Paquete | Severidad | Tipo | Rango afectado | Corrección | Avisos |\n|---|---|---|---|---|---|"
+            : "| Paquete | Severidad | Tipo | Alcance | Rango afectado | Corrección | Avisos |\n|---|---|---|---|---|---|---|";
+          const graves = v.critical + v.high;
+          const veredicto = bloqueante
+            ? (graves > 0 ? "**FALLA:** hay vulnerabilidades altas o críticas en dependencias de producción." : "**OK:** sin vulnerabilidades altas ni críticas en producción.")
+            : "Informativo: no hace fallar el job por sí mismo. El control obligatorio es la auditoría de producción.";
+          const md = [
+            `## ${titulo}`,
+            "",
+            `crítica ${v.critical} · alta ${v.high} · moderada ${v.moderate} · baja ${v.low}`,
+            "",
+            veredicto,
+            "",
+            filas.length ? `${cabecera}\n${filas.join("\n")}` : "Sin vulnerabilidades reportadas.",
+            ""
+          ].join("\n");
+          resumen(md);
+          console.log(md);
+
+          if (bloqueante && graves > 0) {
+            console.log(`::error title=${titulo}::${graves} vulnerabilidad(es) alta(s) o crítica(s) en producción. Ver el resumen del job.`);
+            process.exit(1);
+          }
+          if (!bloqueante && graves > 0) {
+            console.log(`::warning title=${titulo}::${graves} vulnerabilidad(es) alta(s) o crítica(s) en el árbol completo. Ver la columna Alcance del resumen.`);
+          }
+          EOF
+
+      # Sólo leen el lockfile: no instalan ni ejecutan código de terceros.
+      # Nunca se corre `npm audit fix` desde CI. El código de salida de npm no
+      # se usa para decidir (vale 1 tanto con hallazgos como con errores): la
+      # decisión la toma el analizador a partir del JSON.
+      - name: npm audit — producción (bloqueante)
+        run: |
+          npm audit --package-lock-only --omit=dev --json > audit-produccion.json 2> audit-produccion.stderr.txt || true
+          if [ -s audit-produccion.stderr.txt ]; then cat audit-produccion.stderr.txt; fi
+          node "$RUNNER_TEMP/reporte.js" audit-produccion.json bloqueante
+
+      # Corre aunque falle la de producción, para que el informe completo
+      # siempre quede visible. Sólo falla si no puede evaluarse.
+      - name: npm audit — completo (informativo)
+        if: ${{ !cancelled() }}
+        run: |
+          npm audit --package-lock-only --json > audit.json 2> audit.stderr.txt || true
+          if [ -s audit.stderr.txt ]; then cat audit.stderr.txt; fi
+          node "$RUNNER_TEMP/reporte.js" audit.json informativo audit-produccion.json
 
       - name: Guardar reporte de auditoría
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: npm-audit
-          path: audit.json
+          path: |
+            audit.json
+            audit-produccion.json
+          if-no-files-found: warn
           retention-days: 14
