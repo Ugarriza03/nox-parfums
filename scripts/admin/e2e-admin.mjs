@@ -13,7 +13,8 @@
  *        navegador no descarga código del pedido ni del catálogo
  *      · ningún JavaScript de la tienda contiene código del panel
  *      · sin errores de consola ni de hidratación (tienda y login)
- *   B. Producción sin NOX_ADMIN_HABILITADO → /admin responde la 404 de la tienda
+ *   B. Producción sin NOX_ADMIN_HABILITADO → /admin responde la 404 de la
+ *      tienda (con su presentación) sin nada del panel
  *   C. Supabase configurado pero inaccesible → errores controlados, sin acceso
  *
  * AISLAMIENTO DEL ENTORNO: cada escenario arranca con un entorno armado desde
@@ -149,6 +150,26 @@ function chunksDe(html) {
   }
   return [...out];
 }
+/**
+ * ¿Es la 404 de la tienda, con su presentación? Devuelve qué parte falla para
+ * que el informe diga exactamente qué renderizó Next.
+ */
+function es404DeTienda(status, html) {
+  const vista = visible(html);
+  const variante = (vista.match(/data-nox-404="([^"]+)"/) ?? [, "ninguna"])[1];
+  const partes = {
+    "status 404": status === 404,
+    "texto «Esta página no existe»": /Esta página no existe/.test(vista),
+    "404 de la tienda (data-nox-404=tienda)": variante === "tienda",
+    "salto «Ir al contenido»": MARCO.test(vista),
+    "encabezado <header>": /<header/.test(vista),
+    "pie <footer>": /<footer/.test(vista),
+    "sin contenido del panel": !/data-nox-admin|type="password"/.test(html)
+  };
+  const fallan = Object.entries(partes).filter(([, ok]) => !ok).map(([n]) => n);
+  return { ok: fallan.length === 0, detalle: `status ${status} · 404 renderizada: ${variante}${fallan.length ? ` · falla: ${fallan.join(", ")}` : ""}` };
+}
+
 async function chunksConMarcador(base, chunks, marcador) {
   const con = [];
   for (const src of chunks) {
@@ -177,12 +198,8 @@ const logA = await conServidor("A. SIN CONFIGURACIÓN DE SUPABASE", 3107, {}, as
   // 404 de la tienda: misma presentación de siempre.
   for (const ruta of ["/no-existe-nox", "/fragancia/no-existe-nox", "/catalogo/no-existe/nox"]) {
     const r = await get(`${base}${ruta}`);
-    const html = await r.text();
-    check(
-      `${ruta} responde 404 con la página de la tienda`,
-      r.status === 404 && /Esta página no existe/.test(html) && MARCO.test(visible(html)) && /<footer/.test(html) && !/data-nox-admin/.test(html),
-      String(r.status)
-    );
+    const { ok, detalle } = es404DeTienda(r.status, await r.text());
+    check(`${ruta} responde 404 con la página de la tienda`, ok, detalle);
   }
   const adminInexistente = await get(`${base}/admin/no-existe-nox`);
   check(
@@ -261,6 +278,11 @@ const logA = await conServidor("A. SIN CONFIGURACIÓN DE SUPABASE", 3107, {}, as
     const hidratacion = errores.filter((e) => /hydrat|did not match|server rendered HTML/i.test(e));
     check(`${ruta}: sin errores de consola ni de hidratación`, errores.length === 0, [...hidratacion, ...errores].slice(0, 2).join(" | "));
 
+    if (ruta === "/no-existe-nox") {
+      const variante = await page.evaluate(() => document.querySelector("[data-nox-404]")?.getAttribute("data-nox-404") ?? "ninguna");
+      const marco = await page.evaluate(() => ({ header: document.querySelectorAll("header").length, footer: document.querySelectorAll("footer").length }));
+      check("en el navegador, la 404 es la de la tienda con encabezado y pie", variante === "tienda" && marco.header > 0 && marco.footer > 0, `${variante} ${JSON.stringify(marco)}`);
+    }
     if (ruta === "/admin/login") {
       const dom = await page.evaluate(() => ({
         header: document.querySelectorAll("header").length,
@@ -295,11 +317,9 @@ await conServidor(
     for (const ruta of ["/admin", "/admin/login", "/admin/inventario", "/admin/mfa"]) {
       const r = await get(`${base}${ruta}`);
       const html = await r.text();
-      check(
-        `${ruta} responde la 404 de la tienda, sin nada del panel`,
-        r.status === 404 && /Esta página no existe/.test(html) && MARCO.test(visible(html)) && !/data-nox-admin|NOX Admin|type="password"/.test(html),
-        String(r.status)
-      );
+      const { ok, detalle } = es404DeTienda(r.status, html);
+      check(`${ruta} responde la 404 de la tienda`, ok, detalle);
+      check(`${ruta} no expone nada del panel`, !/data-nox-admin|NOX Admin|type="password"|Ingresar/.test(html) && /noindex/.test(r.headers.get("x-robots-tag") ?? ""));
     }
     const home = await get(`${base}/`);
     check("la tienda sigue respondiendo 200", home.status === 200);

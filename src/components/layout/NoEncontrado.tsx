@@ -7,7 +7,7 @@ import { NoxMark } from "@/components/ui";
  */
 export function NoEncontrado() {
   return (
-    <section className="flex min-h-[70vh] items-center pt-24">
+    <section data-nox-404="tienda" className="flex min-h-[70vh] items-center pt-24">
       <div className="nox-shell">
         <div className="mx-auto max-w-lg text-center">
           <div className="flex justify-center opacity-60">

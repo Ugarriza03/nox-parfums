@@ -252,14 +252,32 @@ check("el panel es dinámico (no se prerenderiza en el build)", /dynamic\s*=\s*"
 
 /* ---------------------------------------------- separación tienda / panel */
 
-const raizLayout = leer("src/app/layout.tsx");
+// Dos layouts raíz, sin layout ni 404 compartidos. Next responde los
+// notFound() que no se resuelven dentro del árbol con la 404 del layout raíz
+// de esa ruta: así la tienda usa la suya y /admin no incluye nada de ella.
 check(
-  "el layout raíz no incluye el marco de la tienda (Header, Footer, OrderBar, pedido)",
-  !/Header|Footer|OrderBar|OrderProvider|TiendaChrome|@\/store\//.test(raizLayout)
+  "no hay layout ni 404 raíz compartidos (src/app/layout.tsx y src/app/not-found.tsx no existen)",
+  !existsSync("src/app/layout.tsx") && !existsSync("src/app/not-found.tsx")
 );
-check("el layout de (tienda) usa TiendaChrome", /<TiendaChrome>/.test(leer("src/app/(tienda)/layout.tsx")));
+const layoutTienda = leer("src/app/(tienda)/layout.tsx");
+const layoutAdmin = leer("src/app/admin/layout.tsx");
 check(
-  "la 404 de la tienda vive en (tienda) y muestra NoEncontrado dentro del marco",
+  "la tienda y el panel tienen cada uno su layout raíz con el documento compartido",
+  /<Documento>/.test(layoutTienda) && /<Documento>/.test(layoutAdmin)
+);
+const documento = leer("src/components/documento/Documento.tsx");
+check(
+  "el documento compartido sólo arma <html>, tipografías y estilos (sin tienda ni panel)",
+  /<html lang="es-AR"/.test(documento) && /<body>/.test(documento) &&
+    [...documento.matchAll(/from\s+["']([^"']+)["']|import\s+["']([^"']+)["']/g)].every(([, a, b]) => ["react", "@/app/globals.css"].includes(a ?? b))
+);
+check("el layout de la tienda usa TiendaChrome y conserva su metadata", /<TiendaChrome>/.test(layoutTienda) && /metadataBase/.test(layoutTienda) && /openGraph/.test(layoutTienda));
+check(
+  "el layout del panel no incluye el marco de la tienda (Header, Footer, OrderBar, pedido)",
+  !/Header|Footer|OrderBar|OrderProvider|TiendaChrome|@\/store\//.test(layoutAdmin)
+);
+check(
+  "la 404 de la tienda es la de su layout raíz y muestra NoEncontrado dentro del marco",
   /<NoEncontrado \/>/.test(leer("src/app/(tienda)/not-found.tsx")) && !/TiendaChrome/.test(leer("src/app/(tienda)/not-found.tsx"))
 );
 check(
@@ -267,8 +285,9 @@ check(
   existsSync("src/app/(tienda)/[...noEncontrada]/page.tsx") && /notFound\(\)/.test(leer("src/app/(tienda)/[...noEncontrada]/page.tsx"))
 );
 check(
-  "la 404 raíz es neutral: no importa nada de la tienda",
-  ![...leer("src/app/not-found.tsx").matchAll(/from\s+["']([^"']+)["']/g)].some(([, r]) => r !== "next/link")
+  "la 404 del panel es neutral: no importa nada de la tienda",
+  existsSync("src/app/admin/not-found.tsx") &&
+    ![...leer("src/app/admin/not-found.tsx").matchAll(/from\s+["']([^"']+)["']/g)].some(([, r]) => r !== "next/link")
 );
 check(
   "con el panel deshabilitado, el proxy responde la 404 de la tienda",

@@ -1,17 +1,16 @@
 import Link from "next/link";
 
 /**
- * 404 RAÍZ — neutral, sin el marco de la tienda.
+ * 404 DEL PANEL — neutral, sin nada de la tienda.
  *
- * Next la incluye en todas las rutas (también en /admin), así que NO puede
- * importar componentes de la tienda: si lo hiciera, el JavaScript del pedido
- * y del catálogo se descargaría en el panel. Sólo la alcanzan los notFound()
- * de /admin; la tienda usa (tienda)/not-found.tsx.
+ * Es la 404 del layout raíz de /admin: la usan los notFound() de las páginas
+ * del panel (por ejemplo, una fragancia inexistente en el detalle de stock).
+ * Se muestra dentro del layout del panel, para administradores.
  */
 export default function NotFound() {
   return (
-    <main id="contenido" className="flex min-h-screen items-center bg-void">
-      <div className="nox-shell">
+    <section data-nox-404="panel" className="flex min-h-[60vh] items-center">
+      <div className="w-full">
         <div className="mx-auto max-w-lg text-center">
           <p className="nox-eyebrow">Error 404</p>
           <h1 className="mt-4 font-display text-[32px] leading-[1.1] text-bone md:text-[44px]">Esta página no existe</h1>
@@ -25,6 +24,6 @@ export default function NotFound() {
           </div>
         </div>
       </div>
-    </main>
+    </section>
   );
 }

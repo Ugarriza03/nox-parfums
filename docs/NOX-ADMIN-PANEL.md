@@ -133,13 +133,18 @@ registro de movimientos desde la interfaz y cierre de sesión.
 
 - Plan Free: pausa por inactividad y sin backups. Recomendado: exportar el
   historial periódicamente (próxima fase).
-- Layouts separados: las páginas públicas viven en el grupo `src/app/(tienda)/`
-  (mismas URLs) con Header, Footer, OrderProvider y OrderBar vía
-  `TiendaChrome`; el layout raíz sólo tiene `<html>`, fuentes y estilos; el
-  panel `/admin` tiene su propio layout y no descarga el pedido ni el catálogo
-  (`npm run qa:admin` lo verifica recorriendo los imports de todo el árbol
-  que Next arma para `/admin`, incluidos los archivos de la raíz). La 404 de
-  la tienda vive en `(tienda)/not-found.tsx` y las URLs inexistentes llegan a
-  ella por `(tienda)/[...noEncontrada]`; la 404 raíz es neutral porque Next la
-  incluye en todas las rutas.
+- Layouts separados: la tienda (`src/app/(tienda)/layout.tsx`) y el panel
+  (`src/app/admin/layout.tsx`) tienen cada uno su **layout raíz**; no hay
+  `src/app/layout.tsx` ni `src/app/not-found.tsx`. Los dos arman `<html>` con
+  `src/components/documento/Documento.tsx`. Motivo: Next 16 responde los
+  `notFound()` que no se resuelven dentro del árbol con la 404 del layout
+  raíz de la ruta, y un layout/404 raíz común o mete el marco de la tienda
+  en `/admin` o deja la 404 de la tienda sin su presentación. Ahora:
+  · la 404 de la tienda (`(tienda)/not-found.tsx`, con Header, Footer y
+    OrderBar) cubre URLs inexistentes (`(tienda)/[...noEncontrada]`), fichas
+    inexistentes y `/admin` en producción sin habilitar;
+  · `/admin` no descarga el pedido ni el catálogo (`npm run qa:admin`
+    recorre todo el árbol que Next arma para `/admin`) y su 404 es neutral.
+  · Ir de la tienda al panel (o al revés) recarga la página completa: es
+    el comportamiento de Next entre layouts raíz distintos.
 - Las clases de Tailwind del panel se suman a la hoja de estilos global.

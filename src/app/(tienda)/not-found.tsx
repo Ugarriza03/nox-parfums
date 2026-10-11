@@ -3,14 +3,15 @@ import { NoEncontrado } from "@/components/layout/NoEncontrado";
 /**
  * 404 DE LA TIENDA
  *
- * Se muestra dentro del layout de (tienda), así que conserva Header, Footer,
- * OrderBar y el pedido sin importarlos acá. Cubre:
+ * Es la 404 del layout raíz de la tienda ((tienda)/layout.tsx), así que se
+ * muestra con Header, Footer, OrderBar y el pedido sin importarlos acá.
+ * Cubre:
  *   · URLs inexistentes (las atrapa [...noEncontrada] y llama a notFound())
  *   · fichas inexistentes (/fragancia/[slug] llama a notFound())
+ *   · /admin en producción sin habilitar (el proxy reescribe a una URL
+ *     inexistente)
  *
- * Vive en el grupo (tienda) y no en la raíz a propósito: Next incluye el
- * not-found de un segmento en TODAS las páginas que cuelgan de él. En la raíz
- * metía el marco de la tienda (y el pedido, nox.pedido.v1) en /admin.
+ * /admin tiene su propio layout raíz y no incluye este archivo.
  */
 export default function NotFoundTienda() {
   return <NoEncontrado />;
