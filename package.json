@@ -13,7 +13,9 @@
     "integridad:generar": "tsx scripts/integridad/generar-manifiesto.ts",
     "olfativo": "tsx scripts/autocompletar-olfativo.ts",
     "preview": "node scripts/build-preview.mjs",
-    "qa": "npm run qa:integridad && npm run qa:ids && npm run qa:catalogo && npm run qa:performance && npm run qa:mayoristas && npm run qa:match && npm run qa:olfativo && npm run qa:import && npm run preview && npm run qa:lote && npm run qa:lote10 && npm run qa:lote20 && npm run qa:redaccion && npm run qa:pedido && npm run qa:asesor && npm run test:e2e",
+    "qa": "npm run qa:integridad && npm run qa:ids && npm run qa:admin && npm run test:admin:sesion && npm run test:admin:formulario && npm run qa:catalogo && npm run qa:performance && npm run qa:mayoristas && npm run qa:match && npm run qa:olfativo && npm run qa:import && npm run preview && npm run qa:lote && npm run qa:lote10 && npm run qa:lote20 && npm run qa:redaccion && npm run qa:pedido && npm run qa:asesor && npm run test:e2e",
+    "qa:admin": "tsx scripts/qa-admin.ts",
+    "qa:admin:sql": "bash supabase/tests/run.sh",
     "qa:asesor": "node scripts/qa-asesor.mjs",
     "qa:catalogo": "tsx scripts/qa-catalogo.ts",
     "qa:ids": "tsx scripts/ids/registrar-identificadores.ts --check && tsx scripts/qa-identificadores.ts",
@@ -32,6 +34,10 @@
     "redaccion": "tsx scripts/redactar-olfativo.ts",
     "revisar:olfativo": "tsx scripts/revisar-olfativo.ts",
     "start": "next start",
+    "test:admin:e2e": "node scripts/admin/e2e-admin.mjs",
+    "test:admin:formulario": "node scripts/admin/test-formulario-movimiento.mjs",
+    "test:admin:sesion": "node scripts/admin/test-sesion.mjs",
+    "diagnostico:admin": "node scripts/admin/diagnostico-aislamiento.mjs",
     "test:e2e": "node scripts/test-preview.mjs",
     "test:layout": "node scripts/verificar-layout.mjs",
     "validar": "tsx scripts/validar-catalogo.ts"
@@ -40,6 +46,8 @@
     "postcss": "^8.5.12"
   },
   "dependencies": {
+    "@supabase/ssr": "0.12.7",
+    "@supabase/supabase-js": "2.117.3",
     "next": "16.4.0",
     "react": "19.2.8",
     "react-dom": "19.2.8"

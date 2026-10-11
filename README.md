@@ -94,17 +94,25 @@ los totales y la continuidad de la escala.
 ```
 src/
   app/                      Rutas (App Router)
-    page.tsx                Home
-    catalogo/               Catálogo con buscador y filtros
-    fragancia/[slug]/       Ficha de producto (233 rutas estáticas)
-    asesor/                 Encontrá tu fragancia
-    mi-pedido/              Armado de pedido + WhatsApp
-    mayoristas/             Escala mayorista + armado propio
-    como-comprar/ envios/ preguntas-frecuentes/ contacto/
-    sitemap.ts robots.ts not-found.tsx
+    (tienda)/               Tienda pública. El grupo NO cambia las URLs
+      layout.tsx            Layout raíz de la tienda: documento, metadata y
+                            pedido + Header + Footer + OrderBar (TiendaChrome)
+      page.tsx              Home
+      catalogo/             Catálogo con buscador y filtros
+      fragancia/[slug]/     Ficha de producto (233 rutas estáticas)
+      asesor/               Encontrá tu fragancia
+      mi-pedido/            Armado de pedido + WhatsApp
+      mayoristas/           Escala mayorista + armado propio
+      como-comprar/ envios/ preguntas-frecuentes/ contacto/
+      not-found.tsx         404 de la tienda (dentro del marco)
+      [...noEncontrada]/    Toda URL inexistente → 404 de la tienda
+    admin/                  NOX Admin, layout raíz propio y 404 neutral
+                            (ver docs/NOX-ADMIN-PANEL.md)
+    sitemap.ts robots.ts    (no hay layout ni 404 raíz compartidos)
   components/
     ui/                     Botones, chips, stepper, reveal, íconos
-    layout/                 Header, nav mobile, footer
+    documento/              <html>, tipografías y estilos (lo usan los dos layouts raíz)
+    layout/                 Header, nav mobile, footer, TiendaChrome, contenido 404
     product/                Visual de fragancia, card, ficha
     home/                   Hero y secciones de la home
     order/                  Barra flotante + control de pedido compartido

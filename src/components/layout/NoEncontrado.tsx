@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { NoxMark } from "@/components/ui";
 
-export default function NotFound() {
+/**
+ * Contenido de la página 404 (sin marco). Lo usan la 404 global
+ * ((tienda)/not-found.tsx, dentro del marco de la tienda) y el preview estático.
+ */
+export function NoEncontrado() {
   return (
-    <section className="flex min-h-[70vh] items-center pt-24">
+    <section data-nox-404="tienda" className="flex min-h-[70vh] items-center pt-24">
       <div className="nox-shell">
         <div className="mx-auto max-w-lg text-center">
           <div className="flex justify-center opacity-60">

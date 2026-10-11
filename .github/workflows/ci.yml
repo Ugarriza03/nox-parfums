@@ -4,14 +4,18 @@
 # Qué corre y en qué orden (detalle en docs/NOX-ADMIN.md):
 #   1. verificar     npm ci → integridad + identificadores (falla rápido) →
 #                    next build → navegador de Playwright → npm run qa
-#                    (incluye preview + E2E) → test:layout → qa:sync
+#                    (incluye preview + E2E y qa:admin) → test:layout →
+#                    E2E de NOX Admin sin Supabase → qa:sync
+#   3. admin-sql     migraciones de NOX Admin sobre PostgreSQL desechable:
+#                    RLS, permisos, MFA, stock negativo, concurrencia e
+#                    historial inmutable (sin conexión a Supabase real)
 #   2. dependencias  npm audit sobre el lockfile, en dos partes:
 #                    · producción (--omit=dev): BLOQUEANTE ante alta/crítica
 #                    · completa (incluye desarrollo): informativa, visible
 #                    Si una auditoría no corre o su JSON es inválido, el job
 #                    falla: nunca se interpreta como "cero vulnerabilidades".
 #
-# Los dos jobs son independientes: una vulnerabilidad conocida pone el job
+# Los jobs son independientes: una vulnerabilidad conocida pone el job
 # "dependencias" en rojo sin ocultar el resultado de "verificar", y viceversa.
 
 name: CI
@@ -78,12 +82,52 @@ jobs:
       - name: Layout sin scroll horizontal (390 px)
         run: npm run test:layout
 
+      # Servidor de producción local (next start) sin Supabase, producción
+      # deshabilitada y Supabase inaccesible: el panel nunca expone datos y la
+      # tienda no depende de él.
+      - name: E2E de NOX Admin (sin Supabase real)
+        run: npm run test:admin:e2e
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+
       # qa:sync no forma parte de npm run qa y en main (c98bea1) ya falla un
       # chequeo ("Rasasi sigue en Árabes"). Se corre a la vista, sin bloquear,
       # hasta que se decida su corrección. Ver docs/NOX-ADMIN.md.
       - name: qa:sync (falla preexistente documentada, no bloqueante)
         run: npm run qa:sync
         continue-on-error: true
+
+  admin-sql:
+    name: NOX Admin — pruebas SQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          # Contenedor desechable del job, accesible sólo desde el runner:
+          # sin contraseña, así no hay ninguna credencial en el repositorio.
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: postgres
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      # Base desechable del propio job: no hay datos ni credenciales reales.
+      - name: Migraciones, RLS, permisos y concurrencia
+        run: bash supabase/tests/run.sh
 
   dependencias:
     name: Auditoría de dependencias
