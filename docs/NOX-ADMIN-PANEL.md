@@ -147,4 +147,17 @@ registro de movimientos desde la interfaz y cierre de sesión.
     recorre todo el árbol que Next arma para `/admin`) y su 404 es neutral.
   · Ir de la tienda al panel (o al revés) recarga la página completa: es
     el comportamiento de Next entre layouts raíz distintos.
+- 404 de la tienda en rutas dinámicas: cuando `notFound()` se dispara durante
+  el render en el servidor (URLs inexistentes, fichas inexistentes, `/admin`
+  cerrado en producción), Next 16 responde **status 404** con un documento de
+  error vacío (`<html id="__next_error__">`) y la carga RSC del render normal;
+  el navegador arma la 404 de la tienda con su encabezado y pie. Es el
+  comportamiento del framework: los límites de error de React sólo actúan en
+  el navegador. `test:admin:e2e` lo verifica de los dos lados (servidor: 404
+  en GET y HEAD, la respuesta transporta la 404 de la tienda y nada del
+  panel; navegador: DOM final, sin errores, sin JS del panel) e informa el
+  modo de entrega. Limitación: sin JavaScript, esa 404 se ve vacía (sigue
+  siendo 404 y no se indexa). Si hiciera falta HTML completo, la opción es la
+  404 global prerenderizada de Next (`global-not-found`), que hoy es
+  experimental: no se adoptó.
 - Las clases de Tailwind del panel se suman a la hoja de estilos global.
