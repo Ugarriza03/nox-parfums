@@ -9,13 +9,16 @@
     "build": "next build",
     "datos": "tsx scripts/reporte-datos.ts",
     "dev": "next dev",
-    "lint": "next lint",
+    "ids:registrar": "tsx scripts/ids/registrar-identificadores.ts",
+    "integridad:generar": "tsx scripts/integridad/generar-manifiesto.ts",
     "olfativo": "tsx scripts/autocompletar-olfativo.ts",
     "preview": "node scripts/build-preview.mjs",
-    "qa": "npm run qa:catalogo && npm run qa:performance && npm run qa:mayoristas && npm run qa:match && npm run qa:olfativo && npm run qa:import && npm run preview && npm run qa:lote && npm run qa:lote10 && npm run qa:lote20 && npm run qa:redaccion && npm run qa:pedido && npm run qa:asesor && npm run test:e2e",
+    "qa": "npm run qa:integridad && npm run qa:ids && npm run qa:catalogo && npm run qa:performance && npm run qa:mayoristas && npm run qa:match && npm run qa:olfativo && npm run qa:import && npm run preview && npm run qa:lote && npm run qa:lote10 && npm run qa:lote20 && npm run qa:redaccion && npm run qa:pedido && npm run qa:asesor && npm run test:e2e",
     "qa:asesor": "node scripts/qa-asesor.mjs",
     "qa:catalogo": "tsx scripts/qa-catalogo.ts",
+    "qa:ids": "tsx scripts/ids/registrar-identificadores.ts --check && tsx scripts/qa-identificadores.ts",
     "qa:import": "node scripts/qa-import.mjs",
+    "qa:integridad": "tsx scripts/integridad/verificar-integridad.ts && tsx scripts/integridad/qa-integridad-detecta.ts",
     "qa:lote": "node scripts/qa-lote.mjs",
     "qa:lote10": "node scripts/qa-lote-10.mjs",
     "qa:lote20": "node scripts/qa-lote-20.mjs",
@@ -37,20 +40,20 @@
     "postcss": "^8.5.12"
   },
   "dependencies": {
-    "next": "14.2.35",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "next": "16.4.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@types/node": "20.14.10",
-    "@types/react": "18.3.3",
-    "@types/react-dom": "18.3.0",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
     "autoprefixer": "10.4.19",
     "postcss": "^8.5.12",
     "tailwindcss": "3.4.10",
     "typescript": "5.5.4",
-    "tsx": "4.19.1",
-    "esbuild": "0.23.1",
+    "tsx": "4.23.15",
+    "esbuild": "0.28.2",
     "playwright": "1.55.1"
   }
 }

@@ -4,16 +4,18 @@ import { ProductDetail } from "@/components/product/ProductDetail";
 import { PRODUCTS, getProduct } from "@/data/products";
 import { siteConfig } from "@/config/site";
 
+// Next.js 16: `params` es una Promise (el acceso síncrono se eliminó).
 interface Params {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export function generateStaticParams() {
   return PRODUCTS.map((product) => ({ slug: product.slug }));
 }
 
-export function generateMetadata({ params }: Params): Metadata {
-  const product = getProduct(params.slug);
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const { slug } = await params;
+  const product = getProduct(slug);
   if (!product) return { title: "Fragancia no encontrada" };
 
   const description = product.olfactory
@@ -31,8 +33,9 @@ export function generateMetadata({ params }: Params): Metadata {
   };
 }
 
-export default function FragrancePage({ params }: Params) {
-  const product = getProduct(params.slug);
+export default async function FragrancePage({ params }: Params) {
+  const { slug } = await params;
+  const product = getProduct(slug);
   if (!product) notFound();
   return <ProductDetail product={product} />;
 }
