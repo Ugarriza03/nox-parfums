@@ -114,6 +114,7 @@ igual.
 | Comando | Qué verifica | Requiere |
 | --- | --- | --- |
 | `npm run qa:admin` | Lógica de acceso, validaciones, estados, filtros y revisión estática de seguridad (incluido en `npm run qa`) | Nada |
+| `npm run test:admin:formulario` | Regresión del formulario de movimientos: tras la carga inicial pasa solo al modo de movimientos (sin F5), conserva la confirmación, no permite otra carga y ingreso/egreso/ajuste siguen funcionando (incluido en `npm run qa`) | Chromium de Playwright |
 | `npm run qa:admin:sql` | Migración sobre PostgreSQL desechable: RLS, permisos, MFA, stock negativo, idempotencia, 25 egresos concurrentes, historial inmutable | `psql`/`createdb` y un PostgreSQL local (en CI: contenedor) |
 | `npm run test:admin:e2e` | `next start` sin Supabase, producción deshabilitada y Supabase caído: redirecciones, noindex, sin datos, sin código del panel en la tienda, sin errores de hidratación | `npm run build` + Chromium de Playwright |
 

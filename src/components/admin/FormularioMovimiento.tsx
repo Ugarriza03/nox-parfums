@@ -39,8 +39,19 @@ export function FormularioMovimiento({
 }) {
   const [estado, accion, pendiente] = useActionState(registrarMovimiento, INICIAL);
   const [requestId, setRequestId] = useState<string>("");
-  const [tipo, setTipo] = useState<TipoMovimiento>(tipos[0]);
+  const [tipoElegido, setTipo] = useState<TipoMovimiento>(tipos[0]);
   const [formKey, setFormKey] = useState(0);
+
+  // `tipos` puede cambiar sin que el formulario se desmonte: tras la carga
+  // inicial, la página se vuelve a renderizar con ingreso/egreso/ajuste en la
+  // misma posición, React conserva este estado y useState(tipos[0]) no se
+  // recalcula. Por eso el tipo vigente se deriva de las props en cada render:
+  // si el elegido ya no está permitido, se usa el primero de la lista nueva.
+  const tipo = tipos.includes(tipoElegido) ? tipoElegido : tipos[0];
+
+  // Carga inicial confirmada mientras la página todavía no trajo el modo de
+  // movimientos: no se permite enviar otra (la base también la rechaza).
+  const cargaConfirmada = estado.ok && tipos.length === 1 && tipos[0] === "carga_inicial";
 
   // El id se crea en el navegador (no en el render del servidor) para no
   // provocar diferencias de hidratación.
@@ -131,7 +142,7 @@ export function FormularioMovimiento({
 
       {estado.mensaje ? <Aviso tono={estado.ok ? "ok" : "error"}>{estado.mensaje}</Aviso> : null}
 
-      <button type="submit" disabled={pendiente || !requestId} className={claseBoton}>
+      <button type="submit" disabled={pendiente || !requestId || cargaConfirmada} className={claseBoton}>
         {pendiente ? "Registrando…" : `Registrar ${ETIQUETA_TIPO[tipo].toLowerCase()}`}
       </button>
     </form>
