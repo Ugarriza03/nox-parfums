@@ -190,7 +190,7 @@ check(
 
 /* -- la pregunta de refinamiento habla de carácter, no de proyección -- */
 
-const asesorTxt = textoVisible("src/app/asesor/AdvisorClient.tsx");
+const asesorTxt = textoVisible("src/app/(tienda)/asesor/AdvisorClient.tsx");
 check('la pregunta ya no dice "¿Cuánta presencia querés?"', !asesorTxt.includes("Cuánta presencia querés"));
 check('la pregunta es "¿Qué intensidad preferís?"', asesorTxt.includes("¿Qué intensidad preferís?"));
 check('el hint "Presente sin invadir" ya no existe', !asesorTxt.includes("Presente sin invadir"));

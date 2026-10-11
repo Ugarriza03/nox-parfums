@@ -228,6 +228,64 @@ check(
 check("el panel no se indexa (robots noindex en el layout)", /index:\s*false/.test(readFileSync("src/app/admin/layout.tsx", "utf8")));
 check("el panel es dinámico (no se prerenderiza en el build)", /dynamic\s*=\s*"force-dynamic"/.test(readFileSync("src/app/admin/layout.tsx", "utf8")));
 
+/* ---------------------------------------------- separación tienda / panel */
+
+const raizLayout = leer("src/app/layout.tsx");
+check(
+  "el layout raíz no incluye el marco de la tienda (Header, Footer, OrderBar, pedido)",
+  !/Header|Footer|OrderBar|OrderProvider|TiendaChrome|@\/store\//.test(raizLayout)
+);
+check(
+  "el layout de (tienda) y la 404 global usan TiendaChrome",
+  /<TiendaChrome>/.test(leer("src/app/(tienda)/layout.tsx")) && /<TiendaChrome>/.test(leer("src/app/not-found.tsx"))
+);
+const chrome = leer("src/components/layout/TiendaChrome.tsx");
+check(
+  "TiendaChrome conserva OrderProvider, Header, <main id=contenido>, Footer y OrderBar",
+  ["<OrderProvider>", "<Header />", 'id="contenido"', "<Footer />", "<OrderBar />"].every((t) => chrome.includes(t))
+);
+const RUTAS_PUBLICAS = ["page.tsx", "catalogo/page.tsx", "fragancia/[slug]/page.tsx", "asesor/page.tsx", "mi-pedido/page.tsx", "mayoristas/page.tsx", "como-comprar/page.tsx", "envios/page.tsx", "preguntas-frecuentes/page.tsx", "contacto/page.tsx"];
+const faltantes = RUTAS_PUBLICAS.filter((r) => !existsSync(`src/app/(tienda)/${r}`));
+const fuera = RUTAS_PUBLICAS.filter((r) => r !== "page.tsx" && existsSync(`src/app/${r}`));
+check("las 10 rutas públicas viven en (tienda) y no quedan duplicadas fuera", faltantes.length === 0 && fuera.length === 0 && !existsSync("src/app/page.tsx"), [...faltantes, ...fuera].join(", "));
+
+/** Archivos que alcanza un módulo siguiendo imports @/… y relativos. */
+function alcanzables(inicio: string[], cortarEn: (f: string, texto: string) => boolean): Set<string> {
+  const vistos = new Set<string>();
+  const pendientes = [...inicio];
+  while (pendientes.length) {
+    const f = pendientes.pop()!;
+    if (vistos.has(f)) continue;
+    vistos.add(f);
+    const texto = readFileSync(f, "utf8");
+    if (cortarEn(f, texto)) continue;
+    for (const [, ruta] of sinComentarios(texto).matchAll(/from\s+["']([^"']+)["']/g)) {
+      let base: string | null = null;
+      if (ruta.startsWith("@/")) base = `src/${ruta.slice(2)}`;
+      else if (ruta.startsWith(".")) base = enPosix(join(f, "..", ruta));
+      if (!base) continue;
+      const candidato = [`${base}.ts`, `${base}.tsx`, `${base}/index.ts`, `${base}/index.tsx`].find((c) => existsSync(c));
+      if (candidato) pendientes.push(candidato);
+    }
+  }
+  return vistos;
+}
+// Lo que descarga el navegador en /admin: los componentes de cliente del
+// panel y lo que importan. Un módulo "use server" llega como referencia, no
+// como código, así que ahí se corta el recorrido.
+const deCliente = alcanzables(clientesPanel, (f, t) => !clientesPanel.includes(f) && /^\s*["']use server["']/.test(t));
+const deTienda = [...deCliente].filter((f) => /src\/(store|components\/(layout|order|product|home|ui)|data)\//.test(f));
+check(
+  `el JavaScript de cliente del panel (${deCliente.size} módulos) no incluye pedido, catálogo ni componentes de la tienda`,
+  deTienda.length === 0,
+  deTienda.join(", ")
+);
+const desdeLayoutAdmin = alcanzables(["src/app/admin/layout.tsx"], () => false);
+check(
+  "el layout del panel no importa nada del marco de la tienda",
+  ![...desdeLayoutAdmin].some((f) => /src\/(store|components\/(layout|order))\//.test(f))
+);
+
 const migraciones = existsSync("supabase/migrations") ? readdirSync("supabase/migrations").filter((f) => f.endsWith(".sql")) : [];
 const sql = migraciones
   .map((f) => readFileSync(join("supabase/migrations", f), "utf8"))

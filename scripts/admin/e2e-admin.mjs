@@ -76,10 +76,19 @@ const logA = await conServidor(3107, {}, async (base) => {
   check("el proxy no se ejecuta en la tienda (sin cabeceras del panel)", !home.headers.get("x-robots-tag") && !home.headers.get("x-frame-options"));
   check("el HTML de la tienda no incluye nada del panel", !/data-nox-admin|NOX Admin|registrar_movimiento/.test(htmlHome));
 
-  for (const ruta of ["/catalogo", "/fragancia/lattafa-khamrah", "/mi-pedido", "/asesor", "/mayoristas"]) {
+  // Marco de la tienda (grupo (tienda)): mismas URLs, mismo encabezado y pie.
+  const MARCO = /Ir al contenido/;
+  check("la home conserva el marco de la tienda (salto, encabezado y pie)", MARCO.test(htmlHome) && /<header/.test(htmlHome) && /<footer/.test(htmlHome));
+  for (const ruta of ["/catalogo", "/fragancia/lattafa-khamrah", "/mi-pedido", "/asesor", "/mayoristas", "/como-comprar", "/envios", "/preguntas-frecuentes", "/contacto"]) {
     const r = await get(`${base}${ruta}`);
-    check(`${ruta} responde 200`, r.status === 200, String(r.status));
+    const html = await r.text();
+    check(`${ruta} responde 200 con el marco de la tienda`, r.status === 200 && MARCO.test(html) && /<footer/.test(html), String(r.status));
   }
+
+  // 404 global: conserva la presentación de la tienda.
+  const noExiste = await get(`${base}/no-existe-nox`);
+  const html404 = await noExiste.text();
+  check("una URL inexistente responde 404 con la página de la tienda", noExiste.status === 404 && /Esta página no existe/.test(html404) && MARCO.test(html404) && /<footer/.test(html404), String(noExiste.status));
 
   for (const ruta of ["/admin", "/admin/inventario", "/admin/inventario/lattafa-khamrah", "/admin/actividad", "/admin/configuracion", "/admin/mfa"]) {
     const r = await get(`${base}${ruta}`);
@@ -99,6 +108,16 @@ const logA = await conServidor(3107, {}, async (base) => {
   check("cabecera X-Robots-Tag noindex en /admin", /noindex/.test(login.headers.get("x-robots-tag") ?? ""));
   check("meta robots noindex en el HTML del panel", /<meta name="robots" content="noindex/.test(htmlLogin));
   check("respuesta del panel no cacheable", /no-store/.test(login.headers.get("cache-control") ?? ""));
+  check("el login no incluye el marco de la tienda (encabezado, pie, barra de pedido)", !/Ir al contenido|<footer/.test(htmlLogin) && /data-nox-admin/.test(htmlLogin));
+
+  // JavaScript que descarga el panel: no debe contener el pedido ni el catálogo.
+  const scriptsLogin = [...htmlLogin.matchAll(/<script[^>]+src="([^"]+)"/g)].map((m) => m[1]);
+  const conTienda = [];
+  for (const src of scriptsLogin) {
+    const js = await (await get(new URL(src, base).toString())).text();
+    if (/nox\.pedido\.v1|Inspirado en|lattafa-khamrah/.test(js)) conTienda.push(src);
+  }
+  check(`los ${scriptsLogin.length} scripts del login no contienen el pedido ni el catálogo`, scriptsLogin.length > 0 && conTienda.length === 0, conTienda.join(", "));
 
   // JavaScript que descarga la tienda: no debe contener código del panel.
   const scripts = [...htmlHome.matchAll(/<script[^>]+src="([^"]+)"/g)].map((m) => m[1]);

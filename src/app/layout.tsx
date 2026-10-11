@@ -1,11 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
-import { OrderProvider } from "@/store/order";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { OrderBar } from "@/components/order/OrderBar";
 import { siteConfig } from "@/config/site";
+
+/**
+ * LAYOUT RAÍZ — sólo el documento: <html>, tipografías, estilos y metadata.
+ *
+ * El marco de la tienda (pedido, Header, Footer, OrderBar) vive en
+ * src/app/(tienda)/layout.tsx y en la 404 global; el panel /admin tiene el
+ * suyo. Así el panel no carga componentes ni datos de la tienda.
+ */
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -44,22 +48,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           rel="stylesheet"
         />
       </head>
-      <body>
-        <OrderProvider>
-          <a
-            href="#contenido"
-            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-bone focus:px-4 focus:py-2 focus:text-[12px] focus:text-void"
-          >
-            Ir al contenido
-          </a>
-          <Header />
-          <main id="contenido" className="min-h-screen">
-            {children}
-          </main>
-          <Footer />
-          <OrderBar />
-        </OrderProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

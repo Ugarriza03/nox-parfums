@@ -15,16 +15,16 @@ import { OrderBar } from "@/components/order/OrderBar";
 import { ProductDetail } from "@/components/product/ProductDetail";
 import { getProduct } from "@/data/products";
 
-import HomePage from "@/app/page";
-import { CatalogClient } from "@/app/catalogo/CatalogClient";
-import { AdvisorClient } from "@/app/asesor/AdvisorClient";
-import { OrderClient } from "@/app/mi-pedido/OrderClient";
-import { WholesaleClient } from "@/app/mayoristas/WholesaleClient";
-import HowToBuyPage from "@/app/como-comprar/page";
-import ShippingPage from "@/app/envios/page";
-import FaqPage from "@/app/preguntas-frecuentes/page";
-import ContactPage from "@/app/contacto/page";
-import NotFound from "@/app/not-found";
+import HomePage from "@/app/(tienda)/page";
+import { CatalogClient } from "@/app/(tienda)/catalogo/CatalogClient";
+import { AdvisorClient } from "@/app/(tienda)/asesor/AdvisorClient";
+import { OrderClient } from "@/app/(tienda)/mi-pedido/OrderClient";
+import { WholesaleClient } from "@/app/(tienda)/mayoristas/WholesaleClient";
+import HowToBuyPage from "@/app/(tienda)/como-comprar/page";
+import ShippingPage from "@/app/(tienda)/envios/page";
+import FaqPage from "@/app/(tienda)/preguntas-frecuentes/page";
+import ContactPage from "@/app/(tienda)/contacto/page";
+import { NoEncontrado as NotFound } from "@/components/layout/NoEncontrado";
 
 function Routes() {
   const path = usePathname();

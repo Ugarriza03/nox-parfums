@@ -21,8 +21,10 @@ export const metadata: Metadata = {
 export default function AdminLayout({ children }: { children: ReactNode }) {
   if (!panelHabilitado()) notFound();
   return (
-    <div data-nox-admin className="min-h-screen bg-void pb-20 pt-24 md:pt-28">
+    // Layout propio: no incluye Header, Footer, OrderBar ni el pedido de la
+    // tienda (viven en el grupo (tienda)), así que el panel no los descarga.
+    <main id="contenido" data-nox-admin className="min-h-screen bg-void pb-20 pt-10 md:pt-14">
       <div className="nox-shell">{children}</div>
-    </div>
+    </main>
   );
 }

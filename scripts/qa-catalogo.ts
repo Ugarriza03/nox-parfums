@@ -223,7 +223,7 @@ check(
   footer.includes("NOX ofrece fragancias inspiradas en perfumes reconocidos")
 );
 
-const mayoristas = readFileSync("src/app/mayoristas/WholesaleClient.tsx", "utf8");
+const mayoristas = readFileSync("src/app/(tienda)/mayoristas/WholesaleClient.tsx", "utf8");
 check(
   "mayoristas usa la redacción aprobada",
   mayoristas.includes("te explicamos cómo funciona la compra")
@@ -247,7 +247,7 @@ check(
     home.includes("perfumería árabe")
 );
 
-const asesor = readFileSync("src/app/asesor/AdvisorClient.tsx", "utf8");
+const asesor = readFileSync("src/app/(tienda)/asesor/AdvisorClient.tsx", "utf8");
 check('"Intenso y ambarado" no existe en el asesor', !asesor.includes("Intenso y ambarado"));
 check(
   'el asesor usa "Ambarado" con el hint aprobado',

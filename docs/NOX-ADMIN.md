@@ -136,10 +136,10 @@ Todo está en la rama `feature/nox-admin-foundation`; `main` no se tocó.
   stock bajo global = 1; carga inicial explícita por fragancia; ajuste = stock
   real contado.
 - Implementado en `feature/nox-admin-panel-v1`: panel de inventario,
-  autenticación, migración con RLS y pruebas. Ver `docs/NOX-ADMIN-PANEL.md`.
+  autenticación, migración con RLS, layouts de tienda y panel separados
+  (grupo `(tienda)`) y pruebas. Ver `docs/NOX-ADMIN-PANEL.md`.
 - Pendiente antes de producción: pruebas con un proyecto Supabase real, MFA
-  exigido a ambos administradores, separar el layout del panel del de la
-  tienda, confirmar el plan de Vercel (Hobby no admite uso comercial) y decidir
+  exigido a ambos administradores, confirmar el plan de Vercel (Hobby no admite uso comercial) y decidir
   la falla preexistente de `qa:sync`.
 
 ### Costos futuros posibles (nada contratado)

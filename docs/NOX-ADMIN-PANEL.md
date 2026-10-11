@@ -125,7 +125,10 @@ registro de movimientos desde la interfaz y cierre de sesión.
 
 - Plan Free: pausa por inactividad y sin backups. Recomendado: exportar el
   historial periódicamente (próxima fase).
-- El panel todavía se muestra dentro del layout de la tienda (encabezado y pie).
-  Separarlo requiere mover las rutas públicas a un grupo `(tienda)`; ver la
-  decisión pendiente en el informe de la iteración.
+- Layouts separados: las páginas públicas viven en el grupo `src/app/(tienda)/`
+  (mismas URLs) con Header, Footer, OrderProvider y OrderBar vía
+  `TiendaChrome`; el layout raíz sólo tiene `<html>`, fuentes y estilos; el
+  panel `/admin` tiene su propio layout y no descarga el pedido ni el catálogo
+  (`npm run qa:admin` lo verifica recorriendo los imports). La 404 global usa
+  el mismo marco de la tienda.
 - Las clases de Tailwind del panel se suman a la hoja de estilos global.
