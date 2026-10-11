@@ -21,3 +21,8 @@ dist-preview/
 # Son los que mantienen el HTML autónomo en 20 MB: sin ellos build-preview.mjs
 # cae en los originales de 1122 px, el archivo pasa a 81 MB y el QA de
 # navegador se vuelve mucho más lento e inestable. Un clon limpio los necesita.
+
+# Variables de entorno locales (NOX Admin): nunca se versionan.
+.env
+.env.*
+!.env.example
