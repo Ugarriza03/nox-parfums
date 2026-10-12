@@ -65,6 +65,14 @@ jobs:
           npm run qa:integridad
           npm run qa:ids
 
+      - name: NOX V2 — preparar y verificar semilla de 233 fragancias
+        run: |
+          SEED_FILE="$(mktemp)"
+          rm -f "$SEED_FILE"
+          npx tsx scripts/admin/preparar-semilla-catalogo-v2.ts --out "$SEED_FILE"
+          npx tsx scripts/admin/qa-semilla-catalogo-v2.ts "$SEED_FILE"
+          rm -f "$SEED_FILE"
+
       - name: Build de producción (sin desplegar)
         run: npm run build
         env:
