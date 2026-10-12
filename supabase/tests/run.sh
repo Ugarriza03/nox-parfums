@@ -30,6 +30,10 @@ echo "── Pruebas secuenciales ───────────────�
 "${PSQL[@]}" -f "$RAIZ/supabase/tests/10_inventario.sql" 2>&1 | sed -n 's/^.*NOTICE:  //p; /ERROR/p; /OK$/p'
 
 echo
+echo "── NOX Admin V2: esquema, RLS y auditoría ──"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_fase1.sql"
+echo
+
 echo "── Concurrencia ─────────────────────────────────────────────────────"
 ADMIN_A="00000000-0000-0000-0000-00000000000a"
 ADMIN_B="00000000-0000-0000-0000-00000000000b"
