@@ -32,6 +32,7 @@ echo "── Pruebas secuenciales ───────────────�
 echo
 echo "── NOX Admin V2: esquema, RLS y auditoría ──"
 "${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_fase1.sql"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_estados.sql"
 echo
 
 echo "── Concurrencia ─────────────────────────────────────────────────────"
