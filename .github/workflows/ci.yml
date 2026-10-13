@@ -71,7 +71,15 @@ jobs:
           rm -f "$SEED_FILE"
           npx tsx scripts/admin/preparar-semilla-catalogo-v2.ts --out "$SEED_FILE"
           npx tsx scripts/admin/qa-semilla-catalogo-v2.ts "$SEED_FILE"
-          rm -f "$SEED_FILE"
+          SQL_FILE="$(mktemp)"
+          rm -f "$SQL_FILE"
+          npx tsx scripts/admin/preparar-importacion-catalogo-v2.ts "$SEED_FILE" --out "$SQL_FILE"
+          grep -q '^ROLLBACK;' "$SQL_FILE"
+          if grep -Eq '^COMMIT;' "$SQL_FILE"; then
+            echo "ERROR: SQL de vista previa contiene COMMIT"
+            exit 1
+          fi
+          rm -f "$SEED_FILE" "$SQL_FILE"
 
       - name: Build de producción (sin desplegar)
         run: npm run build
