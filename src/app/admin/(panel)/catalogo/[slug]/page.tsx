@@ -5,6 +5,8 @@ import { Aviso, Tarjeta, Titulo, fecha } from "@/components/admin/ui";
 import { CatalogFragranceEditor, type CatalogEditorValues } from "@/components/admin/CatalogFragranceEditor";
 import { guardarEdicionCatalogo } from "./acciones";
 import { AprobarRevision } from "@/components/admin/AprobarRevision";
+import { ControlesEstadoCatalogo } from "@/components/admin/ControlesEstadoCatalogo";
+import type { EstadoCatalogo } from "./estado-acciones";
 
 export const metadata = { title: "Ficha del catálogo" };
 
@@ -109,6 +111,10 @@ export default async function FichaCatalogoAdmin({
       ) : (
         <Aviso>Esta fragancia está oculta o archivada. Para editarla, primero debe volver a un estado permitido.</Aviso>
       )}
+      <Tarjeta>
+        <h2 className="mb-4 text-lg text-bone">Publicación y visibilidad</h2>
+        <ControlesEstadoCatalogo slug={slug} estado={data.status as EstadoCatalogo} />
+      </Tarjeta>
       <Aviso>El stock no se modifica desde esta ficha. Para registrar unidades o movimientos, utilizá Inventario.</Aviso>
     </div>
   );
