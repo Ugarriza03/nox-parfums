@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requerirAdmin } from "@/lib/admin/sesion";
 import { Aviso, Tarjeta, Titulo, fecha } from "@/components/admin/ui";
+import { CatalogFragranceEditor, type CatalogEditorValues } from "@/components/admin/CatalogFragranceEditor";
+import { guardarEdicionCatalogo } from "./acciones";
 
 export const metadata = { title: "Ficha del catálogo" };
 
@@ -36,7 +38,7 @@ export default async function FichaCatalogoAdmin({
   return (
     <div className="space-y-6">
       <Link href="/admin/catalogo" className="text-sm text-mist hover:text-bone">← Catálogo</Link>
-      <Titulo eyebrow={data.house} descripcion="Ficha administrativa de solo lectura. La edición y publicación se habilitarán después de verificar el flujo completo.">
+      <Titulo eyebrow={data.house} descripcion="Los borradores se editan directamente. Las fichas publicadas generan revisiones pendientes, sin modificar la tienda.">
         {data.fragrance_name}
       </Titulo>
       <Tarjeta>
@@ -55,6 +57,28 @@ export default async function FichaCatalogoAdmin({
           {data.olfactory ? JSON.stringify(data.olfactory, null, 2) : "Sin perfil cargado"}
         </pre>
       </Tarjeta>
+      {(data.status === "draft" || data.status === "published") ? (
+        <Tarjeta>
+          <h2 className="mb-4 text-lg text-bone">{data.status === "draft" ? "Editar borrador" : "Preparar revisión"}</h2>
+          <CatalogFragranceEditor
+            key={data.slug + ":" + data.updated_at}
+            mode={data.status === "draft" ? "edit-draft" : "propose-revision"}
+            initial={{
+              slug: data.slug,
+              house: data.house,
+              fragranceName: data.fragrance_name,
+              gender: data.gender as CatalogEditorValues["gender"],
+              universe: data.universe as CatalogEditorValues["universe"],
+              origin: data.origin as CatalogEditorValues["origin"],
+              olfactory: data.olfactory as Record<string, unknown> | null,
+              imagePath: data.image_path
+            }}
+            onSave={guardarEdicionCatalogo}
+          />
+        </Tarjeta>
+      ) : (
+        <Aviso>Esta fragancia está oculta o archivada. Para editarla, primero debe volver a un estado permitido.</Aviso>
+      )}
       <Aviso>El stock no se modifica desde esta ficha. Para registrar unidades o movimientos, utilizá Inventario.</Aviso>
     </div>
   );
