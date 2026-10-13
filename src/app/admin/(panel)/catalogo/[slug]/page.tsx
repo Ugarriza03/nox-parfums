@@ -4,6 +4,7 @@ import { requerirAdmin } from "@/lib/admin/sesion";
 import { Aviso, Tarjeta, Titulo, fecha } from "@/components/admin/ui";
 import { CatalogFragranceEditor, type CatalogEditorValues } from "@/components/admin/CatalogFragranceEditor";
 import { guardarEdicionCatalogo } from "./acciones";
+import { AprobarRevision } from "@/components/admin/AprobarRevision";
 
 export const metadata = { title: "Ficha del catálogo" };
 
@@ -24,6 +25,12 @@ export default async function FichaCatalogoAdmin({
 
   if (error) return <Aviso tono="error">No se pudo consultar esta ficha del catálogo V2.</Aviso>;
   if (!data) notFound();
+
+  const revision = data.status === "published"
+    ? await supabase.from("catalog_revisions")
+        .select("proposed_data,proposed_at,base_updated_at")
+        .eq("product_slug", slug).maybeSingle()
+    : null;
 
   const campos = [
     ["Identificador", data.slug],
@@ -57,6 +64,29 @@ export default async function FichaCatalogoAdmin({
           {data.olfactory ? JSON.stringify(data.olfactory, null, 2) : "Sin perfil cargado"}
         </pre>
       </Tarjeta>
+      {revision?.error ? (
+        <Aviso tono="error">No se pudo verificar si existen revisiones pendientes.</Aviso>
+      ) : revision?.data ? (
+        <Tarjeta>
+          <h2 className="mb-3 text-lg text-bone">Revisión pendiente de aprobación</h2>
+          <p className="mb-3 text-sm text-mist">Propuesta guardada el {fecha(revision.data.proposed_at)}. La ficha actual no se modifica hasta aprobarla.</p>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <h3 className="mb-2 text-xs uppercase tracking-wider text-mist">Ficha actual</h3>
+              <pre className="max-h-80 overflow-auto whitespace-pre-wrap break-words rounded-xl border border-edge p-3 text-xs text-haze">{JSON.stringify({
+                house: data.house, fragrance_name: data.fragrance_name, gender: data.gender,
+                universe: data.universe, origin: data.origin, olfactory: data.olfactory,
+                image_path: data.image_path
+              }, null, 2)}</pre>
+            </div>
+            <div>
+              <h3 className="mb-2 text-xs uppercase tracking-wider text-mist">Cambios propuestos</h3>
+              <pre className="max-h-80 overflow-auto whitespace-pre-wrap break-words rounded-xl border border-edge p-3 text-xs text-haze">{JSON.stringify(revision.data.proposed_data, null, 2)}</pre>
+            </div>
+          </div>
+          <div className="mt-5"><AprobarRevision slug={slug} /></div>
+        </Tarjeta>
+      ) : null}
       {(data.status === "draft" || data.status === "published") ? (
         <Tarjeta>
           <h2 className="mb-4 text-lg text-bone">{data.status === "draft" ? "Editar borrador" : "Preparar revisión"}</h2>
