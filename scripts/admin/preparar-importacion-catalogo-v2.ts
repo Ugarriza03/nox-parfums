@@ -16,6 +16,7 @@ type Row = {
   slug: string; house: string; fragrance_name: string;
   gender: string; universe: string; origin: string;
   olfactory: unknown; image_path: null; status: "published";
+  inspired_label: string; data_status: string; performance: unknown; description: null;
 };
 
 function fail(message: string): never { throw new Error("Importación V2: " + message); }
@@ -38,7 +39,9 @@ for (const item of data) {
   const expected: Row = {
     slug: p.slug, house: p.house, fragrance_name: p.inspiredBy.slice(p.house.length + 1),
     gender: p.gender, universe: p.universe, origin: p.origin,
-    olfactory: p.olfactory, image_path: null, status: "published"
+    olfactory: p.olfactory, image_path: null,
+    inspired_label: p.inspiredLabel, data_status: p.dataStatus,
+    performance: p.performance, description: null, status: "published"
   };
   if (JSON.stringify(r) !== JSON.stringify(expected)) fail("Paridad incorrecta: " + r.slug);
   slugs.add(r.slug);
@@ -48,7 +51,8 @@ const quote = (v: string): string => "'" + v.replace(/'/g, "''") + "'";
 const values = rows.map(r => "(" + [
   quote(r.slug), quote(r.house), quote(r.fragrance_name), quote(r.gender),
   quote(r.universe), quote(r.origin), r.olfactory === null ? "NULL" : quote(JSON.stringify(r.olfactory)) + "::jsonb",
-  "NULL", quote("published")
+  "NULL", quote(r.inspired_label), quote(r.data_status),
+  quote(JSON.stringify(r.performance)) + "::jsonb", "NULL", quote("published")
 ].join(", ") + ")").join(",\n");
 const sql = `-- NOX V2: VISTA PREVIA SOLAMENTE. NO EJECUTAR EN PRODUCCION.
 -- Requiere las migraciones V2 y una base de pruebas con catalog_products vacia.
@@ -61,7 +65,7 @@ DO $$ BEGIN
   END IF;
 END $$;
 INSERT INTO public.catalog_products
-  (slug, house, fragrance_name, gender, universe, origin, olfactory, image_path, status)
+  (slug, house, fragrance_name, gender, universe, origin, olfactory, image_path, inspired_label, data_status, performance, description, status)
 VALUES
 ${values};
 DO $$ BEGIN
