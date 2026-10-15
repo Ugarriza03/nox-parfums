@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { requerirAdmin } from "@/lib/admin/sesion";
 import { Aviso, Tarjeta, Titulo, fecha } from "@/components/admin/ui";
 import type { CatalogEditorValues } from "@/components/admin/CatalogFragranceEditor";
+import { EditorComplementos } from "@/components/admin/EditorComplementos";
 import { AuditoriaPortadas } from "@/components/admin/AuditoriaPortadas";
 import { CatalogEditorConPortada } from "@/components/admin/CatalogEditorConPortada";
 import { guardarEdicionCatalogo } from "./acciones";
@@ -23,7 +24,7 @@ export default async function FichaCatalogoAdmin({
 
   const { data, error } = await supabase
     .from("catalog_products")
-    .select("slug,house,fragrance_name,gender,universe,origin,status,olfactory,image_path,updated_at")
+    .select("slug,house,fragrance_name,gender,universe,origin,status,olfactory,image_path,description,inspired_label,data_status,performance,updated_at")
     .eq("slug", slug)
     .maybeSingle();
 
@@ -111,6 +112,16 @@ export default async function FichaCatalogoAdmin({
         </Tarjeta>
       ) : (
         <Aviso>Esta fragancia está oculta o archivada. Para editarla, primero debe volver a un estado permitido.</Aviso>
+      )}
+      {(data.status === "draft" || data.status === "published") && (
+        <Tarjeta>
+          <EditorComplementos slug={slug} status={data.status} initial={{
+            description: data.description,
+            inspiredLabel: data.inspired_label,
+            dataStatus: data.data_status as "verificado" | "pendiente" | null,
+            performance: data.performance as Record<string, unknown> | null
+          }} />
+        </Tarjeta>
       )}
       <Tarjeta>
         <AuditoriaPortadas slug={slug} />
