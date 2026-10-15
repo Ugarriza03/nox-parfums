@@ -81,6 +81,9 @@ jobs:
           fi
           rm -f "$SEED_FILE" "$SQL_FILE"
 
+      - name: NOX V2 — verificar 233 portadas y 6 alternativas por hash
+        run: npx tsx scripts/admin/qa-portadas-catalogo-v2.ts
+
       - name: Build de producción (sin desplegar)
         run: npm run build
         env:
