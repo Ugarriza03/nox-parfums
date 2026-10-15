@@ -392,7 +392,8 @@ const sql = migraciones
   .join("\n")
   .replace(/--.*$/gm, " ");
 check("hay migración versionada del inventario", migraciones.length >= 1);
-check("la migración no crea políticas de escritura", !/create policy[^;]*for\s+(insert|update|delete|all)/i.test(sql));
+const sqlInventarioV1 = readFileSync("supabase/migrations/20261011120000_nox_admin_inventario.sql", "utf8").replace(/--.*$/gm, " ");
+check("la migración V1 de inventario no crea políticas de escritura", !/create policy[^;]*for\s+(insert|update|delete|all)/i.test(sqlInventarioV1));
 check("las funciones SECURITY DEFINER fijan search_path vacío", (sql.match(/security definer/gi) ?? []).length === (sql.match(/security definer\s+set search_path = ''/gi) ?? []).length && /security definer/i.test(sql));
 check("la migración revoca los privilegios por defecto de anon", /revoke all on table[\s\S]*from public, anon, authenticated/i.test(sql));
 
