@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export type CatalogEditorValues = {
   slug: string;
@@ -17,11 +17,12 @@ type Props = {
   initial?: Partial<CatalogEditorValues>;
   mode: "create-draft" | "edit-draft" | "propose-revision";
   busy?: boolean;
+  uploadedImagePath?: string | null;
   onSave: (values: CatalogEditorValues) => Promise<void>;
 };
 
 /** UI desacoplada: no hace llamadas a Supabase ni publica cambios por su cuenta. */
-export function CatalogFragranceEditor({ initial, mode, busy = false, onSave }: Props) {
+export function CatalogFragranceEditor({ initial, mode, busy = false, uploadedImagePath, onSave }: Props) {
   const [house, setHouse] = useState(initial?.house ?? "");
   const [fragranceName, setFragranceName] = useState(initial?.fragranceName ?? "");
   const [slug, setSlug] = useState(initial?.slug ?? "");
@@ -30,6 +31,9 @@ export function CatalogFragranceEditor({ initial, mode, busy = false, onSave }: 
   const [origin, setOrigin] = useState<CatalogEditorValues["origin"]>(initial?.origin ?? "internacional");
   const [notes, setNotes] = useState(JSON.stringify(initial?.olfactory ?? {}, null, 2));
   const [imagePath, setImagePath] = useState(initial?.imagePath ?? "");
+  useEffect(() => {
+    if (uploadedImagePath) setImagePath(uploadedImagePath);
+  }, [uploadedImagePath]);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
