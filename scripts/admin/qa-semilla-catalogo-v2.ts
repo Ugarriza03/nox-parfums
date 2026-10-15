@@ -38,6 +38,10 @@ for (const product of PRODUCTS) {
     origin: product.origin,
     olfactory: product.olfactory,
     image_path: null,
+    inspired_label: product.inspiredLabel,
+    data_status: product.dataStatus,
+    performance: product.performance,
+    description: null,
     status: "published"
   };
   if (JSON.stringify(row) !== JSON.stringify(expected)) {
