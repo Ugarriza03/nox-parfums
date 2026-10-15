@@ -22,7 +22,7 @@ using (bucket_id = 'nox-catalog-covers'
 create policy "nox catalog covers admin insert"
 on storage.objects for insert to authenticated
 with check (bucket_id = 'nox-catalog-covers'
-  and name ~ '^covers/[a-z0-9]+(-[a-z0-9]+)*/[a-z0-9-]+\\.(webp|png|jpg|jpeg)$'
+  and name ~ '^covers/[a-z0-9]+(-[a-z0-9]+)*/[a-z0-9-]+[.](webp|png|jpg|jpeg)$'
   and public.is_admin()
   and coalesce(auth.jwt()->>'aal','') = 'aal2');
 
@@ -32,7 +32,7 @@ using (bucket_id = 'nox-catalog-covers'
   and public.is_admin()
   and coalesce(auth.jwt()->>'aal','') = 'aal2')
 with check (bucket_id = 'nox-catalog-covers'
-  and name ~ '^covers/[a-z0-9]+(-[a-z0-9]+)*/[a-z0-9-]+\\.(webp|png|jpg|jpeg)$'
+  and name ~ '^covers/[a-z0-9]+(-[a-z0-9]+)*/[a-z0-9-]+[.](webp|png|jpg|jpeg)$'
   and public.is_admin()
   and coalesce(auth.jwt()->>'aal','') = 'aal2');
 
