@@ -11,7 +11,7 @@ begin
   select count(*) into n from pg_policies
     where schemaname='storage' and tablename='objects'
       and policyname like 'nox catalog covers admin %';
-  if n <> 4 then raise exception 'Se esperaban 4 políticas de Storage; hay %', n; end if;
+  if n <> 3 then raise exception 'Se esperaban 3 políticas de Storage (sin borrado); hay %', n; end if;
   if not (select relrowsecurity from pg_class where oid='storage.objects'::regclass) then
     raise exception 'Storage objects sin RLS';
   end if;
