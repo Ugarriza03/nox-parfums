@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { requerirAdmin } from "@/lib/admin/sesion";
 import { Aviso, Tarjeta, Titulo, fecha } from "@/components/admin/ui";
 import type { CatalogEditorValues } from "@/components/admin/CatalogFragranceEditor";
+import { AuditoriaPortadas } from "@/components/admin/AuditoriaPortadas";
 import { CatalogEditorConPortada } from "@/components/admin/CatalogEditorConPortada";
 import { guardarEdicionCatalogo } from "./acciones";
 import { AprobarRevision } from "@/components/admin/AprobarRevision";
@@ -111,6 +112,9 @@ export default async function FichaCatalogoAdmin({
       ) : (
         <Aviso>Esta fragancia está oculta o archivada. Para editarla, primero debe volver a un estado permitido.</Aviso>
       )}
+      <Tarjeta>
+        <AuditoriaPortadas slug={slug} />
+      </Tarjeta>
       <Tarjeta>
         <h2 className="mb-4 text-lg text-bone">Publicación y visibilidad</h2>
         <ControlesEstadoCatalogo slug={slug} estado={data.status as EstadoCatalogo} />
