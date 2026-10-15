@@ -39,6 +39,7 @@ echo "── NOX Admin V2: esquema, RLS y auditoría ──"
 "${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_seguridad.sql"
 "${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_campos_complementarios.sql"
 "${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_storage.sql"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_validar_imagen.sql"
 echo
 
 echo "── Concurrencia ─────────────────────────────────────────────────────"
