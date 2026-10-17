@@ -30,6 +30,21 @@ echo "── Pruebas secuenciales ───────────────�
 "${PSQL[@]}" -f "$RAIZ/supabase/tests/10_inventario.sql" 2>&1 | sed -n 's/^.*NOTICE:  //p; /ERROR/p; /OK$/p'
 
 echo
+echo "── NOX Admin V2: esquema, RLS y auditoría ──"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_fase1.sql"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_estados.sql"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_borradores.sql"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_editar_borradores.sql"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_revisiones.sql"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_seguridad.sql"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_campos_complementarios.sql"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_storage.sql"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_validar_imagen.sql"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_imagen_en_uso.sql"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_preservar_complementos.sql"
+"${PSQL[@]}" -f "$RAIZ/supabase/tests/catalogo_v2_publicacion_segura.sql"
+echo
+
 echo "── Concurrencia ─────────────────────────────────────────────────────"
 ADMIN_A="00000000-0000-0000-0000-00000000000a"
 ADMIN_B="00000000-0000-0000-0000-00000000000b"
