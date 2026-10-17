@@ -11,7 +11,11 @@ begin
   select count(*) into n from pg_policies
     where schemaname='storage' and tablename='objects'
       and policyname like 'nox catalog covers admin %';
-  if n <> 3 then raise exception 'Se esperaban 3 políticas de Storage (sin borrado); hay %', n; end if;
+  if n <> 2 then raise exception 'Se esperaban 2 políticas de Storage (solo lectura e inserción); hay %', n; end if;
+  if exists (select 1 from pg_policies where schemaname='storage' and tablename='objects'
+    and policyname like 'nox catalog covers admin %' and cmd in ('UPDATE','DELETE','ALL')) then
+    raise exception 'Las portadas permiten modificación o borrado directo';
+  end if;
   if not (select relrowsecurity from pg_class where oid='storage.objects'::regclass) then
     raise exception 'Storage objects sin RLS';
   end if;
