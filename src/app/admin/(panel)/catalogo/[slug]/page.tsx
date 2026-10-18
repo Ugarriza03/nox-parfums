@@ -36,6 +36,14 @@ export default async function FichaCatalogoAdmin({
         .select("proposed_data,proposed_at,base_updated_at")
         .eq("product_slug", slug).maybeSingle();
 
+  // Vista previa efímera, solo tras autenticar al administrador con MFA.
+  // No convertir el bucket en público ni persistir la URL firmada.
+  const rutaPortada = typeof data.image_path === "string" &&
+    data.image_path.startsWith(`covers/${slug}/`) ? data.image_path : null;
+  const portada = rutaPortada
+    ? await supabase.storage.from("nox-catalog-covers").createSignedUrl(rutaPortada, 60)
+    : null;
+
   const campos = [
     ["Identificador", data.slug],
     ["Género", data.gender],
@@ -62,6 +70,21 @@ export default async function FichaCatalogoAdmin({
           ))}
         </dl>
       </Tarjeta>
+      {rutaPortada && (
+        <Tarjeta>
+          <h2 className="mb-3 text-base text-bone">Portada privada de la ficha</h2>
+          {portada?.data?.signedUrl ? (
+            // URL temporal obtenida en servidor, nunca almacenada en la base.
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={portada.data.signedUrl} alt={`Portada de ${data.fragrance_name}`}
+              referrerPolicy="no-referrer"
+              className="max-h-80 w-auto rounded-xl border border-edge object-contain" />
+          ) : (
+            <Aviso tono="error">No se pudo obtener la portada privada. Comprobá los permisos o actualizá la página.</Aviso>
+          )}
+          <p className="mt-2 text-xs text-mist">Vista previa temporal para administradores. No publica la imagen en la tienda.</p>
+        </Tarjeta>
+      )}
       <Tarjeta>
         <h2 className="mb-3 text-base text-bone">Perfil olfativo</h2>
         <pre className="overflow-x-auto whitespace-pre-wrap break-words text-xs text-haze">
