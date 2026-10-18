@@ -25,5 +25,13 @@
 - Aplicar migraciones y semilla en el proyecto de prueba, verificar autenticación/MFA y los flujos con navegador.
 - Resolver la vista de portadas privadas (URL firmada o mecanismo equivalente) y el enlace del catálogo V2 con el storefront **antes de prometer una prueba completa de publicación pública**.
 
+## Estado del entorno aislado informado por Claude (2026-10-18)
+- Supabase de prueba: `nox-admin-test`, separado de producción. Claude informó 233 fichas publicadas sin inventario ni portadas Storage.
+- Vercel de prueba: `https://nox-parfums-admin-test.vercel.app`, proyecto separado conectado a la rama V2.
+- Claude informó que `20261012270000_descartar_revision` seguía pendiente de aprobación manual. **No eludir confirmaciones de operaciones destructivas.**
+- La lectura V2 de fichas se activa únicamente con `NOX_CATALOGO_V2_TIENDA=true`; desactivada por defecto, con respaldo estático completo.
+- Esta integración no habilita productos nuevos, imágenes privadas ni el catálogo general; requieren otra fase y QA.
+- Verificar el estado real de las migraciones y el despliegue antes de considerar la prueba completa.
+
 ## Regla de despliegue
 Ninguna migración en producción, merge de PR #3, cambio de dominio ni modificación de variables productivas sin aprobación explícita del propietario.
