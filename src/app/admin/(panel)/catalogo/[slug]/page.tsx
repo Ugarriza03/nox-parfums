@@ -8,6 +8,7 @@ import { AuditoriaPortadas } from "@/components/admin/AuditoriaPortadas";
 import { CatalogEditorConPortada } from "@/components/admin/CatalogEditorConPortada";
 import { guardarEdicionCatalogo } from "./acciones";
 import { AprobarRevision } from "@/components/admin/AprobarRevision";
+import { DescartarRevision } from "@/components/admin/DescartarRevision";
 import { ControlesEstadoCatalogo } from "@/components/admin/ControlesEstadoCatalogo";
 import type { EstadoCatalogo } from "./estado-acciones";
 
@@ -89,7 +90,10 @@ export default async function FichaCatalogoAdmin({
               <pre className="max-h-80 overflow-auto whitespace-pre-wrap break-words rounded-xl border border-edge p-3 text-xs text-haze">{JSON.stringify(revision.data.proposed_data, null, 2)}</pre>
             </div>
           </div>
-          <div className="mt-5"><AprobarRevision slug={slug} /></div>
+          <div className="mt-5 grid gap-5 md:grid-cols-2">
+            {data.status === "published" && <AprobarRevision slug={slug} />}
+            <DescartarRevision slug={slug} />
+          </div>
         </Tarjeta>
       ) : null}
       {(data.status === "draft" || data.status === "published") ? (
