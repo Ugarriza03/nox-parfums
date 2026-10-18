@@ -10,7 +10,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <section data-nox-404="panel" className="flex min-h-[60vh] items-center">
-      <div className="w-full">
+      <div className="nox-shell w-full">
         <div className="mx-auto max-w-lg text-center">
           <p className="nox-eyebrow">Error 404</p>
           <h1 className="mt-4 font-display text-[32px] leading-[1.1] text-bone md:text-[44px]">Esta página no existe</h1>

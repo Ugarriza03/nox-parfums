@@ -34,8 +34,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     // Layout RAÍZ propio: no comparte layout con la tienda, así que el panel
     // no descarga Header, Footer, OrderBar, el pedido ni el catálogo.
     <Documento>
-      <main id="contenido" data-nox-admin className="min-h-screen bg-void pb-20 pt-10 md:pt-14">
-        <div className="nox-shell">{children}</div>
+      <main id="contenido" data-nox-admin className="min-h-screen bg-void">
+        {children}
       </main>
     </Documento>
   );

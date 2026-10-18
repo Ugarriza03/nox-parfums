@@ -65,6 +65,40 @@ jobs:
           npm run qa:integridad
           npm run qa:ids
 
+      - name: NOX V2 — preparar y verificar semilla de 233 fragancias
+        run: |
+          SEED_FILE="$(mktemp)"
+          rm -f "$SEED_FILE"
+          npx tsx scripts/admin/preparar-semilla-catalogo-v2.ts --out "$SEED_FILE"
+          npx tsx scripts/admin/qa-semilla-catalogo-v2.ts "$SEED_FILE"
+          SQL_FILE="$(mktemp)"
+          rm -f "$SQL_FILE"
+          npx tsx scripts/admin/preparar-importacion-catalogo-v2.ts "$SEED_FILE" --out "$SQL_FILE"
+          grep -q '^ROLLBACK;' "$SQL_FILE"
+          if grep -Eq '^COMMIT;' "$SQL_FILE"; then
+            echo "ERROR: SQL de vista previa contiene COMMIT"
+            exit 1
+          fi
+          rm -f "$SEED_FILE" "$SQL_FILE"
+
+      - name: NOX V2 — probar respaldo estático y paridad de lectura
+        run: npx tsx scripts/admin/test-catalogo-v2-adaptador.ts
+
+      - name: NOX Admin — menú lateral y módulo Catálogo (lógica y accesibilidad)
+        run: |
+          npx tsx scripts/admin/test-menu-admin.ts
+          npx tsx scripts/admin/test-catalogo-admin.ts
+          npx tsx scripts/admin/test-ficha-sincronizacion.ts
+
+      - name: NOX V2 — lectura de catálogo en tienda (flag, red y respaldo)
+        run: npx tsx scripts/admin/test-catalogo-tienda.ts
+
+      - name: NOX V2 — verificar 233 portadas y 6 alternativas por hash
+        run: npx tsx scripts/admin/qa-portadas-catalogo-v2.ts
+
+      - name: NOX V2 — validar archivos de imagen antes de Storage
+        run: npx tsx scripts/admin/qa-validar-portada-v2.ts
+
       - name: Build de producción (sin desplegar)
         run: npm run build
         env:
