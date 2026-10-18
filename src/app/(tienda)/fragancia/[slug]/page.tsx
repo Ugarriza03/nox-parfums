@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductDetail } from "@/components/product/ProductDetail";
-import { PRODUCTS, getProduct } from "@/data/products";
+import { PRODUCTS } from "@/data/products";
+import { obtenerProductoTienda } from "@/lib/catalogo-tienda";
 import { siteConfig } from "@/config/site";
 
 // Next.js 16: `params` es una Promise (el acceso síncrono se eliminó).
@@ -15,7 +16,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const { product, fuente } = await obtenerProductoTienda(slug);
   if (!product) return { title: "Fragancia no encontrada" };
 
   const description = product.olfactory
@@ -29,13 +30,14 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     openGraph: {
       title: `NOX — ${product.inspiredLabel}`,
       description
-    }
+    },
+    other: { "nox-catalogo-fuente": fuente }
   };
 }
 
 export default async function FragrancePage({ params }: Params) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const { product, fuente } = await obtenerProductoTienda(slug);
   if (!product) notFound();
   return <ProductDetail product={product} />;
 }
