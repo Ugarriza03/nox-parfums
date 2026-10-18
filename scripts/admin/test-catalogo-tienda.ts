@@ -21,6 +21,7 @@ const respaldo = async (data: unknown, status = 200) => {
   assert.equal(result.fuente, "estatico");
   assert.equal(result.products, PRODUCTS);
 };
+async function main() {
 assert.equal(catalogoV2Activado({}), false);
 assert.equal(catalogoV2Activado(env), true);
 const sinFlag = await obtenerCatalogoTienda({}, respuesta(filas));
@@ -50,3 +51,5 @@ const fallo = await obtenerCatalogoTienda(env, (async () => { throw Error("red c
 assert.equal(fallo.fuente, "estatico");
 assert.equal(fallo.products, PRODUCTS);
 console.log("OK: 20 verificaciones de flag, lectura pública, ficha y respaldo estático.");
+}
+main().catch(error => { console.error(error); process.exitCode = 1; });
