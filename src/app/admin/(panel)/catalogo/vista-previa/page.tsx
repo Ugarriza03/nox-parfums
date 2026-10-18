@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requerirAdmin } from "@/lib/admin/sesion";
 import { PRODUCTS } from "@/data/products";
+import { prepararVistaCatalogoV2, type FilaCatalogoV2 } from "@/lib/admin/catalogo-v2-adaptador";
 import { Aviso, Tarjeta, Titulo } from "@/components/admin/ui";
 
 export const metadata = { title: "Vista previa de migración del catálogo" };
@@ -18,10 +19,11 @@ function jsonEstable(value: unknown): string {
 export default async function VistaPreviaCatalogoV2() {
   const { supabase } = await requerirAdmin();
   const { data, error } = await supabase.from("catalog_products")
-    .select("slug,house,fragrance_name,status,gender,universe,origin,olfactory,inspired_label,data_status,performance")
+    .select("slug,house,fragrance_name,status,gender,universe,origin,olfactory,inspired_label,data_status,performance,image_path")
     .order("slug").limit(1000);
   if (error || !data) return <Aviso tono="error">No se pudo leer el catálogo V2. La tienda pública permanece intacta.</Aviso>;
 
+  const vista = prepararVistaCatalogoV2(data as FilaCatalogoV2[], false);
   const originales = new Map(PRODUCTS.map(p => [p.slug, p]));
   const recibidos = new Set<string>();
   const problemas: string[] = [];
@@ -75,6 +77,9 @@ export default async function VistaPreviaCatalogoV2() {
           <div><dt className="text-sm text-mist">Rendimientos sin prueba previa</dt><dd className="text-xl text-bone">{rendimientoNoVerificado}</dd></div>
         </dl>
       </Tarjeta>
+      <Aviso tono={vista.fuente === "v2" ? "ok" : "info"}>
+        Adaptador de lectura: {vista.fuente === "v2" ? "datos V2 disponibles para simulación" : `respaldo estático activo (${vista.motivos.join(", ")})`}. Ningún cambio se muestra en la tienda pública.
+      </Aviso>
       <Aviso tono={listo ? "info" : "error"}>
         {listo
           ? "Paridad de identidad y datos olfativos 233/233. Aún falta verificar imágenes, pedidos y SEO antes de cualquier corte público."
