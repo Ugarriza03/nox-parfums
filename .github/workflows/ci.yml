@@ -81,6 +81,9 @@ jobs:
           fi
           rm -f "$SEED_FILE" "$SQL_FILE"
 
+      - name: NOX V2 — probar respaldo estático y paridad de lectura
+        run: npx tsx scripts/admin/test-catalogo-v2-adaptador.ts
+
       - name: NOX V2 — verificar 233 portadas y 6 alternativas por hash
         run: npx tsx scripts/admin/qa-portadas-catalogo-v2.ts
 
