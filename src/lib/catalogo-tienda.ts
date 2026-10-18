@@ -8,18 +8,11 @@ type Fetch = typeof fetch;
 function leerConfigPublica(env: Env): { url: string; publishableKey: string } | null {
   const rawUrl = env.NOX_SUPABASE_URL?.trim();
   const publishableKey = env.NOX_SUPABASE_PUBLISHABLE_KEY?.trim();
-  if (!rawUrl || !publishableKey || /^sb_secret_/i.test(publishableKey)) return null;
+  if (!rawUrl || !publishableKey || !/^sb_publishable_[A-Za-z0-9_-]+$/.test(publishableKey)) return null;
   let url: URL;
   try { url = new URL(rawUrl); } catch { return null; }
   const local = url.hostname === "localhost" || url.hostname === "127.0.0.1";
   if (url.protocol !== "https:" && !(local && url.protocol === "http:")) return null;
-  const jwt = publishableKey.split(".");
-  if (jwt.length === 3) {
-    try {
-      const payload = JSON.parse(Buffer.from(jwt[1], "base64url").toString("utf8")) as { role?: string };
-      if (payload.role === "service_role") return null;
-    } catch { return null; }
-  }
   return { url: url.origin, publishableKey };
 }
 export const TIEMPO_MAXIMO_MS = 2500;
