@@ -67,7 +67,10 @@ export default async function CatalogoAdminPage({
         <Titulo eyebrow="NOX Admin · Catálogo V2" descripcion="Administrá las fichas y su visibilidad. El stock propio se gestiona exclusivamente desde Inventario.">
           Fragancias
         </Titulo>
-        <Link href="/admin/catalogo/nueva" className={claseBoton}>Nueva fragancia</Link>
+        <div className="flex flex-wrap items-center gap-3">
+          <Link href="/admin/catalogo/vista-previa" className="rounded-full border border-edge px-5 py-2.5 text-sm text-bone">Comparar con tienda actual</Link>
+          <Link href="/admin/catalogo/nueva" className={claseBoton}>Nueva fragancia</Link>
+        </div>
       </div>
       <form method="get" className="grid gap-3 sm:grid-cols-[1fr_190px_auto]" role="search">
         <input name="q" defaultValue={q} placeholder="Buscar marca, nombre o identificador" aria-label="Buscar fragancias" className={claseCampo} />
