@@ -14,10 +14,12 @@ type Accion = "aprobar" | "descartar";
  * rechazaría). `descarteDisponible` es falso si la migración de descarte no
  * está aplicada: el botón queda deshabilitado con el motivo, sin alternativas.
  */
-export function AccionesRevision({ slug, puedeAprobar, descarteDisponible }: {
+export function AccionesRevision({ slug, puedeAprobar, descarteDisponible, version }: {
   slug: string;
   puedeAprobar: boolean;
   descarteDisponible: boolean;
+  /** Versión mostrada: se aprueba sólo si la propuesta sigue siendo la misma. */
+  version: unknown;
 }) {
   const router = useRouter();
   const [accion, setAccion] = useState<Accion | null>(null);
@@ -29,10 +31,21 @@ export function AccionesRevision({ slug, puedeAprobar, descarteDisponible }: {
     setOcupado(true);
     setMensaje(null);
     try {
-      const r = accion === "aprobar" ? await publicarRevision(slug) : await descartarRevision(slug);
-      if (!r.ok) { setMensaje({ ok: false, texto: r.error }); return; }
-      setMensaje({ ok: true, texto: accion === "aprobar" ? "Revisión aprobada y aplicada a la ficha." : "Revisión descartada. La ficha no cambió." });
+      const r = accion === "aprobar" ? await publicarRevision(slug, version) : await descartarRevision(slug);
+      if (!r.ok) {
+        setMensaje({ ok: false, texto: r.error });
+        if ("desactualizada" in r && r.desactualizada) router.refresh();
+        return;
+      }
       setAccion(null);
+      // Este bloque desaparece al no quedar revisión: el aviso se muestra en la
+      // página, que sólo lo presenta si sigue siendo cierto.
+      if (accion === "aprobar") {
+        router.replace(`/admin/catalogo/${encodeURIComponent(slug)}?aviso=revision-aprobada`, { scroll: false });
+        router.refresh();
+        return;
+      }
+      setMensaje({ ok: true, texto: "Revisión descartada. La ficha no cambió." });
       router.refresh();
     } catch {
       setMensaje({ ok: false, texto: "No se pudo completar la acción. Intentá nuevamente." });

@@ -88,6 +88,7 @@ jobs:
         run: |
           npx tsx scripts/admin/test-menu-admin.ts
           npx tsx scripts/admin/test-catalogo-admin.ts
+          npx tsx scripts/admin/test-ficha-sincronizacion.ts
 
       - name: NOX V2 — lectura de catálogo en tienda (flag, red y respaldo)
         run: npx tsx scripts/admin/test-catalogo-tienda.ts

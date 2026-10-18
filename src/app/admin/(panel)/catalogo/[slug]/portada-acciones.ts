@@ -2,7 +2,7 @@
 
 import { requerirAdmin } from "@/lib/admin/sesion";
 import { esSlugValido } from "@/lib/admin/catalogo-v2";
-import { COVER_BUCKET, MAX_COVER_BYTES, validarPortada } from "@/lib/admin/validar-portada";
+import { COVER_BUCKET, MAX_COVER_BYTES, MAX_COVER_ETIQUETA, validarPortada } from "@/lib/admin/validar-portada";
 
 export type ResultadoPortada = { ok: true; ruta: string } | { ok: false; error: string };
 
@@ -18,7 +18,7 @@ export async function subirPortadaCatalogo(form: FormData): Promise<ResultadoPor
   if (!esSlugValido(slug) || !(archivo instanceof File)) {
     return { ok: false, error: "Seleccioná una imagen para una fragancia válida." };
   }
-  if (archivo.size < 1 || archivo.size > MAX_COVER_BYTES) return { ok: false, error: "La portada debe pesar como máximo 5 MB." };
+  if (archivo.size < 1 || archivo.size > MAX_COVER_BYTES) return { ok: false, error: `La portada debe pesar como máximo ${MAX_COVER_ETIQUETA}.` };
 
   const { data: producto, error: errorProducto } = await supabase
     .from("catalog_products").select("status").eq("slug", slug).maybeSingle();

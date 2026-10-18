@@ -8,6 +8,11 @@
  * El perfil olfativo se edita en campos estructurados; las claves que el
  * editor no conoce se conservan, y guardar sin tocar nada no altera el perfil.
  * No incluye stock: el inventario se gestiona sólo desde Inventario.
+ *
+ * Sincronización: `version` identifica los datos del servidor con que se
+ * renderizó. Cuando cambia (aprobación, guardado, cambio de estado), el
+ * formulario se reinicia con los valores actuales, para que nunca quede un
+ * valor viejo que pueda revertir un cambio aprobado al volver a guardar.
  */
 
 import { useEffect, useMemo, useState } from "react";
@@ -33,6 +38,7 @@ import {
   sugerirSlug,
   type PerfilEditable
 } from "@/lib/admin/catalogo-v2";
+import { ayudaCampoPortada, sinCambios } from "@/lib/admin/ficha-sincronizacion";
 import { claseAyuda, claseBoton, claseCampo, claseError, claseEtiqueta, claseOk } from "./ui";
 
 export type CatalogEditorValues = {
@@ -47,13 +53,15 @@ export type CatalogEditorValues = {
 };
 
 /** Resultado de guardar: la acción devuelve el destino opcional tras crear. */
-export type ResultadoGuardado = { ok: true; slug?: string } | { ok: false; error: string };
+export type ResultadoGuardado = { ok: true; slug?: string } | { ok: false; error: string; desactualizada?: boolean };
 
 type Props = {
   initial?: Partial<CatalogEditorValues>;
   mode: "create-draft" | "edit-draft" | "propose-revision";
   busy?: boolean;
   uploadedImagePath?: string | null;
+  /** Versión de los datos del servidor; al cambiar, el formulario se reinicia. */
+  version?: string;
   onSave: (values: CatalogEditorValues) => Promise<ResultadoGuardado | void>;
 };
 
@@ -96,7 +104,11 @@ function Casillas({
   );
 }
 
-export function CatalogFragranceEditor({ initial, mode, busy = false, uploadedImagePath, onSave }: Props) {
+type Modo = Props["mode"];
+/** Mensaje ligado al modo en que se produjo: si el modo cambia, deja de mostrarse. */
+type Mensaje = { texto: string; modo: Modo } | null;
+
+export function CatalogFragranceEditor({ initial, mode, busy = false, uploadedImagePath, version, onSave }: Props) {
   const router = useRouter();
   const creando = mode === "create-draft";
   const perfilBase = initial?.olfactory ?? null;
@@ -110,9 +122,26 @@ export function CatalogFragranceEditor({ initial, mode, busy = false, uploadedIm
   const [origin, setOrigin] = useState<CatalogEditorValues["origin"]>(initial?.origin ?? "internacional");
   const [perfil, setPerfil] = useState<PerfilEditable>(() => perfilAEditable(perfilBase));
   const [imagePath, setImagePath] = useState(initial?.imagePath ?? "");
-  const [error, setError] = useState<string | null>(null);
-  const [ok, setOk] = useState<string | null>(null);
+  const [error, setErrorMensaje] = useState<Mensaje>(null);
+  const [ok, setOkMensaje] = useState<Mensaje>(null);
   const [saving, setSaving] = useState(false);
+  const setError = (texto: string | null) => setErrorMensaje(texto ? { texto, modo: mode } : null);
+  const setOk = (texto: string | null) => setOkMensaje(texto ? { texto, modo: mode } : null);
+
+  // Reinicio al cambiar la versión del servidor (patrón "estado derivado de
+  // props" de React: se aplica en el mismo render, sin mostrar valores viejos).
+  const [versionVista, setVersionVista] = useState(version);
+  if (version !== versionVista) {
+    setVersionVista(version);
+    setHouse(initial?.house ?? "");
+    setFragranceName(initial?.fragranceName ?? "");
+    setSlug(initial?.slug ?? "");
+    setGender(initial?.gender ?? "unisex");
+    setUniverse(initial?.universe ?? "disenador");
+    setOrigin(initial?.origin ?? "internacional");
+    setPerfil(perfilAEditable(perfilBase));
+    setImagePath(initial?.imagePath ?? "");
+  }
 
   useEffect(() => {
     if (uploadedImagePath) setImagePath(uploadedImagePath);
@@ -141,15 +170,27 @@ export function CatalogFragranceEditor({ initial, mode, busy = false, uploadedIm
     }
     const resultado = editableAPerfil(perfil, perfilBase);
     if (!resultado.ok) { setError(resultado.error); return; }
+    const valores: CatalogEditorValues = {
+      slug, house: house.trim(), fragranceName: fragranceName.trim(), gender, universe, origin,
+      olfactory: resultado.perfil, imagePath: imagePath || null
+    };
+    if (!creando && sinCambios(valores, initial)) {
+      setOk(mode === "propose-revision"
+        ? "No hay cambios para guardar: el formulario coincide con los datos actuales."
+        : "No hay cambios para guardar: el borrador ya tiene estos valores.");
+      return;
+    }
     setSaving(true);
     try {
-      const r = await onSave({
-        slug, house: house.trim(), fragranceName: fragranceName.trim(), gender, universe, origin,
-        olfactory: resultado.perfil, imagePath: imagePath || null
-      });
-      if (r && !r.ok) { setError(r.error); return; }
+      const r = await onSave(valores);
+      if (r && !r.ok) {
+        setError(r.error);
+        // Formulario viejo: se traen los datos actuales (el reinicio lo hace `version`).
+        if (r.desactualizada) router.refresh();
+        return;
+      }
       if (creando && r && r.ok && r.slug) {
-        router.push(`/admin/catalogo/${encodeURIComponent(r.slug)}?creada=1`);
+        router.push(`/admin/catalogo/${encodeURIComponent(r.slug)}?aviso=creada`);
         return;
       }
       setOk(mode === "propose-revision"
@@ -213,7 +254,11 @@ export function CatalogFragranceEditor({ initial, mode, busy = false, uploadedIm
           </label>
           <label className={claseEtiqueta}>Portada privada
             <input value={imagePath} readOnly placeholder="Sin portada en almacenamiento privado" className={`${claseCampo} font-mono text-[12px]`} />
-            <span className={claseAyuda}>Se completa al subir una imagen. Para quitarla, usá “Quitar portada”.</span>
+            <span className={claseAyuda}>
+              {creando
+                ? "La portada se sube después de crear el borrador, desde la ficha."
+                : ayudaCampoPortada(mode, initial?.imagePath ?? null, imagePath || null)}
+            </span>
           </label>
         </div>
         {imagePath ? (
@@ -275,8 +320,8 @@ export function CatalogFragranceEditor({ initial, mode, busy = false, uploadedIm
       </fieldset>
 
       <div aria-live="polite" className="space-y-3">
-        {error ? <p role="alert" className={claseError}>{error}</p> : null}
-        {ok ? <p role="status" className={claseOk}>{ok}</p> : null}
+        {error && error.modo === mode ? <p role="alert" className={claseError}>{error.texto}</p> : null}
+        {ok && ok.modo === mode ? <p role="status" className={claseOk}>{ok.texto}</p> : null}
       </div>
       <div className="flex flex-wrap items-center gap-3 border-t border-edge pt-6">
         <button type="submit" disabled={locked} className={claseBoton} aria-busy={saving}>

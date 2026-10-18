@@ -5,7 +5,7 @@ import { requerirAdmin } from "@/lib/admin/sesion";
 import { ESTADOS_CATALOGO, esSlugValido, mensajeErrorRpc, type EstadoCatalogo } from "@/lib/admin/catalogo-v2";
 
 export type { EstadoCatalogo };
-export type ResultadoAccion = { ok: true } | { ok: false; error: string };
+export type ResultadoAccion = { ok: true } | { ok: false; error: string; desactualizada?: boolean };
 
 /** Transición de estado mediante nox_catalog_cambiar_estado (auditada, idempotente). */
 export async function cambiarEstadoCatalogo(slug: string, estado: EstadoCatalogo): Promise<ResultadoAccion> {

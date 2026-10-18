@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requerirAdmin } from "@/lib/admin/sesion";
 import { esSlugValido, mensajeErrorRpc } from "@/lib/admin/catalogo-v2";
+import { verificarVersion } from "@/lib/admin/catalogo-version";
 import type { ResultadoAccion } from "./estado-acciones";
 
 /**
@@ -18,6 +19,8 @@ export async function guardarComplementosCatalogo(input: {
   description: string | null;
   inspiredLabel: string | null;
   dataStatus: "verificado" | "pendiente" | null;
+  /** Versión que mostró la página; si cambió, se rechaza (formulario viejo). */
+  versionEsperada: unknown;
 }): Promise<ResultadoAccion> {
   const { supabase } = await requerirAdmin();
   if (!input || !esSlugValido(input.slug) ||
@@ -26,6 +29,8 @@ export async function guardarComplementosCatalogo(input: {
       (input.dataStatus !== null && !["verificado", "pendiente"].includes(input.dataStatus))) {
     return { ok: false, error: "Los datos editoriales no son válidos." };
   }
+  const version = await verificarVersion(supabase, input.slug, input.versionEsperada);
+  if (!version.ok) return version;
 
   const [ficha, revision] = await Promise.all([
     supabase.from("catalog_products").select("performance").eq("slug", input.slug).maybeSingle(),

@@ -4,7 +4,6 @@ import { requerirAdmin } from "@/lib/admin/sesion";
 import {
   Aviso, ChipEstadoCatalogo, ChipRevision, Subtitulo, Tarjeta, claseOk, fecha
 } from "@/components/admin/ui";
-import type { CatalogEditorValues } from "@/components/admin/CatalogFragranceEditor";
 import { CatalogEditorConPortada } from "@/components/admin/CatalogEditorConPortada";
 import { EditorComplementos } from "@/components/admin/EditorComplementos";
 import { AuditoriaPortadas } from "@/components/admin/AuditoriaPortadas";
@@ -16,6 +15,9 @@ import {
   type GeneroCatalogo, type OrigenCatalogo
 } from "@/lib/admin/catalogo-v2";
 import { productoAdmin } from "@/lib/admin/catalogo";
+import {
+  avisoFicha, leerAvisoUrl, valoresComplementos, valoresEditor, versionFicha, type FilaFicha, type VersionFicha
+} from "@/lib/admin/ficha-sincronizacion";
 import { guardarEdicionCatalogo } from "./acciones";
 
 export const metadata = { title: "Ficha del catálogo" };
@@ -53,7 +55,7 @@ export default async function FichaCatalogoAdmin({
 }) {
   const { supabase } = await requerirAdmin();
   const { slug } = await params;
-  const { creada } = await searchParams;
+  const avisoUrl = leerAvisoUrl(await searchParams);
   if (!esSlugValido(slug)) notFound();
 
   const { data, error } = await supabase
@@ -90,8 +92,23 @@ export default async function FichaCatalogoAdmin({
     origin: data.origin, image_path: data.image_path, olfactory: data.olfactory, inspired_label: data.inspired_label,
     description: data.description, data_status: data.data_status, performance: data.performance
   };
-  const cambios = revision.data ? diferenciasRevision(actual, revision.data.proposed_data as Record<string, unknown>) : [];
+  const propuesta = (revision.data?.proposed_data ?? null) as Record<string, unknown> | null;
+  const cambios = propuesta ? diferenciasRevision(actual, propuesta) : [];
   const editable = estado === "draft" || estado === "published";
+
+  // Versión que ven los formularios. Si cambia (aprobación, guardado, cambio de
+  // estado), se reinician con los datos actuales; el servidor rechaza guardados
+  // hechos sobre una versión anterior.
+  const version: VersionFicha = {
+    updatedAt: String(data.updated_at),
+    estado,
+    revisionAt: typeof revision.data?.proposed_at === "string" ? revision.data.proposed_at : null
+  };
+  const claveVersion = versionFicha(version);
+  const guardarConVersion = guardarEdicionCatalogo.bind(null, version);
+  const aviso = avisoFicha(avisoUrl, estado, Boolean(revision.data));
+  const portadaPropuesta = propuesta && Object.hasOwn(propuesta, "image_path") && propuesta.image_path !== data.image_path
+    ? propuesta.image_path : undefined;
 
   return (
     <div className="space-y-6">
@@ -122,7 +139,7 @@ export default async function FichaCatalogoAdmin({
         </div>
       </header>
 
-      {creada === "1" ? <p role="status" className={claseOk}>Borrador creado. No está publicado: revisalo y publicalo cuando esté listo.</p> : null}
+      {aviso ? <p role="status" className={claseOk}>{aviso}</p> : null}
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
         <div className="min-w-0 space-y-6">
@@ -162,7 +179,7 @@ export default async function FichaCatalogoAdmin({
                   </table>
                 </div>
               )}
-              <AccionesRevision slug={slug} puedeAprobar={estado === "published"} descarteDisponible={descarteDisponible} />
+              <AccionesRevision slug={slug} puedeAprobar={estado === "published"} descarteDisponible={descarteDisponible} version={version} />
             </Tarjeta>
           ) : null}
 
@@ -170,17 +187,10 @@ export default async function FichaCatalogoAdmin({
             <CatalogEditorConPortada
               slug={slug}
               mode={estado === "draft" ? "edit-draft" : "propose-revision"}
-              initial={{
-                slug: data.slug,
-                house: data.house,
-                fragranceName: data.fragrance_name,
-                gender: data.gender as CatalogEditorValues["gender"],
-                universe: data.universe as CatalogEditorValues["universe"],
-                origin: data.origin as CatalogEditorValues["origin"],
-                olfactory: perfil,
-                imagePath: data.image_path
-              }}
-              onSave={guardarEdicionCatalogo}
+              initial={valoresEditor(data as FilaFicha, propuesta)}
+              version={claveVersion}
+              hayRevision={Boolean(propuesta)}
+              onSave={guardarConVersion}
             />
           ) : (
             <Aviso>
@@ -194,11 +204,8 @@ export default async function FichaCatalogoAdmin({
               <Subtitulo descripcion={estado === "published" ? "En fichas publicadas, estos cambios también quedan como revisión." : undefined}>
                 Información complementaria
               </Subtitulo>
-              <EditorComplementos slug={slug} status={estado} initial={{
-                description: data.description,
-                inspiredLabel: data.inspired_label,
-                dataStatus: data.data_status as "verificado" | "pendiente" | null
-              }} />
+              <EditorComplementos slug={slug} status={estado} version={version}
+                initial={valoresComplementos(data as FilaFicha, propuesta)} />
             </Tarjeta>
           ) : null}
         </div>
@@ -251,6 +258,13 @@ export default async function FichaCatalogoAdmin({
                 Sin portada en almacenamiento privado. La tienda sigue usando la portada local validada.
               </p>
             )}
+            {portadaPropuesta !== undefined ? (
+              <p className="mt-4 text-[12.5px] leading-relaxed text-mist">
+                {portadaPropuesta
+                  ? "La revisión pendiente propone una portada nueva: se aplica a la ficha recién al aprobarla."
+                  : "La revisión pendiente quita la portada: se aplica recién al aprobarla."}
+              </p>
+            ) : null}
             <div className="mt-5 border-t border-edge pt-5">
               <AuditoriaPortadas slug={slug} />
             </div>

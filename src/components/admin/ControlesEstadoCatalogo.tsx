@@ -16,22 +16,27 @@ export function ControlesEstadoCatalogo({ slug, estado, bloqueoPublicar }: {
   const router = useRouter();
   const [elegido, setElegido] = useState<EstadoCatalogo | null>(null);
   const [ocupado, setOcupado] = useState(false);
-  const [mensaje, setMensaje] = useState<{ ok: boolean; texto: string } | null>(null);
+  // Cada mensaje queda ligado al estado en que se mostró: si el estado de la
+  // ficha cambia por otra vía, el mensaje viejo deja de mostrarse.
+  const [mensajeEstado, setMensajeEstado] = useState<{ ok: boolean; texto: string; estado: EstadoCatalogo } | null>(null);
+  const mensaje = mensajeEstado && mensajeEstado.estado === estado ? mensajeEstado : null;
   const opciones = TRANSICIONES[estado] ?? [];
   const opcion = opciones.find((o) => o.destino === elegido);
 
   async function confirmar() {
     if (!opcion || ocupado) return;
     setOcupado(true);
-    setMensaje(null);
+    setMensajeEstado(null);
     try {
       const r = await cambiarEstadoCatalogo(slug, opcion.destino);
-      if (!r.ok) { setMensaje({ ok: false, texto: r.error }); return; }
-      setMensaje({ ok: true, texto: `Estado actualizado: ${ETIQUETA_ESTADO_CATALOGO[opcion.destino]}.` });
+      if (!r.ok) { setMensajeEstado({ ok: false, texto: r.error, estado }); return; }
+      setMensajeEstado({ ok: true, texto: `Estado actualizado: ${ETIQUETA_ESTADO_CATALOGO[opcion.destino]}.`, estado: opcion.destino });
       setElegido(null);
+      // Se quitan avisos de la URL (p. ej. "Borrador creado"): ya no describen la ficha.
+      router.replace(`/admin/catalogo/${encodeURIComponent(slug)}`, { scroll: false });
       router.refresh();
     } catch {
-      setMensaje({ ok: false, texto: "No se pudo cambiar el estado. Intentá nuevamente." });
+      setMensajeEstado({ ok: false, texto: "No se pudo cambiar el estado. Intentá nuevamente.", estado });
     } finally {
       setOcupado(false);
     }
@@ -48,7 +53,7 @@ export function ControlesEstadoCatalogo({ slug, estado, bloqueoPublicar }: {
               type="button"
               disabled={ocupado || bloqueada}
               aria-pressed={elegido === o.destino}
-              onClick={() => { setElegido(o.destino); setMensaje(null); }}
+              onClick={() => { setElegido(o.destino); setMensajeEstado(null); }}
               className={`${claseBotonSecundario} disabled:cursor-not-allowed disabled:opacity-50 ${elegido === o.destino ? "border-bone/60" : ""}`}
               title={bloqueada ? bloqueoPublicar ?? undefined : undefined}
             >

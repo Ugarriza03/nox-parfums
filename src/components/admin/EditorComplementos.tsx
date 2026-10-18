@@ -3,32 +3,59 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { guardarComplementosCatalogo } from "@/app/admin/(panel)/catalogo/[slug]/complementos-acciones";
+import { esVersionValida, type VersionFicha } from "@/lib/admin/ficha-sincronizacion";
 import { claseAyuda, claseBotonSecundario, claseCampo, claseError, claseEtiqueta, claseOk } from "./ui";
 
-export function EditorComplementos({ slug, status, initial }: {
+/**
+ * Datos editoriales. Igual que el editor de ficha: se reinicia con los datos
+ * del servidor cuando cambia la versión, y el servidor rechaza un guardado
+ * hecho sobre una versión vieja.
+ */
+export function EditorComplementos({ slug, status, initial, version }: {
   slug: string;
   status: "draft" | "published";
   initial: { description: string | null; inspiredLabel: string | null; dataStatus: "verificado" | "pendiente" | null };
+  version: VersionFicha;
 }) {
   const router = useRouter();
   const [description, setDescription] = useState(initial.description ?? "");
   const [inspiredLabel, setInspiredLabel] = useState(initial.inspiredLabel ?? "");
   const [dataStatus, setDataStatus] = useState<"" | "verificado" | "pendiente">(initial.dataStatus ?? "");
   const [busy, setBusy] = useState(false);
-  const [mensaje, setMensaje] = useState<{ ok: boolean; texto: string } | null>(null);
+  const [mensaje, setMensajeEstado] = useState<{ ok: boolean; texto: string; status: string } | null>(null);
+  const setMensaje = (m: { ok: boolean; texto: string } | null) => setMensajeEstado(m ? { ...m, status } : null);
+
+  const clave = esVersionValida(version) ? `${version.updatedAt}|${version.estado}|${version.revisionAt ?? ""}` : "";
+  const [claveVista, setClaveVista] = useState(clave);
+  if (clave !== claveVista) {
+    setClaveVista(clave);
+    setDescription(initial.description ?? "");
+    setInspiredLabel(initial.inspiredLabel ?? "");
+    setDataStatus(initial.dataStatus ?? "");
+  }
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setMensaje(null);
+    const valores = {
+      description: description.trim() || null,
+      inspiredLabel: inspiredLabel.trim() || null,
+      dataStatus: dataStatus || null
+    };
+    if (valores.description === (initial.description?.trim() || null) &&
+        valores.inspiredLabel === (initial.inspiredLabel?.trim() || null) &&
+        valores.dataStatus === (initial.dataStatus ?? null)) {
+      setMensaje({ ok: true, texto: "No hay cambios para guardar." });
+      return;
+    }
     setBusy(true);
     try {
-      const r = await guardarComplementosCatalogo({
-        slug,
-        description: description.trim() || null,
-        inspiredLabel: inspiredLabel.trim() || null,
-        dataStatus: dataStatus || null
-      });
-      if (!r.ok) { setMensaje({ ok: false, texto: r.error }); return; }
+      const r = await guardarComplementosCatalogo({ slug, ...valores, versionEsperada: version });
+      if (!r.ok) {
+        setMensaje({ ok: false, texto: r.error });
+        if (r.desactualizada) router.refresh();
+        return;
+      }
       setMensaje({ ok: true, texto: status === "published" ? "Revisión editorial guardada. La ficha publicada no cambió." : "Información guardada." });
       router.refresh();
     } catch {
@@ -62,7 +89,7 @@ export function EditorComplementos({ slug, status, initial }: {
         con pruebas propias de NOX; este panel no permite editarlos y conserva el valor actual.
       </div>
       <div aria-live="polite">
-        {mensaje ? <p role={mensaje.ok ? "status" : "alert"} className={mensaje.ok ? claseOk : claseError}>{mensaje.texto}</p> : null}
+        {mensaje && mensaje.status === status ? <p role={mensaje.ok ? "status" : "alert"} className={mensaje.ok ? claseOk : claseError}>{mensaje.texto}</p> : null}
       </div>
       <button type="submit" disabled={busy} className={claseBotonSecundario} aria-busy={busy}>
         {busy ? "Guardando…" : status === "published" ? "Guardar como revisión" : "Guardar información"}

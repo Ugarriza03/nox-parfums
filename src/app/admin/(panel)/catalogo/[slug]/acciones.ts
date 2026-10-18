@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requerirAdmin } from "@/lib/admin/sesion";
 import { mensajeErrorRpc } from "@/lib/admin/catalogo-v2";
 import { validarValoresFicha } from "@/lib/admin/catalogo-validacion";
+import { verificarVersion } from "@/lib/admin/catalogo-version";
 import type { CatalogEditorValues, ResultadoGuardado } from "@/components/admin/CatalogFragranceEditor";
 
 /**
@@ -12,20 +13,24 @@ import type { CatalogEditorValues, ResultadoGuardado } from "@/components/admin/
  *   · publicada → nox_catalog_guardar_revision (revisión pendiente, no visible)
  * Devuelve el resultado en vez de lanzar: en producción Next oculta los
  * mensajes de error de las Server Actions.
+ *
+ * `esperada` es la versión que el servidor mostró al renderizar el editor (se
+ * enlaza con .bind en la página). Si la ficha o su revisión cambiaron desde
+ * entonces, se rechaza el guardado para no revertir cambios aprobados.
  */
-export async function guardarEdicionCatalogo(values: CatalogEditorValues): Promise<ResultadoGuardado> {
+export async function guardarEdicionCatalogo(esperada: unknown, values: CatalogEditorValues): Promise<ResultadoGuardado> {
   const { supabase } = await requerirAdmin();
   const v = validarValoresFicha(values);
   if (!v.ok) return v;
   const { valores } = v;
 
-  const { data: actual, error: errorLectura } = await supabase
-    .from("catalog_products").select("status").eq("slug", valores.slug).maybeSingle();
-  if (errorLectura || !actual) return { ok: false, error: "No se pudo verificar la fragancia." };
+  const version = await verificarVersion(supabase, valores.slug, esperada);
+  if (!version.ok) return version;
 
-  const funcion = actual.status === "draft"
+  const estado = version.actual.estado;
+  const funcion = estado === "draft"
     ? "nox_catalog_editar_borrador"
-    : actual.status === "published"
+    : estado === "published"
       ? "nox_catalog_guardar_revision"
       : null;
   if (!funcion) return { ok: false, error: "Sólo se editan borradores o se proponen revisiones de fichas publicadas." };
