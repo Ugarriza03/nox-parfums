@@ -2,9 +2,17 @@
  * Adaptador de lectura para probar el catálogo V2 SIN activar el storefront.
  * No se importa en páginas públicas ni se usa service_role.
  */
-import "server-only";
 import { PRODUCTS } from "@/data/products";
 import type { Product } from "@/data/types";
+
+function jsonEstable(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(jsonEstable).join(",")}]`;
+  if (value && typeof value === "object") {
+    const obj = value as Record<string, unknown>;
+    return `{${Object.keys(obj).sort().map(k => `${JSON.stringify(k)}:${jsonEstable(obj[k])}`).join(",")}}`;
+  }
+  return JSON.stringify(value) ?? "null";
+}
 
 export type FilaCatalogoV2 = {
   slug: string;
@@ -51,12 +59,17 @@ export function prepararVistaCatalogoV2(
     const anterior = base.get(fila.slug);
     if (!anterior || fila.status !== "published") return respaldo("Identidad o publicación incompleta");
     if (fila.gender !== anterior.gender || fila.origin !== anterior.origin ||
-        fila.universe !== anterior.universe || !fila.house.trim() ||
-        !fila.fragrance_name.trim()) return respaldo("Campos de identidad inválidos");
+        fila.universe !== anterior.universe || fila.house !== anterior.house ||
+        `${fila.house} ${fila.fragrance_name}` !== anterior.inspiredBy)
+      return respaldo("Campos de identidad distintos");
     if (fila.data_status !== "verificado" && fila.data_status !== "pendiente")
       return respaldo("Estado de datos inválido");
-    if (fila.olfactory !== null && (typeof fila.olfactory !== "object" ||
-        Array.isArray(fila.olfactory))) return respaldo("Perfil olfativo inválido");
+    if (jsonEstable(fila.olfactory) !== jsonEstable(anterior.olfactory))
+      return respaldo("Perfil olfativo distinto");
+    if (fila.inspired_label !== anterior.inspiredLabel)
+      return respaldo("Referencia de inspiración distinta");
+    if (fila.data_status !== anterior.dataStatus)
+      return respaldo("Estado de verificación distinto");
     // La performance del extracto NOX jamás se afirma por datos no auditados.
     // En esta etapa se conserva el valor validado del catálogo estático.
     adaptados.push({
