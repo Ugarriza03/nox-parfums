@@ -32,11 +32,9 @@ export default async function FichaCatalogoAdmin({
   if (error) return <Aviso tono="error">No se pudo consultar esta ficha del catálogo V2.</Aviso>;
   if (!data) notFound();
 
-  const revision = data.status === "published"
-    ? await supabase.from("catalog_revisions")
+  const revision = await supabase.from("catalog_revisions")
         .select("proposed_data,proposed_at,base_updated_at")
-        .eq("product_slug", slug).maybeSingle()
-    : null;
+        .eq("product_slug", slug).maybeSingle();
 
   const campos = [
     ["Identificador", data.slug],
