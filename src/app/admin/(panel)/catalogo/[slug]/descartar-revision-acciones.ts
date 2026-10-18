@@ -2,23 +2,20 @@
 
 import { revalidatePath } from "next/cache";
 import { requerirAdmin } from "@/lib/admin/sesion";
+import { esSlugValido, mensajeErrorRpc } from "@/lib/admin/catalogo-v2";
+import type { ResultadoAccion } from "./estado-acciones";
 
-export async function descartarRevision(slug: string): Promise<void> {
+/**
+ * Descarta la revisión pendiente (nox_catalog_descartar_revision, migración
+ * 20261012270000). Si la base todavía no tiene esa función, devuelve un error
+ * claro y no hace nada: no existe un camino alternativo que borre la revisión.
+ */
+export async function descartarRevision(slug: string): Promise<ResultadoAccion> {
   const { supabase } = await requerirAdmin();
-  if (typeof slug !== "string" || slug.length > 120 ||
-      !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
-    throw new Error("Solicitud inválida.");
-  }
-  const { error } = await supabase.rpc("nox_catalog_descartar_revision", {
-    p_slug: slug
-  });
-  if (error) {
-    if (error.code === "NX401" || error.code === "42501")
-      throw new Error("Se requiere una sesión de administrador con MFA.");
-    if (error.code === "NX404")
-      throw new Error("La revisión ya no existe. Actualizá la página.");
-    throw new Error("No se pudo descartar la revisión.");
-  }
+  if (!esSlugValido(slug)) return { ok: false, error: "Solicitud inválida." };
+  const { error } = await supabase.rpc("nox_catalog_descartar_revision", { p_slug: slug });
+  if (error) return { ok: false, error: mensajeErrorRpc(error, "No se pudo descartar la revisión.") };
   revalidatePath(`/admin/catalogo/${slug}`);
   revalidatePath("/admin/catalogo");
+  return { ok: true };
 }

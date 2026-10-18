@@ -84,6 +84,11 @@ jobs:
       - name: NOX V2 — probar respaldo estático y paridad de lectura
         run: npx tsx scripts/admin/test-catalogo-v2-adaptador.ts
 
+      - name: NOX Admin — menú lateral y módulo Catálogo (lógica y accesibilidad)
+        run: |
+          npx tsx scripts/admin/test-menu-admin.ts
+          npx tsx scripts/admin/test-catalogo-admin.ts
+
       - name: NOX V2 — lectura de catálogo en tienda (flag, red y respaldo)
         run: npx tsx scripts/admin/test-catalogo-tienda.ts
 

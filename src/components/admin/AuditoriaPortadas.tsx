@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { claseBotonSecundario, claseError } from "./ui";
 import { auditarPortadasCatalogo, type PortadaAuditada } from "@/app/admin/(panel)/catalogo/[slug]/auditoria-portadas";
 
 export function AuditoriaPortadas({ slug }: { slug: string }) {
@@ -21,21 +22,20 @@ export function AuditoriaPortadas({ slug }: { slug: string }) {
   }
   return (
     <section className="space-y-3">
-      <h2 className="text-lg text-bone">Auditoría de portadas privadas</h2>
-      <p className="text-sm text-mist">
+      <p className="text-[13px] leading-relaxed text-mist">
         Consulta hasta 100 archivos recientes de esta fragancia. Una imagen sin referencias
         y con más de 30 días se marca como candidata; no se elimina automáticamente.
       </p>
       <button type="button" onClick={consultar} disabled={busy}
-        className="rounded border border-edge px-4 py-2 text-sm text-bone disabled:opacity-50">
+        className={claseBotonSecundario}>
         {busy ? "Verificando…" : "Revisar imágenes almacenadas"}
       </button>
-      {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
+      {error && <p role="alert" className={claseError}>{error}</p>}
       {items && (
         <div role="status" className="space-y-2">
           {items.length === 0 && <p className="text-sm text-mist">No se encontraron imágenes privadas.</p>}
           {items.map(item => (
-            <div key={item.path} className="rounded border border-edge p-3 text-sm">
+            <div key={item.path} className="rounded-xl border border-edge p-3 text-[13px]">
               <p className="break-all text-bone">{item.path}</p>
               <p className="text-mist">
                 {item.referenced ? "En uso: conservar" :

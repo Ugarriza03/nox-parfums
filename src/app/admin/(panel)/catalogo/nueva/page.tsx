@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { requerirAdmin } from "@/lib/admin/sesion";
 import { CatalogFragranceEditor } from "@/components/admin/CatalogFragranceEditor";
+import { Tarjeta, Titulo } from "@/components/admin/ui";
 import { guardarBorrador } from "./acciones";
 
 export const metadata = { title: "Nueva fragancia" };
@@ -7,13 +9,18 @@ export const metadata = { title: "Nueva fragancia" };
 export default async function NuevaFraganciaPage() {
   await requerirAdmin();
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
-      <div>
-        <p className="text-xs uppercase tracking-widest text-mist">NOX Admin · Catálogo V2</p>
-        <h1 className="mt-2 font-display text-3xl text-bone">Nueva fragancia</h1>
-        <p className="mt-2 text-sm text-haze">La fragancia se guarda como borrador y no se publica automáticamente.</p>
-      </div>
-      <CatalogFragranceEditor mode="create-draft" onSave={guardarBorrador} />
+    <div className="max-w-3xl space-y-6">
+      <nav aria-label="Ruta" className="text-[13px] text-mist">
+        <Link href="/admin/catalogo" className="hover:text-bone">Catálogo</Link>
+        <span aria-hidden="true" className="mx-2">/</span>
+        <span className="text-haze">Nueva fragancia</span>
+      </nav>
+      <Titulo eyebrow="Catálogo V2" descripcion="Se crea como borrador: no se publica ni crea inventario. La portada se sube después, desde la ficha.">
+        Nueva fragancia
+      </Titulo>
+      <Tarjeta>
+        <CatalogFragranceEditor mode="create-draft" onSave={guardarBorrador} />
+      </Tarjeta>
     </div>
   );
 }

@@ -1,26 +1,22 @@
 import type { ReactNode } from "react";
 import { requerirAdmin } from "@/lib/admin/sesion";
-import { AdminNav } from "@/components/admin/AdminNav";
+import { AdminSidebar } from "@/components/admin/AdminSidebar";
 
 /**
- * Marco de las secciones protegidas. La verificación de acá es la primera;
- * cada página y cada acción vuelven a llamar a requerirAdmin().
+ * Marco compartido de las secciones protegidas: menú lateral + contenido.
+ * La verificación de acá es la primera; cada página y cada acción vuelven a
+ * llamar a requerirAdmin() (los layouts no se re-ejecutan en cada navegación).
  */
 export default async function PanelLayout({ children }: { children: ReactNode }) {
   const { admin } = await requerirAdmin();
   return (
-    <div>
-      <div className="mb-8 flex flex-col gap-4 border-b border-edge pb-5 md:flex-row md:items-center md:justify-between">
-        <div>
-          <p className="text-[11px] uppercase tracking-widest text-mist">NOX Admin</p>
-          <p className="mt-1 text-[13px] text-haze">
-            {admin.nombre}
-            <span className="ml-2 text-mist">· {admin.aal === "aal2" ? "sesión con segundo factor" : "sesión sin segundo factor"}</span>
-          </p>
-        </div>
-        <AdminNav />
+    <div className="lg:flex">
+      <AdminSidebar
+        usuario={{ nombre: admin.nombre, email: admin.email, mfaActivo: admin.aal === "aal2" }}
+      />
+      <div className="min-w-0 flex-1">
+        <div className="mx-auto w-full max-w-[1180px] px-4 pb-20 pt-8 sm:px-6 md:pt-10 lg:px-10">{children}</div>
       </div>
-      {children}
     </div>
   );
 }

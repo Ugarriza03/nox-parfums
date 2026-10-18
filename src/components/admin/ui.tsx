@@ -89,8 +89,55 @@ export const claseTabla = "w-full min-w-[720px] border-collapse text-left text-[
 export const claseTh = "border-b border-edge px-4 py-3 text-[11px] font-normal uppercase tracking-wider text-mist";
 export const claseTd = "border-b border-edge/60 px-4 py-3 align-top text-haze";
 export const claseCampo =
-  "w-full rounded-xl border border-edge bg-void px-3 py-2.5 text-[14px] text-bone placeholder:text-mist/70 focus:border-steel focus:outline-none";
+  "w-full rounded-xl border border-edge bg-void px-3 py-2.5 text-[14px] normal-case tracking-normal text-bone placeholder:text-mist/70 focus:border-steel focus:outline-none focus-visible:ring-2 focus-visible:ring-steel/40 disabled:opacity-70";
 export const claseBoton =
   "inline-flex items-center justify-center rounded-full bg-bone px-5 py-2.5 text-[13px] font-medium text-void transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-50";
 export const claseBotonSecundario =
   "inline-flex items-center justify-center rounded-full border border-edge px-5 py-2.5 text-[13px] text-bone transition hover:border-mist";
+
+/* ------------------------------------------------------------ catálogo V2 */
+
+const ESTILO_ESTADO_CATALOGO: Record<string, string> = {
+  draft: "border-edge text-haze",
+  published: "border-bone/40 text-bone",
+  hidden: "border-steel/50 text-steel",
+  archived: "border-edge text-mist"
+};
+const ETIQUETA_ESTADO_CATALOGO_UI: Record<string, string> = {
+  draft: "Borrador",
+  published: "Publicada",
+  hidden: "Oculta",
+  archived: "Archivada"
+};
+
+export function ChipEstadoCatalogo({ estado }: { estado: string }) {
+  return (
+    <span className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border px-2.5 py-0.5 text-[11px] ${ESTILO_ESTADO_CATALOGO[estado] ?? "border-edge text-mist"}`}>
+      <span aria-hidden="true" className={`h-1.5 w-1.5 rounded-full ${estado === "published" ? "bg-bone" : estado === "hidden" ? "bg-steel" : "bg-mist/60"}`} />
+      {ETIQUETA_ESTADO_CATALOGO_UI[estado] ?? "Desconocido"}
+    </span>
+  );
+}
+
+export function ChipRevision() {
+  return (
+    <span className="inline-flex whitespace-nowrap rounded-full border border-steel/40 px-2.5 py-0.5 text-[11px] text-steel">
+      Revisión pendiente
+    </span>
+  );
+}
+
+/** Encabezado de sección dentro de una tarjeta. */
+export function Subtitulo({ children, descripcion, id }: { children: ReactNode; descripcion?: ReactNode; id?: string }) {
+  return (
+    <div className="mb-5">
+      <h2 id={id} className="text-[16px] text-bone">{children}</h2>
+      {descripcion ? <p className="mt-1.5 text-[13px] leading-relaxed text-mist">{descripcion}</p> : null}
+    </div>
+  );
+}
+
+export const claseEtiqueta = "grid gap-1.5 text-[12px] uppercase tracking-wider text-mist";
+export const claseAyuda = "text-[12px] normal-case tracking-normal text-mist/90";
+export const claseError = "rounded-xl border border-haze/50 bg-graphite px-4 py-3 text-[13px] text-bone";
+export const claseOk = "rounded-xl border border-steel/50 bg-midnight px-4 py-3 text-[13px] text-bone";

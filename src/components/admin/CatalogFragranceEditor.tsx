@@ -1,6 +1,39 @@
 "use client";
 
+/**
+ * EDITOR DE FICHA DEL CATÁLOGO V2 — sólo interfaz.
+ *
+ * No habla con Supabase: arma los valores, los valida y llama a `onSave`
+ * (una Server Action que vuelve a validar y usa las RPC auditadas).
+ * El perfil olfativo se edita en campos estructurados; las claves que el
+ * editor no conoce se conservan, y guardar sin tocar nada no altera el perfil.
+ * No incluye stock: el inventario se gestiona sólo desde Inventario.
+ */
+
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  AROMATIC_INTENSITY_LABELS,
+  CATEGORIAS_CATALOGO,
+  ESTACIONES,
+  ETIQUETA_CATEGORIA,
+  ETIQUETA_GENERO,
+  ETIQUETA_ORIGEN,
+  FAMILIAS,
+  FAMILY_LABELS,
+  GENEROS_CATALOGO,
+  INTENSIDADES,
+  OCASIONES,
+  OCCASION_LABELS,
+  ORIGENES_CATALOGO,
+  SEASON_LABELS,
+  editableAPerfil,
+  esSlugValido,
+  perfilAEditable,
+  sugerirSlug,
+  type PerfilEditable
+} from "@/lib/admin/catalogo-v2";
+import { claseAyuda, claseBoton, claseCampo, claseError, claseEtiqueta, claseOk } from "./ui";
 
 export type CatalogEditorValues = {
   slug: string;
@@ -13,56 +46,116 @@ export type CatalogEditorValues = {
   imagePath: string | null;
 };
 
+/** Resultado de guardar: la acción devuelve el destino opcional tras crear. */
+export type ResultadoGuardado = { ok: true; slug?: string } | { ok: false; error: string };
+
 type Props = {
   initial?: Partial<CatalogEditorValues>;
   mode: "create-draft" | "edit-draft" | "propose-revision";
   busy?: boolean;
   uploadedImagePath?: string | null;
-  onSave: (values: CatalogEditorValues) => Promise<void>;
+  onSave: (values: CatalogEditorValues) => Promise<ResultadoGuardado | void>;
 };
 
-/** UI desacoplada: no hace llamadas a Supabase ni publica cambios por su cuenta. */
+function Casillas({
+  leyenda, opciones, etiquetas, valor, onChange, disabled
+}: {
+  leyenda: string;
+  opciones: readonly string[];
+  etiquetas: Record<string, string>;
+  valor: string[];
+  onChange: (v: string[]) => void;
+  disabled: boolean;
+}) {
+  return (
+    <fieldset className="space-y-2">
+      <legend className="text-[12px] uppercase tracking-wider text-mist">{leyenda}</legend>
+      <div className="flex flex-wrap gap-2">
+        {opciones.map((o) => {
+          const activo = valor.includes(o);
+          return (
+            <label
+              key={o}
+              className={`cursor-pointer select-none rounded-full border px-3 py-1.5 text-[12.5px] transition-colors focus-within:ring-2 focus-within:ring-steel/70 ${
+                activo ? "border-bone/50 bg-graphite text-bone" : "border-edge text-haze hover:border-mist"
+              } ${disabled ? "cursor-not-allowed opacity-60" : ""}`}
+            >
+              <input
+                type="checkbox"
+                className="sr-only"
+                checked={activo}
+                disabled={disabled}
+                onChange={() => onChange(activo ? valor.filter((x) => x !== o) : [...valor, o])}
+              />
+              {etiquetas[o] ?? o}
+            </label>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
+}
+
 export function CatalogFragranceEditor({ initial, mode, busy = false, uploadedImagePath, onSave }: Props) {
+  const router = useRouter();
+  const creando = mode === "create-draft";
+  const perfilBase = initial?.olfactory ?? null;
+
   const [house, setHouse] = useState(initial?.house ?? "");
   const [fragranceName, setFragranceName] = useState(initial?.fragranceName ?? "");
   const [slug, setSlug] = useState(initial?.slug ?? "");
+  const [slugTocado, setSlugTocado] = useState(Boolean(initial?.slug));
   const [gender, setGender] = useState<CatalogEditorValues["gender"]>(initial?.gender ?? "unisex");
   const [universe, setUniverse] = useState<CatalogEditorValues["universe"]>(initial?.universe ?? "disenador");
   const [origin, setOrigin] = useState<CatalogEditorValues["origin"]>(initial?.origin ?? "internacional");
-  const [notes, setNotes] = useState(JSON.stringify(initial?.olfactory ?? {}, null, 2));
+  const [perfil, setPerfil] = useState<PerfilEditable>(() => perfilAEditable(perfilBase));
   const [imagePath, setImagePath] = useState(initial?.imagePath ?? "");
+  const [error, setError] = useState<string | null>(null);
+  const [ok, setOk] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+
   useEffect(() => {
     if (uploadedImagePath) setImagePath(uploadedImagePath);
   }, [uploadedImagePath]);
-  const [error, setError] = useState<string | null>(null);
-  const [saving, setSaving] = useState(false);
+
+  // Al crear, el identificador se sugiere desde marca + nombre hasta que se edite a mano.
+  useEffect(() => {
+    if (creando && !slugTocado) setSlug(sugerirSlug(house, fragranceName));
+  }, [creando, slugTocado, house, fragranceName]);
 
   const locked = busy || saving;
-  const slugValid = useMemo(() => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) && slug.length <= 120, [slug]);
-  const label = mode === "propose-revision" ? "Guardar revisión pendiente" : "Guardar borrador";
+  const slugValid = useMemo(() => esSlugValido(slug), [slug]);
+  const campo = <K extends keyof PerfilEditable>(k: K) => (v: PerfilEditable[K]) => setPerfil((p) => ({ ...p, [k]: v }));
+  const etiquetaBoton = mode === "propose-revision" ? "Guardar revisión pendiente" : creando ? "Crear borrador" : "Guardar borrador";
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
-    if (!slugValid) { setError("El identificador debe contener letras minúsculas, números y guiones."); return; }
+    setOk(null);
+    if (!slugValid) { setError("El identificador sólo admite minúsculas, números y guiones (hasta 120 caracteres)."); return; }
     if (!house.trim() || !fragranceName.trim() || house.trim().length > 160 || fragranceName.trim().length > 180) {
-      setError("Revisá la marca y el nombre de la fragancia."); return;
+      setError("Completá la marca (hasta 160 caracteres) y el nombre de la fragancia (hasta 180)."); return;
     }
-    if (imagePath && (imagePath.length > 500 || imagePath.startsWith("/") || imagePath.includes("..") || /[\x00-\x1f\x7f]/.test(imagePath))) {
-      setError("La ruta de imagen no es válida."); return;
+    if (imagePath && (imagePath.length > 500 || !imagePath.startsWith(`covers/${slug}/`) || imagePath.includes(".."))) {
+      setError("La portada debe ser una imagen privada subida para esta fragancia."); return;
     }
-    let olfactory: Record<string, unknown> | null;
-    try {
-      const parsed: unknown = JSON.parse(notes);
-      if (parsed === null) olfactory = null;
-      else if (typeof parsed === "object" && !Array.isArray(parsed)) olfactory = parsed as Record<string, unknown>;
-      else throw new Error("Formato incorrecto");
-    } catch {
-      setError("El perfil olfativo debe ser un objeto JSON válido."); return;
-    }
+    const resultado = editableAPerfil(perfil, perfilBase);
+    if (!resultado.ok) { setError(resultado.error); return; }
     setSaving(true);
     try {
-      await onSave({ slug, house: house.trim(), fragranceName: fragranceName.trim(), gender, universe, origin, olfactory, imagePath: imagePath || null });
+      const r = await onSave({
+        slug, house: house.trim(), fragranceName: fragranceName.trim(), gender, universe, origin,
+        olfactory: resultado.perfil, imagePath: imagePath || null
+      });
+      if (r && !r.ok) { setError(r.error); return; }
+      if (creando && r && r.ok && r.slug) {
+        router.push(`/admin/catalogo/${encodeURIComponent(r.slug)}?creada=1`);
+        return;
+      }
+      setOk(mode === "propose-revision"
+        ? "Revisión guardada. La ficha publicada no cambia hasta aprobarla."
+        : "Borrador guardado.");
+      router.refresh();
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "No se pudo guardar. Intentá nuevamente.");
     } finally {
@@ -71,48 +164,128 @@ export function CatalogFragranceEditor({ initial, mode, busy = false, uploadedIm
   }
 
   return (
-    <form onSubmit={submit} className="space-y-5" aria-label="Editor de fragancia NOX">
-      <p className="text-sm opacity-75">
+    <form onSubmit={submit} className="space-y-8" aria-label="Editor de ficha de fragancia" noValidate>
+      <p className="text-[13px] leading-relaxed text-mist">
         {mode === "propose-revision"
-          ? "Los cambios se guardan para revisión. La ficha publicada no cambia hasta aprobarlos."
-          : "Los cambios se guardan como borrador y no se publican automáticamente."}
+          ? "La ficha está publicada: los cambios se guardan como revisión pendiente y no se aplican hasta aprobarlos."
+          : "Los cambios se guardan como borrador. Nada se publica automáticamente."}
       </p>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <label className="grid gap-1 text-sm">Marca
-          <input required maxLength={160} value={house} onChange={e => setHouse(e.target.value)} disabled={locked} className="rounded border p-3 text-black" />
+
+      <fieldset className="space-y-4" disabled={locked}>
+        <legend className="mb-3 text-[15px] text-bone">Identidad</legend>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className={claseEtiqueta}>Marca
+            <input required maxLength={160} value={house} onChange={(e) => setHouse(e.target.value)} className={claseCampo} autoComplete="off" />
+          </label>
+          <label className={claseEtiqueta}>Fragancia
+            <input required maxLength={180} value={fragranceName} onChange={(e) => setFragranceName(e.target.value)} className={claseCampo} autoComplete="off" />
+          </label>
+          <label className={`${claseEtiqueta} sm:col-span-2`}>Identificador (slug)
+            <input
+              required maxLength={120} value={slug}
+              onChange={(e) => { setSlug(e.target.value); setSlugTocado(true); }}
+              disabled={locked || !creando}
+              aria-invalid={!slugValid}
+              aria-describedby="ayuda-slug"
+              className={`${claseCampo} font-mono text-[13px] disabled:opacity-70`}
+              spellCheck={false}
+            />
+            <span id="ayuda-slug" className={claseAyuda}>
+              {creando
+                ? "Se congela al crear la ficha y no cambia aunque se edite la marca o el nombre."
+                : "Identificador estable: no se puede modificar."}
+            </span>
+          </label>
+          <label className={claseEtiqueta}>Género
+            <select value={gender} onChange={(e) => setGender(e.target.value as CatalogEditorValues["gender"])} className={claseCampo}>
+              {GENEROS_CATALOGO.map((g) => <option key={g} value={g}>{ETIQUETA_GENERO[g]}</option>)}
+            </select>
+          </label>
+          <label className={claseEtiqueta}>Categoría
+            <select value={universe} onChange={(e) => setUniverse(e.target.value as CatalogEditorValues["universe"])} className={claseCampo}>
+              {CATEGORIAS_CATALOGO.map((c) => <option key={c} value={c}>{ETIQUETA_CATEGORIA[c]}</option>)}
+            </select>
+          </label>
+          <label className={claseEtiqueta}>Origen
+            <select value={origin} onChange={(e) => setOrigin(e.target.value as CatalogEditorValues["origin"])} className={claseCampo}>
+              {ORIGENES_CATALOGO.map((o) => <option key={o} value={o}>{ETIQUETA_ORIGEN[o]}</option>)}
+            </select>
+          </label>
+          <label className={claseEtiqueta}>Portada privada
+            <input value={imagePath} readOnly placeholder="Sin portada en almacenamiento privado" className={`${claseCampo} font-mono text-[12px]`} />
+            <span className={claseAyuda}>Se completa al subir una imagen. Para quitarla, usá “Quitar portada”.</span>
+          </label>
+        </div>
+        {imagePath ? (
+          <button type="button" onClick={() => setImagePath("")} className="text-[12px] text-mist underline underline-offset-4 hover:text-bone">
+            Quitar portada de la ficha
+          </button>
+        ) : null}
+      </fieldset>
+
+      <fieldset className="space-y-5" disabled={locked}>
+        <legend className="mb-1 text-[15px] text-bone">Perfil olfativo</legend>
+        <p className="text-[13px] leading-relaxed text-mist">
+          Describe la fragancia de referencia: notas, acordes y carácter. No incluye duración, proyección ni estela.
+          Las listas se separan con comas.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className={claseEtiqueta}>Familia principal
+            <select value={perfil.family} onChange={(e) => campo("family")(e.target.value)} className={claseCampo}>
+              <option value="">Sin definir</option>
+              {FAMILIAS.map((f) => <option key={f} value={f}>{FAMILY_LABELS[f]}</option>)}
+            </select>
+          </label>
+          <label className={claseEtiqueta}>Carácter aromático
+            <select value={perfil.aromaticIntensity} onChange={(e) => campo("aromaticIntensity")(e.target.value)} className={claseCampo}>
+              <option value="">Sin definir</option>
+              {INTENSIDADES.map((i) => <option key={i} value={i}>{AROMATIC_INTENSITY_LABELS[i]}</option>)}
+            </select>
+          </label>
+        </div>
+        <Casillas leyenda="Familias" opciones={FAMILIAS} etiquetas={FAMILY_LABELS} valor={perfil.families} onChange={campo("families")} disabled={locked} />
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className={claseEtiqueta}>Notas de salida
+            <input value={perfil.topNotes} onChange={(e) => campo("topNotes")(e.target.value)} className={claseCampo} />
+          </label>
+          <label className={claseEtiqueta}>Notas de corazón
+            <input value={perfil.middleNotes} onChange={(e) => campo("middleNotes")(e.target.value)} className={claseCampo} />
+          </label>
+          <label className={claseEtiqueta}>Notas de fondo
+            <input value={perfil.baseNotes} onChange={(e) => campo("baseNotes")(e.target.value)} className={claseCampo} />
+          </label>
+          <label className={claseEtiqueta}>Notas principales
+            <input value={perfil.mainNotes} onChange={(e) => campo("mainNotes")(e.target.value)} className={claseCampo} />
+            <span className={claseAyuda}>3 a 5 notas: se usan en tarjetas, asesor y buscador.</span>
+          </label>
+          <label className={`${claseEtiqueta} sm:col-span-2`}>Acordes
+            <input value={perfil.accords} onChange={(e) => campo("accords")(e.target.value)} className={claseCampo} />
+          </label>
+        </div>
+        <Casillas leyenda="Ocasiones" opciones={OCASIONES} etiquetas={OCCASION_LABELS} valor={perfil.occasions} onChange={campo("occasions")} disabled={locked} />
+        <Casillas leyenda="Estaciones" opciones={ESTACIONES} etiquetas={SEASON_LABELS} valor={perfil.seasons} onChange={campo("seasons")} disabled={locked} />
+        <label className={claseEtiqueta}>Descripción sensorial
+          <textarea rows={4} maxLength={1200} value={perfil.feel} onChange={(e) => campo("feel")(e.target.value)} className={`${claseCampo} normal-case tracking-normal`} />
+          <span className={claseAyuda}>Redacción propia de NOX. No copiar textos de terceros.</span>
         </label>
-        <label className="grid gap-1 text-sm">Nombre de la fragancia
-          <input required maxLength={180} value={fragranceName} onChange={e => setFragranceName(e.target.value)} disabled={locked} className="rounded border p-3 text-black" />
+        <label className={claseEtiqueta}>Te puede gustar si…
+          <textarea rows={3} value={perfil.likeIf} onChange={(e) => campo("likeIf")(e.target.value)} className={`${claseCampo} normal-case tracking-normal`} />
+          <span className={claseAyuda}>Una frase por línea.</span>
         </label>
-        <label className="grid gap-1 text-sm">Identificador (slug)
-          <input required maxLength={120} value={slug} onChange={e => setSlug(e.target.value)} disabled={locked || mode !== "create-draft"} className="rounded border p-3 text-black" />
-        </label>
-        <label className="grid gap-1 text-sm">Género
-          <select value={gender} onChange={e => setGender(e.target.value as CatalogEditorValues["gender"])} disabled={locked} className="rounded border p-3 text-black">
-            <option value="femenino">Femenino</option><option value="masculino">Masculino</option><option value="unisex">Unisex</option>
-          </select>
-        </label>
-        <label className="grid gap-1 text-sm">Categoría
-          <select value={universe} onChange={e => setUniverse(e.target.value as CatalogEditorValues["universe"])} disabled={locked} className="rounded border p-3 text-black">
-            <option value="disenador">Diseñador</option><option value="nicho">Nicho</option><option value="arabe">Árabe</option><option value="pendiente">Pendiente</option>
-          </select>
-        </label>
-        <label className="grid gap-1 text-sm">Origen
-          <select value={origin} onChange={e => setOrigin(e.target.value as CatalogEditorValues["origin"])} disabled={locked} className="rounded border p-3 text-black">
-            <option value="internacional">Internacional</option><option value="arabe">Árabe</option>
-          </select>
-        </label>
+      </fieldset>
+
+      <div aria-live="polite" className="space-y-3">
+        {error ? <p role="alert" className={claseError}>{error}</p> : null}
+        {ok ? <p role="status" className={claseOk}>{ok}</p> : null}
       </div>
-      <label className="grid gap-1 text-sm">Perfil olfativo (JSON)
-        <textarea rows={7} value={notes} onChange={e => setNotes(e.target.value)} disabled={locked} spellCheck={false} className="rounded border p-3 font-mono text-sm text-black" />
-      </label>
-      <label className="grid gap-1 text-sm">Ruta de imagen (opcional)
-        <input maxLength={500} value={imagePath} onChange={e => setImagePath(e.target.value)} disabled={locked} className="rounded border p-3 text-black" />
-      </label>
-      {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
-      <button type="submit" disabled={locked} className="rounded border px-5 py-3 disabled:opacity-50">
-        {saving ? "Guardando…" : label}
-      </button>
+      <div className="flex flex-wrap items-center gap-3 border-t border-edge pt-6">
+        <button type="submit" disabled={locked} className={claseBoton} aria-busy={saving}>
+          {saving ? "Guardando…" : etiquetaBoton}
+        </button>
+        <span className="text-[12px] text-mist">
+          {mode === "propose-revision" ? "Queda pendiente de aprobación." : "No modifica el stock."}
+        </span>
+      </div>
     </form>
   );
 }

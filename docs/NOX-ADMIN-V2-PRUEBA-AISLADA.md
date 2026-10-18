@@ -35,3 +35,15 @@
 
 ## Regla de despliegue
 Ninguna migración en producción, merge de PR #3, cambio de dominio ni modificación de variables productivas sin aprobación explícita del propietario.
+
+## Menú lateral y módulo Catálogo (2026-10-18)
+
+- Navegación: `src/components/admin/AdminSidebar.tsx` en el layout de `(panel)`. Las pantallas de
+  acceso viven en el grupo `(acceso)`; las URLs no cambian.
+- Catálogo (`/admin/catalogo`): listado con búsqueda, filtros y paginación; ficha con editor
+  estructurado del perfil olfativo, portada privada, revisiones (diferencias, aprobar, descartar),
+  transiciones con confirmación e historial. Todas las escrituras pasan por las RPC auditadas.
+- Rendimiento NOX: no se edita desde el panel (el servidor reenvía el valor existente).
+- **Bloqueado hasta aplicar `20261012270000_descartar_revision` en la base de prueba:** descartar
+  revisiones. La ficha lo detecta (PGRST202) y deshabilita el botón. Sin esa migración, una ficha
+  oculta con revisión pendiente no puede volver a publicarse (la base exige resolver la revisión).
