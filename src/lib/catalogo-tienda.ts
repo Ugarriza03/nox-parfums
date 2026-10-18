@@ -1,11 +1,27 @@
 /** Lectura opcional de catálogo V2 para tienda; nunca usa service_role. */
 import { PRODUCTS } from "@/data/products";
 import type { Product } from "@/data/types";
-import { leerConfigSupabase } from "@/lib/admin/config";
-import { prepararVistaCatalogoV2, type FilaCatalogoV2, type ResultadoVistaV2 } from "@/lib/admin/catalogo-v2-adaptador";
+import { prepararVistaCatalogoV2, type FilaCatalogoV2, type ResultadoVistaV2 } from "@/lib/catalogo-v2-adaptador";
 
 type Env = Record<string, string | undefined>;
 type Fetch = typeof fetch;
+function leerConfigPublica(env: Env): { url: string; publishableKey: string } | null {
+  const rawUrl = env.NOX_SUPABASE_URL?.trim();
+  const publishableKey = env.NOX_SUPABASE_PUBLISHABLE_KEY?.trim();
+  if (!rawUrl || !publishableKey || /^sb_secret_/i.test(publishableKey)) return null;
+  let url: URL;
+  try { url = new URL(rawUrl); } catch { return null; }
+  const local = url.hostname === "localhost" || url.hostname === "127.0.0.1";
+  if (url.protocol !== "https:" && !(local && url.protocol === "http:")) return null;
+  const jwt = publishableKey.split(".");
+  if (jwt.length === 3) {
+    try {
+      const payload = JSON.parse(Buffer.from(jwt[1], "base64url").toString("utf8")) as { role?: string };
+      if (payload.role === "service_role") return null;
+    } catch { return null; }
+  }
+  return { url: url.origin, publishableKey };
+}
 export const TIEMPO_MAXIMO_MS = 2500;
 export const REVALIDAR_SEGUNDOS = 300;
 
@@ -25,7 +41,7 @@ export async function obtenerCatalogoTienda(
   env: Env = process.env, fetchImpl: Fetch = fetch
 ): Promise<ResultadoVistaV2> {
   if (!catalogoV2Activado(env)) return estatico("Catálogo V2 desactivado");
-  const config = leerConfigSupabase(env);
+  const config = leerConfigPublica(env);
   if (!config) return estatico("Supabase no configurado");
   let filas: unknown;
   try {
